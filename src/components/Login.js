@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';  
+import { useNavigate } from "react-router-dom";
 
 import axios from 'axios';
 
 // import styles from './Login.module.css';
 
 
-const Login = ({key,setKey}) => {
+const Login = ({token,setToken,user,setUser}) => {
 
 
 
@@ -16,10 +17,11 @@ const Login = ({key,setKey}) => {
         password: ''
         
       });
+      const [message, setMessage] = useState('')
 
-    const [error, setError] = useState(null);
-    const [token, setToken] = useState(null);
+    const navigate = useNavigate();
 
+    
     const handleInputChange = (event) => {
       setFormData({ 
         ...formData,
@@ -34,16 +36,22 @@ const Login = ({key,setKey}) => {
         try {
           const response = await axios.post('http://127.0.0.1:8000/api/login/', formData);
           
-          setError(null);  
-         setKey(response.data.token);
-          console.log(response.data);
-        //   window.location.href = '/';
+          
+          // console.log(response.data.username + " "+response.data.token);
+          setToken(response.data.token);
+
+          setUser(response.data.username)
+          console.log("token is "+token +" u -" +user)
+
+          navigate('/home');
     
     
           // redirect or display message on success
           
         } catch (err) {
-          setError(err.message);
+          setMessage('Wrong credentials !')
+          document.getElementById('alert').style.display = "block";
+          console.log(err)
         }
       }
     
@@ -180,10 +188,15 @@ button{
 .social i{
   margin-right: 4px;
 }
+#alert{
+  display:none;
+  z-index: 2;
+}
 `}
 </style>
-
-
+    <div className="alert alert-warning" role="alert" id='alert'>
+  {message}
+</div>
     <div className="background">
         <div className="shape"></div>
         <div className="shape"></div>

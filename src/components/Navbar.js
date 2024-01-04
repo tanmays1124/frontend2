@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import "./Navbar.css";
 
-const Navbar = ({ key, setKey }) => {
+const Navbar = ({ token, setToken, user, setUser }) => {
   const handleClick = () => {
     console.log("log out");
-    setKey("");
+    setToken("");
   };
   return (
     <>
@@ -13,6 +14,9 @@ const Navbar = ({ key, setKey }) => {
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             QuizViz
+          </Link>
+          <Link className="navbar-brand" to="/">
+            {user}
           </Link>
           <button
             className="navbar-toggler"
@@ -25,8 +29,8 @@ const Navbar = ({ key, setKey }) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
                   Home
