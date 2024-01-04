@@ -6,6 +6,7 @@ import sql from '../images/sql.jpg';
 import ml from '../images/ml.jpg';
 import html from '../images/html.jpg';
 import Loading from './Loading';
+import Navbar from './Navbar';
 
 const Cards = (props) => {
 
@@ -28,7 +29,6 @@ const Cards = (props) => {
 
     return(
         <>
-
 <div className="col-lg-3 col-md-4 col-sm-6">
             <div className="card">
                 <img src={props.image} className="card-img-top" alt="title"/>
@@ -44,9 +44,10 @@ const Cards = (props) => {
 }
 
 
-const Home =() => {
+const Home =({key,setKey}) => {
     return (
         <>
+            <Navbar key={key} setKey={setKey}/>
 
             <div className="container"> 
                 <div className="row">
