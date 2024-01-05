@@ -1,44 +1,39 @@
 // import react from 'react';
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-
 import './Home.css';
 import linux from '../images/linux.jpg';
 import sql from '../images/sql.jpg';
 import ml from '../images/ml.jpg';
 import html from '../images/html.jpg';
-import Loading from './Loading';
+import CustomModal from './Modal';
+import React, { useState } from "react";
 import Navbar from './Navbar';
+// import Select from "react-dropdown-select";
 
-const Cards =  React.memo((props) => {
+const Cards = (props) => {
+    const [isModalOpen, setModalOpen] = useState(false);
 
+const openModal = () => {
+  setModalOpen(true);
+};
 
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [domain, setDomain] = useState('')
-
-
- 
-    useEffect(() => {
-      // Simulate an API call
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-    }, []);
-  
-    if (isLoading) {
-      return <Loading />;
-}
-
+const closeModal = () => {
+  setModalOpen(false);
+};
 
     return(
         <>
-<div className="col-lg-3 col-md-4 col-sm-6" onClick={props.onClick}>
+
+<div className="col-lg-3 col-md-6 col-sm-12">
             <div className="card">
                 <img src={props.image} className="card-img-top" alt="title"/>
                 <div className="card-body">
-                    <h5 id='title' className="card-title">{props.title}</h5>
-                    <p className="card-text">This is a sample card with some content.</p>
+                    <h5 className="card-title"><a href="#" onClick={openModal}>{props.title}</a></h5>
+                    <p className="card-text">{props.content}</p>
+                        <CustomModal
+                        isOpen={isModalOpen}
+                        closeModal={closeModal}
+                        content="LINUX Quiz"/>                       
+
                    
                 </div>
             </div>
@@ -46,33 +41,24 @@ const Cards =  React.memo((props) => {
 </>
     );
 }
-);
-
-const Home =({token,setToken,user,setUser,question, setQuestion}) => {
-
-    const navigate = useNavigate();
-    function handleCardClick(title) {
-        setQuestion(['Ef','wed'])
-        navigate('/quiz')
-      }
-    
 
 
-
-
+const Home =({user, setUser, token, setToken, setLogged}) => {
     return (
         <>
-            <Navbar token={token} setToken={setToken} user={user} setUser={setUser}/>
+        <Navbar user={user} setUser={user} token={token} setToken={setToken} setLogged = {setLogged}/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
 
             <div className="container">
                 <div className="row">
-                    <Cards title={'Linux'} image={linux} onClick={() => handleCardClick("linux")}   />
-                    <Cards title={'SQL'} image={sql} />
-                    <Cards title={'AI/ML'} image={ml} />
-                    <Cards title={'HTML'} image={html} />
+                    <Cards title={'Linux'} image={linux} content={"Click to begin attempt on Linux and it's sub-domain topics."}/>
+                    <Cards title={'SQL'} image={sql} content={"Click to begin attempt on SQL and it's sub-domain topics."}/>
+                    <Cards title={'AI/ML'} image={ml} content={"Click to begin attempt on AI/ML and it's sub-domain topics."}/>
+                    <Cards title={'HTML'} image={html} content={"Click to begin attempt on HTML and it's sub-domain topics."}/>
 
                 </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
         </>
 

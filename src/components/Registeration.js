@@ -14,6 +14,7 @@ function Register() {
   });
 
   const [error, setError] = useState(null);
+  const [mssg, setMssg] = useState('')
 
   const handleInputChange = (event) => {
     setFormData({ 
@@ -21,9 +22,30 @@ function Register() {
       [event.target.name]: event.target.value
     });
   }
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const psswd = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!email.test){
+      setMssg("Invalid email format")
+      document.getElementById('alert').style.display='block';
+
+
+    }
+    if(psswd.length < 8){
+      setMssg("password should should be greater than 8")
+      document.getElementById('alert').style.display='block';
+
+    }
     
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
@@ -180,14 +202,16 @@ display:flex;
 input{
   margin:20px;
 }
+#alert{
+  display:none;
+}
 `}
 </style>
 
-
-    <div className="background">
-        <div className="shape"></div>
-        <div className="shape"></div>
-    </div>
+<div className="alert alert-warning" role="alert" id="alert">
+          {mssg}
+        </div>
+  
     <form onSubmit={handleSubmit}>
         <h3>Register Here</h3>
         <div className="form-group">
@@ -198,9 +222,15 @@ input{
         <input name ="username" type="text" placeholder="Username" id="username" value={formData.username} onChange={handleInputChange}/>
 
         <input name ="email" type="text" placeholder="Email" id="email" value={formData.email} onChange={handleInputChange}/>
-
-        <input name = "password" type="password" placeholder="Password" id="password" value={formData.password} onChange={handleInputChange}/>
-
+<div className="form-group">
+        <input name = "password" type={showPassword ? 'text' : 'password'} placeholder="Password" id="password" value={formData.password} onChange={handleInputChange}/>
+        <span
+          style={{ marginLeft: '0px', cursor: 'pointer', justifyItems:"center", alignItems:"center" }}
+          onClick={handleTogglePassword}
+        >
+          {showPassword ? '👁️' : '👁️‍🗨️'}
+        </span>
+        </div>
         <button type="submit">Register</button>
         <Link to="/login">Login?</Link>
     </form>
