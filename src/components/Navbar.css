@@ -1,4 +1,4 @@
-nav {
+/* nav {
     background-color: #3333336d;
     padding: 10px;
 }
@@ -20,5 +20,4 @@ a {
     font-weight: bold;
 }
 a:hover {
-    color: #ffd700; /* Change color on hover */
-}
+    color: #ffd700; /* Change color on hover} */

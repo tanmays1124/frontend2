@@ -33,7 +33,11 @@ const Navbar = ({ token, setToken, user, setUser, setLogged }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active text-dark" aria-current="page" to="/home">
+                <Link
+                  className="nav-link active text-dark"
+                  aria-current="page"
+                  to="/home"
+                >
                   Home
                 </Link>
               </li>
@@ -53,7 +57,11 @@ const Navbar = ({ token, setToken, user, setUser, setLogged }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-dark" to="/login" onClick={handleClick}>
+                <Link
+                  className="nav-link text-dark"
+                  to="/login"
+                  onClick={handleClick}
+                >
                   Logout
                 </Link>
               </li>
