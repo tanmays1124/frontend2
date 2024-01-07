@@ -4,6 +4,8 @@
 .card {
     margin: 20px;
     margin-bottom: 20px;
+    margin-top: 80px;
+
     transition: 0.5s ease-in-out;
 }
 .card:hover{

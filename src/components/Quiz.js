@@ -1,71 +1,50 @@
-// Quiz.js
+import React, { useState, useEffect } from 'react';
 
-import React, { useState } from 'react';
-import './Quiz.css'
-const questions = [
-  {
-    question: 'What is the capital of France?',
-    options: ['Paris', 'Berlin', 'London', 'Madrid'],
-    correctAnswer: 'Paris',
-  },
-  {
-    question: 'Which planet is known as the Red Planet?',
-    options: ['Earth', 'Mars', 'Jupiter', 'Venus'],
-    correctAnswer: 'Mars',
-  },
-  // Add more questions as needed
-];
+// import './Quiz.css';
 
-const Quiz = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+const Quiz = ({ questions, setQuestions, answers, setAnswers, options, setOptions }) => {
+  const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
+  const [currQuestion, setCurrQuestion] = useState('');
+  const [currOptions, setCurrOptions] = useState([]);
+  const [currAnswer, setCurrAnswer] = useState('');
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+  useEffect(() => {
+    setCurrQuestion(questions[currQuestionIndex]);
+    setCurrOptions(options[currQuestionIndex]);
+    setCurrAnswer(answers[currQuestionIndex]);
+  }, [questions, options, answers, currQuestionIndex])
+
+  const handleOptionClick = (index) => {
+    if (index==currAnswer){
+      console.log('correct')
+    }
+    else{
+      console.log('incorrect');
+    }
   };
 
   const handleNextQuestion = () => {
-    // Check if an option is selected before moving to the next question
-    if (selectedOption !== null) {
-      // Reset selected option for the next question
-      setSelectedOption(null);
-      // Move to the next question
-      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
-    } else {
-      alert('Please select an option before moving to the next question.');
+
+    if (currQuestionIndex < questions.length - 1) {
+      setCurrQuestionIndex(currQuestionIndex + 1);
     }
   };
 
   return (
-    <center>
-        <div className="quizstyle">
-        <h2>Question {currentQuestion + 1}</h2>
-        <br/>
-        <p>{questions[currentQuestion].question}</p>
-        <br/>
-        <ul>
-            {questions[currentQuestion].options.map((option, index) => (
-            
-            <li key={index} >
-                &emsp;
-                &emsp;
-                <label>
-                <input
-                    type="radio"
-                    name="options"
-                    value={option}
-                    checked={selectedOption === option}
-                    onChange={() => handleOptionSelect(option)}
-                />
-                {option}
-                </label>
-            </li>
-            ))}
-        </ul>
-        <br></br>
-        <button onClick={handleNextQuestion}>Next Question</button>
-        </div>
-    </center>
+    <div className="quiz-card">
+      <h2 className="question">{currQuestion}</h2>
+      <div className="options">
+        {currOptions.map((option, index) => (
+          <div
+            key={index}
+            onClick={() => handleOptionClick(index)}
+          >
+            {option}
+          </div>
+        ))}
+      </div>
+      <button onClick={handleNextQuestion}>Next Question</button>
+    </div>
   );
 };
 
