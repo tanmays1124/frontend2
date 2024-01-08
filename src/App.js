@@ -19,6 +19,7 @@ const App = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [options, setOptions] = useState([]);
+  const [userId, setUserId] = useState(0);
   const [logged, setLogged] = useState(false);
 
   return (
@@ -38,6 +39,8 @@ const App = () => {
               user={user}
               setUser={setUser}
               setLogged={setLogged}
+              userId = {userId}
+              setUserId = {setUserId}
             />
           }
         />
@@ -57,6 +60,9 @@ const App = () => {
               setAnswers={setAnswers}
               options={options}
               setOptions={setOptions}
+              
+              userId = {userId}
+              setUserId = {setUserId}
             />
           }
         />
@@ -64,12 +70,18 @@ const App = () => {
         <Route
           path="/history"
           exact
-          element={<History user={user} setUser={setUser} />}
+          element={<History user={user} setUser={setUser} 
+          userId = {userId}
+          setUserId = {setUserId}/>}
         />
 
-        <Route path="/dashboard" exact element={<Dashboard />} />
+        <Route path="/dashboard" exact element={<Dashboard />} 
+              userId = {userId}
+              setUserId = {setUserId}/>
 
-        <Route path="/leaderboard" exact element={<Leaderboard />} />
+        <Route path="/leaderboard" exact element={<Leaderboard 
+              userId = {userId}
+              setUserId = {setUserId}/>} />
 
         <Route
           path="/quiz"
@@ -82,6 +94,8 @@ const App = () => {
               setAnswers={setAnswers}
               options={options}
               setOptions={setOptions}
+              userId = {userId}
+              setUserId = {setUserId}
             />
           }
         />

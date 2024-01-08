@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 // import styles from './Login.module.css';
 
-const Login = ({ token, setToken, user, setUser, setLogged }) => {
+const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId }) => {
   const [formData, setFormData] = useState({
+  
     username: "",
-    password: "",
+    password: "",  
   });
   const [message, setMessage] = useState("");
 
@@ -32,15 +33,16 @@ const Login = ({ token, setToken, user, setUser, setLogged }) => {
         formData
       );
 
-      // console.log(response.data.username + " "+response.data.token);
       setToken(response.data.token);
 
       setUser(response.data.username);
       console.log("token is " + token + " u -" + user);
       setLogged(true);
+      setUserId(response.data.id)
+      console.log(response.data)
       navigate("/home");
 
-      // redirect or display message on success
+
     } catch (err) {
       setMessage("Wrong credentials !");
       document.getElementById("alert").style.display = "block";

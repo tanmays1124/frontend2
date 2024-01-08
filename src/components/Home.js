@@ -247,7 +247,10 @@ const Home = ({
   setOptions,
   answers,
   setAnswers,
+  userId,
+  setUserId
 }) => {
+  console.log(userId);
   const [category, setCategory] = useState("");
 
   return (

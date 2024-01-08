@@ -35,7 +35,7 @@ function Register() {
     const email = document.getElementById('email').value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if(!email.test){
+    if(!emailRegex.test(email)){
       setMssg("Invalid email format")
       document.getElementById('alert').style.display='block';
 
