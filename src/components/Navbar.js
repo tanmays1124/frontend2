@@ -59,6 +59,7 @@ return(
 )
 };
 
+
 export default Navbar;
 
 // const Navbar = ({ token, setToken, user, setUser, setLogged }) => {
@@ -73,7 +74,7 @@ export default Navbar;
 //         <div className="container-fluid">
 //           <Link className="navbar-brand text-dark" to="/home">
 //             QuizViz
-//           </Link>
+//           </Link>jyhjnhnh111101010100101
 //           <Link className="navbar-brand text-dark" to="/home">
 //             {user}
 //           </Link>

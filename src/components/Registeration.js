@@ -55,7 +55,7 @@ function Register() {
       window.location.href = '/login'; 
 
 
-      // redirect or display message on success
+      // redirect or display message on success hello 
       
     } catch (err) {
       setError(err.message);
