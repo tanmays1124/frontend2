@@ -21,6 +21,7 @@ const App = () => {
   const [options, setOptions] = useState([]);
   const [userId, setUserId] = useState(0);
   const [logged, setLogged] = useState(false);
+  const [quiz, setQuiz] = useState([{}])
 
   return (
     <Router>
@@ -60,7 +61,8 @@ const App = () => {
               setAnswers={setAnswers}
               options={options}
               setOptions={setOptions}
-              
+              quiz = {quiz}
+              setQuiz = {setQuiz}
               userId = {userId}
               setUserId = {setUserId}
             />
@@ -96,6 +98,8 @@ const App = () => {
               setOptions={setOptions}
               userId = {userId}
               setUserId = {setUserId}
+              quiz = {quiz}
+              setQuiz = {setQuiz}
             />
           }
         />

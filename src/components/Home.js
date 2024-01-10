@@ -12,11 +12,13 @@ import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
+  const navigate = useNavigate()
   const [selectedValues, setSelectedValues] = useState({
     select1: '',
     select2: '',
     select3: '',
   });
+  
 
   const handleDropdownChange = (selectName, event) => {
     setSelectedValues((prevValues) => ({
@@ -25,12 +27,79 @@ const Modal = (props) => {
     }));
   };
 
-  const handleStart = () => {
+  const handleStart = async (event) => {
+    event.preventDefault();
     console.log('Selected value:', selectedValues.select1);
     console.log('Selected value:', selectedValues.select2);
     console.log('Selected value:', selectedValues.select3);
     console.log('Selected value:', props.category);
+    // let difficulty = '';
+    // let type_of_question = '';
+    // let num_questions = 0;
+
+    // if(selectedValues.select1=='1'){
+    //   difficulty = 'easy'
+    // }else if(selectedValues.select1==2){
+    //   difficulty = 'medium'
+    // }
+    // else{
+    //   difficulty = 'difficult'
+    // }
+
+
+    
+    // if(selectedValues.select2==1){
+    //   type_of_question = 'One Word'
+    // }
+    // else{
+    //   type_of_question = 'MCQ'
+    // }
+
+
+    
+    // if(selectedValues.select3==1){
+    //   num_questions = 10
+    // }else if(selectedValues.select3==2){
+    //   num_questions = 15
+    // }
+    // else{
+    //   num_questions = 20
+    // }
+   
+    
+      // try {
+      //   const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
+      //     // params: {
+      //     //   category: props.category,
+      //     //   difficulty: "medium",
+      //     //   num_questions: 1,
+      //     // },
+      //   });
+    
+  
+      //   await props.setQuiz(response.data);
+      //   // console.log(difficulty)
+      //   // console.log(type_of_question)
+      //   // console.log(num_questions)
+      // }
+      
+      
+      //   catch (error) {
+      //   console.error("Error fetching data:", error);
+      // }
+    
+    
+    
+    
+
+      // navigate('/quiz')
+
+
   };
+  
+  // useEffect(() => {
+  //   console.log('Updated quiz state:', props.quiz);
+  // }, [props.quiz]);
 
   return (
     <>
@@ -127,6 +196,7 @@ const Modal = (props) => {
   );
 };
 
+
 const Cards = (props) => {
   const [allUpdated, setAllUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -136,78 +206,7 @@ const Cards = (props) => {
     props.setCategory(title);
   };
 
-  const handleBeginNowClick = async (event) => {
-    event.preventDefault();
 
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
-        params: {
-          category: props.category,
-          difficulty: "easy",
-          num_questions: 2,
-        },
-      });
-
-      let que = [];
-      let ans = [];
-      let opt = [];
-      function myFunction(item) {
-        let op = [];
-        op.push(item.option_a);
-        op.push(item.option_b);
-        op.push(item.option_c);
-        op.push(item.option_d);
-
-        que.push(item.question);
-        ans.push(item.answer);
-
-        opt.push(op);
-      }
-      response.data.forEach(myFunction);
-      props.setAnswers(ans);
-      props.setQuestions(que);
-      props.setOptions(opt);
-      console.log(
-        "All three states are updated:",
-        props.questions,
-        props.options,
-        props.answers
-      );
-      navigate("/quiz");
-    } catch (err) {
-      console.log("Error hai bhai" + err);
-    }
-  };
-
-  useEffect(() => {
-    if (loading) {
-      setLoading(false);
-    }
-    if (
-      props.questions &&
-      props.questions.length > 0 &&
-      props.options &&
-      props.options.length > 0 &&
-      props.answers &&
-      props.answers.length > 0
-    ) {
-      setAllUpdated(true);
-      navigate("/quiz");
-    }
-  }, [props.questions, props.options, props.answers]);
-
-  useEffect(() => {
-    if (allUpdated) {
-      navigate("/quiz");
-
-      console.log(
-        "All three states are updated:",
-        props.questions,
-        props.options,
-        props.answers
-      );
-    }
-  }, [allUpdated]);
 
   return (
     <>
@@ -248,7 +247,9 @@ const Home = ({
   answers,
   setAnswers,
   userId,
-  setUserId
+  setUserId,
+  quiz,
+  setQuiz
 }) => {
   console.log(userId);
   const [category, setCategory] = useState("");
@@ -328,7 +329,7 @@ const Home = ({
           />
         </div>
       </div>
-      <Modal category={category} setCategory={setCategory} />
+      <Modal category={category} setCategory={setCategory} quiz={quiz} setQuiz={setQuiz}/>
     </>
   );
 };
