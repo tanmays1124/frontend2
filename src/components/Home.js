@@ -12,10 +12,13 @@ import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
+  const [allUpdated, setAllUpdated] = useState(false);
+  const navigate = useNavigate();
+
   const [selectedValues, setSelectedValues] = useState({
-    select1: '',
-    select2: '',
-    select3: '',
+    select1: "",
+    select2: "",
+    select3: "",
   });
 
   const handleDropdownChange = (selectName, event) => {
@@ -25,119 +28,69 @@ const Modal = (props) => {
     }));
   };
 
-  const handleStart = () => {
-    console.log('Selected value:', selectedValues.select1);
-    console.log('Selected value:', selectedValues.select2);
-    console.log('Selected value:', selectedValues.select3);
-    console.log('Selected value:', props.category);
-  };
 
-  return (
-    <>
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                {props.category}
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body container">
-              <div className="row">
-                <div className="col" style={{ marginBottom: "20px" }}>
-                  <select
-                    className="form-select "
-                    aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select1', e)}
-                    value={selectedValues.select1}
-                  >
-                    <option defaultValue>Select Difficulty Level</option>
-                    <option value="1">Easy</option>
-                    <option value="2">Medium</option>
-                    <option value="3">Hard</option>
-                  </select>
-                </div>
-              </div>
 
-              <div className="row">
-                <div className="col" style={{ marginBottom: "20px" }}>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select2', e)}
-                    value={selectedValues.select2}
-                  >
-                    <option defaultValue>Select Type of questions</option>
-                    <option value="1">One Word</option>
-                    <option value="2">MCQ</option>
-                  </select>
-                </div>
-              </div>
+  // const handleStart = () => {
+  //   console.log("Selected value:", selectedValues.select1);
+  //   console.log("Selected value:", selectedValues.select2);
+  //   console.log("Selected value:", selectedValues.select3);
+  //   console.log("Selected value:", props.category);
+  // };
 
-              <div className="row">
-                <div className="col" style={{ marginBottom: "20px" }}>
-                  <select
-                    className="form-select col"
-                    aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select3', e)}
-                    value={selectedValues.select2}
-                  >
-                    <option defaultValue>select Number of Questions</option>
-                    <option value="1">10</option>
-                    <option value="2">15</option>
-                    <option value="3">20</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleStart}
-              >
-                Start Quiz
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const Cards = (props) => {
-  const [allUpdated, setAllUpdated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const handleModal = (title) => {
-    props.setCategory(title);
-  };
-
-  const handleBeginNowClick = async (event) => {
+  
+  const handleStart = async (event) => {
     event.preventDefault();
+    console.log("Selected value:", selectedValues.select1);
+    console.log("Selected value:", selectedValues.select2);
+    console.log("Selected value:", selectedValues.select3);
+    console.log("Selected value:", props.category);
+
+
+
+
+
+
+    let difficulty = '';
+    let type_of_question = '';
+    let num_questions = 0;
+
+    if(selectedValues.select1=='1'){
+      difficulty = 'easy'
+    }else if(selectedValues.select1==2){
+      difficulty = 'medium'
+    }
+    else{
+      difficulty = 'difficult'
+    }
+
+
+    
+    if(selectedValues.select2==1){
+      type_of_question = 'One Word'
+    }
+    else{
+      type_of_question = 'MCQ'
+    }
+
+
+    
+    if(selectedValues.select3==1){
+      num_questions = 10
+    }else if(selectedValues.select3==2){
+      num_questions = 15
+    }
+    else{
+      num_questions = 20
+    }
+
+
+
+
+
+
+
+
+
 
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
@@ -173,47 +126,208 @@ const Cards = (props) => {
         props.options,
         props.answers
       );
-      navigate("/quiz");
     } catch (err) {
-      console.log("Error hai bhai" + err);
+      console.error("Error hai bhai" + err);
     }
   };
 
-  useEffect(() => {
-    if (loading) {
-      setLoading(false);
-    }
-    if (
-      props.questions &&
-      props.questions.length > 0 &&
-      props.options &&
-      props.options.length > 0 &&
-      props.answers &&
-      props.answers.length > 0
-    ) {
-      setAllUpdated(true);
-      navigate("/quiz");
-    }
-  }, [props.questions, props.options, props.answers]);
 
-  useEffect(() => {
-    if (allUpdated) {
-      navigate("/quiz");
+  // useEffect(() => {
+  //   if (
+  //     props.questions &&
+  //     props.questions.length > 0 &&
+  //     props.options &&
+  //     props.options.length > 0 &&
+  //     props.answers &&
+  //     props.answers.length > 0
+  //   ) {
+  //     setAllUpdated(true);
+  //     navigate("/quiz");
+  //   }
+  // }, [props.questions, props.options, props.answers]);
 
-      console.log(
-        "All three states are updated:",
-        props.questions,
-        props.options,
-        props.answers
-      );
-    }
-  }, [allUpdated]);
+  // useEffect(() => {
+  //   if (allUpdated) {
+  //     navigate("/abc");
+
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //   }
+  // }, [allUpdated]);
+  return (
+    <>
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                {props.category}
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body container">
+              <div className="row">
+                <div className="col" style={{ marginBottom: "20px" }}>
+                  <select
+                    className="form-select "
+                    aria-label="Default select example"
+                    onChange={(e) => handleDropdownChange("select1", e)}
+                    value={selectedValues.select1}
+                  >
+                    <option defaultValue>Select Difficulty Level</option>
+                    <option value="1">Easy</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Hard</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col" style={{ marginBottom: "20px" }}>
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    onChange={(e) => handleDropdownChange("select2", e)}
+                    value={selectedValues.select2}
+                  >
+                    <option defaultValue>Select Type of questions</option>
+                    <option value="1">One Word</option>
+                    <option value="2">MCQ</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col" style={{ marginBottom: "20px" }}>
+                  <select
+                    className="form-select col"
+                    aria-label="Default select example"
+                    onChange={(e) => handleDropdownChange("select3", e)}
+                    value={selectedValues.select3}
+                  >
+                    <option defaultValue>select Number of Questions</option>
+                    <option value="1">10</option>
+                    <option value="2">15</option>
+                    <option value="3">20</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleStart}
+              >
+                Start Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Cards = (props) => {
+  // const [loading, setLoading] = useState(true);
+
+  const handleModal = (title) => {
+    props.setCategory(title);
+  };
+
+  // const handleBeginNowClick = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
+  //       params: {
+  //         category: props.category,
+  //         difficulty: "easy",
+  //         num_questions: 2,
+  //       },
+  //     });
+
+  //     let que = [];
+  //     let ans = [];
+  //     let opt = [];
+  //     function myFunction(item) {
+  //       let op = [];
+  //       op.push(item.option_a);
+  //       op.push(item.option_b);
+  //       op.push(item.option_c);
+  //       op.push(item.option_d);
+
+  //       que.push(item.question);
+  //       ans.push(item.answer);
+
+  //       opt.push(op);
+  //     }
+  //     response.data.forEach(myFunction);
+  //     props.setAnswers(ans);
+  //     props.setQuestions(que);
+  //     props.setOptions(opt);
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //     navigate("/quiz");
+  //   } catch (err) {
+  //     console.log("Error hai bhai" + err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (loading) {
+  //     setLoading(false);
+  //   }
+    
+  // }, [props.questions, props.options, props.answers]);
+
+  // useEffect(() => {
+  //   if (allUpdated) {
+  //     navigate("/quiz");
+
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //   }
+  // }, [allUpdated]);
 
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <Loading />
-      ) : (
+      ) : ( */}
         <div
           className="col-lg-3 col-md-4 col-sm-6"
           data-bs-toggle="modal"
@@ -230,7 +344,7 @@ const Cards = (props) => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };
@@ -248,7 +362,7 @@ const Home = ({
   answers,
   setAnswers,
   userId,
-  setUserId
+  setUserId,
 }) => {
   console.log(userId);
   const [category, setCategory] = useState("");
@@ -261,7 +375,7 @@ const Home = ({
         token={token}
         setToken={setToken}
         setLogged={setLogged}
-        page ={'Home'}
+        page={"Home"}
       />
 
       <div className="container">
@@ -328,7 +442,16 @@ const Home = ({
           />
         </div>
       </div>
-      <Modal category={category} setCategory={setCategory} />
+      <Modal
+        questions={questions}
+        setQuestions={setQuestions}
+        answers={answers}
+        setAnswers={setAnswers}
+        options={options}
+        setOptions={setOptions}
+        category={category}
+        setCategory={setCategory}
+      />
     </>
   );
 };
