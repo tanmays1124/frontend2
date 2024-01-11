@@ -20,6 +20,7 @@ const Modal = (props) => {
     select2: "",
     select3: "",
   });
+  
 
   const handleDropdownChange = (selectName, event) => {
     setSelectedValues((prevValues) => ({
