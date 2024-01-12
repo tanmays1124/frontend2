@@ -10,6 +10,7 @@ import Landing from "./components/Landing";
 import Quiz from "./components/Quiz";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
+import Abc from  "./components/Abc";
 
 import { useState } from "react";
 
@@ -103,6 +104,7 @@ const App = () => {
             />
           }
         />
+        <Route path='/abc' exact element={<Abc/>}/>
       </Routes>
     </Router>
   );

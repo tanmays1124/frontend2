@@ -12,7 +12,9 @@ import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
+  const [allUpdated, setAllUpdated] = useState(false);
   const navigate = useNavigate();
+
   const [selectedValues, setSelectedValues] = useState({
     select1: "",
     select2: "",
@@ -29,6 +31,16 @@ const Modal = (props) => {
     }));
   };
 
+
+
+  // const handleStart = () => {
+  //   console.log("Selected value:", selectedValues.select1);
+  //   console.log("Selected value:", selectedValues.select2);
+  //   console.log("Selected value:", selectedValues.select3);
+  //   console.log("Selected value:", props.category);
+  // };
+
+  
   const handleStart = async (event) => {
     event.preventDefault();
     console.log("Selected value:", selectedValues.select1);
@@ -36,12 +48,22 @@ const Modal = (props) => {
     console.log("Selected value:", selectedValues.select3);
     console.log("Selected value:", props.category);
 
-    if (selectedValues.select1 == "1") {
-      difficulty = "easy";
-    } else if (selectedValues.select1 == 2) {
-      difficulty = "medium";
-    } else {
-      difficulty = "difficult";
+
+
+
+
+
+    let difficulty = '';
+    let type_of_question = '';
+    let num_questions = 0;
+
+    if(selectedValues.select1=='1'){
+      difficulty = 'easy'
+    }else if(selectedValues.select1==2){
+      difficulty = 'medium'
+    }
+    else{
+      difficulty = 'difficult'
     }
 
     if (selectedValues.select2 == 1) {
@@ -58,28 +80,109 @@ const Modal = (props) => {
       num_questions = 20;
     }
 
+    // try {
+    //   const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
+    //     params: {
+    //       category: props.category,
+    //       difficulty: difficulty,
+    //       num_questions: num_questions,
+    //     },
+    //   });
+
+    
+    // if(selectedValues.select2==1){
+    //   type_of_question = 'One Word'
+    // }
+    // else{
+    //   type_of_question = 'MCQ'
+    // }
+
+
+    
+    // if(selectedValues.select3==1){
+    //   num_questions = 10
+    // }else if(selectedValues.select3==2){
+    //   num_questions = 15
+    // }
+    // else{
+    //   num_questions = 20
+    // }
+
+
+
+
+
+
+
+
+
+
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
         params: {
           category: props.category,
-          difficulty: difficulty,
-          num_questions: num_questions,
+          difficulty: "easy",
+          num_questions: 2,
         },
       });
 
-    
-      await props.setQuiz(response.data);
-      navigate('/quiz')
+      let que = [];
+      let ans = [];
+      let opt = [];
+      function myFunction(item) {
+        let op = [];
+        op.push(item.option_a);
+        op.push(item.option_b);
+        op.push(item.option_c);
+        op.push(item.option_d);
 
-      console.log(difficulty);
-      console.log(type_of_question);
-      console.log(num_questions);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+        que.push(item.question);
+        ans.push(item.answer);
+
+        opt.push(op);
+      }
+      response.data.forEach(myFunction);
+      props.setAnswers(ans);
+      props.setQuestions(que);
+      props.setOptions(opt);
+      console.log(
+        "All three states are updated:",
+        props.questions,
+        props.options,
+        props.answers
+      );
+    } catch (err) {
+      console.error("Error hai bhai" + err);
     }
   };
 
 
+  useEffect(() => {
+    if (
+      props.questions &&
+      props.questions.length > 0 &&
+      props.options &&
+      props.options.length > 0 &&
+      props.answers &&
+      props.answers.length > 0
+    ) {
+      setAllUpdated(true);
+      navigate("/quiz");
+    }
+  }, [props.questions, props.options, props.answers]);
+
+  useEffect(() => {
+    if (allUpdated) {
+      navigate("/abc");
+
+      console.log(
+        "All three states are updated:",
+        props.questions,
+        props.options,
+        props.answers
+      );
+    }
+  }, [allUpdated]);
   return (
     <>
       <div
@@ -142,7 +245,7 @@ const Modal = (props) => {
                     className="form-select col"
                     aria-label="Default select example"
                     onChange={(e) => handleDropdownChange("select3", e)}
-                    value={selectedValues.select2}
+                    value={selectedValues.select3}
                   >
                     <option defaultValue>select Number of Questions</option>
                     <option value="1">10</option>
@@ -176,25 +279,80 @@ const Modal = (props) => {
 };
 
 const Cards = (props) => {
-  const [allUpdated, setAllUpdated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  // const [loading, setLoading] = useState(true);
 
   const handleModal = (title) => {
     props.setCategory(title);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  // const handleBeginNowClick = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
+  //       params: {
+  //         category: props.category,
+  //         difficulty: "easy",
+  //         num_questions: 2,
+  //       },
+  //     });
+
+  //     let que = [];
+  //     let ans = [];
+  //     let opt = [];
+  //     function myFunction(item) {
+  //       let op = [];
+  //       op.push(item.option_a);
+  //       op.push(item.option_b);
+  //       op.push(item.option_c);
+  //       op.push(item.option_d);
+
+  //       que.push(item.question);
+  //       ans.push(item.answer);
+
+  //       opt.push(op);
+  //     }
+  //     response.data.forEach(myFunction);
+  //     props.setAnswers(ans);
+  //     props.setQuestions(que);
+  //     props.setOptions(opt);
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //     navigate("/quiz");
+  //   } catch (err) {
+  //     console.log("Error hai bhai" + err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (loading) {
+  //     setLoading(false);
+  //   }
+    
+  // }, [props.questions, props.options, props.answers]);
+
+  // useEffect(() => {
+  //   if (allUpdated) {
+  //     navigate("/quiz");
+
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //   }
+  // }, [allUpdated]);
 
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <Loading />
-      ) : (
+      ) : ( */}
         <div
           className="col-lg-3 col-md-4 col-sm-6"
           data-bs-toggle="modal"
@@ -211,7 +369,7 @@ const Cards = (props) => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };
@@ -230,8 +388,6 @@ const Home = ({
   setAnswers,
   userId,
   setUserId,
-  quiz,
-  setQuiz,
 }) => {
   console.log(userId);
   const [category, setCategory] = useState("");
@@ -320,16 +476,14 @@ const Home = ({
         </div>
       </div>
       <Modal
-        category={category}
-        setCategory={setCategory}
-        quiz={quiz}
-        setQuiz={setQuiz}
         questions={questions}
         setQuestions={setQuestions}
-        options={options}
-        setOptions={setOptions}
         answers={answers}
         setAnswers={setAnswers}
+        options={options}
+        setOptions={setOptions}
+        category={category}
+        setCategory={setCategory}
       />
     </>
   );
