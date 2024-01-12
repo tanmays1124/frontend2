@@ -1,7 +1,7 @@
 
 
 .quiz-history-container {
-    margin-top: 40px;
+    margin-top: 90px;
     padding: 20px;
     box-shadow: 1px 5px 16px 0px rgba(185, 192, 191, 0.493);
     /* background-color:rgb(154, 204, 218); */
@@ -27,6 +27,7 @@
     padding: 20px;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     cursor: pointer;
+    margin: 10px;
     /* background-color:rgb(154, 204, 218); */
   
     

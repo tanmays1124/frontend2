@@ -143,18 +143,25 @@ const History = ({ userId, setUserId }) => {
 
 function conversion(timestamp)
 {
+// Get the current date and time in IST
+const currentDate = new Date(timestamp);
+const options = { timeZone: 'Asia/Kolkata' };
 
-  const date = new Date(timestamp);
+// Extract date components
+const year = currentDate.toLocaleString('en-IN', { year: 'numeric' });
+const month = currentDate.toLocaleString('en-IN', { month: '2-digit' });
+const day = currentDate.toLocaleString('en-IN', { day: '2-digit' });
 
-  // Extract date components
-  const year = date.getUTCFullYear();
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
-  const day = date.getUTCDate().toString().padStart(2, '0');
-  
-  // Create the formatted date string
-  const formattedDate = `${day}-${month}-${year}`;
-  
-  return formattedDate  // Output: 11-01-2024
+// Extract time components
+const hours = currentDate.toLocaleString('en-IN', { hour: '2-digit', hour12: false });
+const minutes = currentDate.toLocaleString('en-IN', { minute: '2-digit' });
+const seconds = currentDate.toLocaleString('en-IN', { second: '2-digit' });
+
+// Create the formatted date and time string in IST
+const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+
+return formattedDateTime;
+
 }
 
   //   const data = JSON.stringify(questionHistory, null)

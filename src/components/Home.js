@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Loading from "./Loading";
-import Quiz from "./Quiz";
+// import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
@@ -53,9 +53,6 @@ const Modal = (props) => {
 
 
 
-    let difficulty = '';
-    let type_of_question = '';
-    let num_questions = 0;
 
     if(selectedValues.select1=='1'){
       difficulty = 'easy'
@@ -80,37 +77,10 @@ const Modal = (props) => {
       num_questions = 20;
     }
 
-    // try {
-    //   const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
-    //     params: {
-    //       category: props.category,
-    //       difficulty: difficulty,
-    //       num_questions: num_questions,
-    //     },
-    //   });
 
-    
-    // if(selectedValues.select2==1){
-    //   type_of_question = 'One Word'
-    // }
-    // else{
-    //   type_of_question = 'MCQ'
-    // }
-
-
-    
-    // if(selectedValues.select3==1){
-    //   num_questions = 10
-    // }else if(selectedValues.select3==2){
-    //   num_questions = 15
-    // }
-    // else{
-    //   num_questions = 20
-    // }
-
-
-
-
+    props.setDifficultyLevel(difficulty)
+    props.setTypeOfquestion(type_of_question)
+    props.setNumber(num_questions)
 
 
 
@@ -121,8 +91,8 @@ const Modal = (props) => {
       const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
         params: {
           category: props.category,
-          difficulty: "easy",
-          num_questions: 2,
+          difficulty: difficulty,
+          num_questions: num_questions,
         },
       });
 
@@ -151,10 +121,28 @@ const Modal = (props) => {
         props.options,
         props.answers
       );
+
+
+
     } catch (err) {
-      console.error("Error hai bhai" + err);
+      console.error("Error" + err);
     }
+
   };
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
 
 
   useEffect(() => {
@@ -167,13 +155,33 @@ const Modal = (props) => {
       props.answers.length > 0
     ) {
       setAllUpdated(true);
-      navigate("/quiz");
+      // navigate("/quiz");
+      console.log(props.questions,props.options,props.answers)
     }
   }, [props.questions, props.options, props.answers]);
 
+
+
+
+
+
+  
+
   useEffect(() => {
     if (allUpdated) {
-      navigate("/abc");
+      const delayAndNavigate = async () => {
+        // Perform some actions here before navigating
+        console.log('Performing actions...');
+  
+        // Pause for 2 seconds
+        await new Promise(resolve => setTimeout(resolve, 2000));
+  
+        // Navigate to another page
+        navigate('/quiz');
+      };
+      delayAndNavigate();
+
+
 
       console.log(
         "All three states are updated:",
@@ -183,6 +191,10 @@ const Modal = (props) => {
       );
     }
   }, [allUpdated]);
+
+
+
+
   return (
     <>
       <div
@@ -258,18 +270,21 @@ const Modal = (props) => {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-primary"
                 data-bs-dismiss="modal"
+                onClick={handleStart}
+
               >
-                Close
+                Start Quiz
               </button>
-              <button
+              
+              {/* <button
                 type="button"
                 className="btn btn-primary"
                 onClick={handleStart}
               >
                 Start Quiz
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -388,6 +403,12 @@ const Home = ({
   setAnswers,
   userId,
   setUserId,
+  difficultyLevel,
+  setDifficultyLevel,
+  typeOfQuestion,
+  setTypeOfquestion,
+  number,
+  setNumber
 }) => {
   console.log(userId);
   const [category, setCategory] = useState("");
@@ -484,6 +505,12 @@ const Home = ({
         setOptions={setOptions}
         category={category}
         setCategory={setCategory}
+              difficultyLevel = {difficultyLevel}
+              setDifficultyLevel = {setDifficultyLevel}
+              typeOfQuestion = {typeOfQuestion}
+              setTypeOfquestion = {setTypeOfquestion}
+              number  ={number}
+              setNumber = {setNumber}
       />
     </>
   );

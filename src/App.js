@@ -7,10 +7,10 @@ import History from "./components/History";
 import Registration from "./components/Registeration";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
-import Quiz from "./components/Quiz";
+// import Quiz from "./components/Quiz";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
-import Abc from  "./components/Abc";
+import Quiz from  "./components/Quiz";
 
 import { useState } from "react";
 
@@ -23,6 +23,9 @@ const App = () => {
   const [userId, setUserId] = useState(0);
   const [logged, setLogged] = useState(false);
   const [quiz, setQuiz] = useState([{}])
+  const [difficultyLevel, setDifficultyLevel] = useState('')
+  const [typeOfQuestion, setTypeOfquestion] = useState('')
+  const [number, setNumber] = useState('')
 
   return (
     <Router>
@@ -66,6 +69,12 @@ const App = () => {
               setQuiz = {setQuiz}
               userId = {userId}
               setUserId = {setUserId}
+              difficultyLevel = {difficultyLevel}
+              setDifficultyLevel = {setDifficultyLevel}
+              typeOfQuestion = {typeOfQuestion}
+              setTypeOfquestion = {setTypeOfquestion}
+              number  ={number}
+              setNumber = {setNumber}
             />
           }
         />
@@ -101,10 +110,10 @@ const App = () => {
               setUserId = {setUserId}
               quiz = {quiz}
               setQuiz = {setQuiz}
+              
             />
           }
         />
-        <Route path='/abc' exact element={<Abc/>}/>
       </Routes>
     </Router>
   );
