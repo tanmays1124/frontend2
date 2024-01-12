@@ -12,13 +12,15 @@ import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedValues, setSelectedValues] = useState({
-    select1: '',
-    select2: '',
-    select3: '',
+    select1: "",
+    select2: "",
+    select3: "",
   });
-  
+  let difficulty = "";
+  let type_of_question = "";
+  let num_questions = 0;
 
   const handleDropdownChange = (selectName, event) => {
     setSelectedValues((prevValues) => ({
@@ -29,77 +31,54 @@ const Modal = (props) => {
 
   const handleStart = async (event) => {
     event.preventDefault();
-    console.log('Selected value:', selectedValues.select1);
-    console.log('Selected value:', selectedValues.select2);
-    console.log('Selected value:', selectedValues.select3);
-    console.log('Selected value:', props.category);
-    // let difficulty = '';
-    // let type_of_question = '';
-    // let num_questions = 0;
+    console.log("Selected value:", selectedValues.select1);
+    console.log("Selected value:", selectedValues.select2);
+    console.log("Selected value:", selectedValues.select3);
+    console.log("Selected value:", props.category);
 
-    // if(selectedValues.select1=='1'){
-    //   difficulty = 'easy'
-    // }else if(selectedValues.select1==2){
-    //   difficulty = 'medium'
-    // }
-    // else{
-    //   difficulty = 'difficult'
-    // }
+    if (selectedValues.select1 == "1") {
+      difficulty = "easy";
+    } else if (selectedValues.select1 == 2) {
+      difficulty = "medium";
+    } else {
+      difficulty = "difficult";
+    }
 
+    if (selectedValues.select2 == 1) {
+      type_of_question = "One Word";
+    } else {
+      type_of_question = "MCQ";
+    }
+
+    if (selectedValues.select3 == 1) {
+      num_questions = 10;
+    } else if (selectedValues.select3 == 2) {
+      num_questions = 15;
+    } else {
+      num_questions = 20;
+    }
+
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
+        params: {
+          category: props.category,
+          difficulty: difficulty,
+          num_questions: num_questions,
+        },
+      });
 
     
-    // if(selectedValues.select2==1){
-    //   type_of_question = 'One Word'
-    // }
-    // else{
-    //   type_of_question = 'MCQ'
-    // }
+      await props.setQuiz(response.data);
+      navigate('/quiz')
 
-
-    
-    // if(selectedValues.select3==1){
-    //   num_questions = 10
-    // }else if(selectedValues.select3==2){
-    //   num_questions = 15
-    // }
-    // else{
-    //   num_questions = 20
-    // }
-   
-    
-      // try {
-      //   const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
-      //     // params: {
-      //     //   category: props.category,
-      //     //   difficulty: "medium",
-      //     //   num_questions: 1,
-      //     // },
-      //   });
-    
-  
-      //   await props.setQuiz(response.data);
-      //   // console.log(difficulty)
-      //   // console.log(type_of_question)
-      //   // console.log(num_questions)
-      // }
-      
-      
-      //   catch (error) {
-      //   console.error("Error fetching data:", error);
-      // }
-    
-    
-    
-    
-
-      // navigate('/quiz')
-
-
+      console.log(difficulty);
+      console.log(type_of_question);
+      console.log(num_questions);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-  
-  // useEffect(() => {
-  //   console.log('Updated quiz state:', props.quiz);
-  // }, [props.quiz]);
+
 
   return (
     <>
@@ -131,7 +110,7 @@ const Modal = (props) => {
                   <select
                     className="form-select "
                     aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select1', e)}
+                    onChange={(e) => handleDropdownChange("select1", e)}
                     value={selectedValues.select1}
                   >
                     <option defaultValue>Select Difficulty Level</option>
@@ -147,7 +126,7 @@ const Modal = (props) => {
                   <select
                     className="form-select"
                     aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select2', e)}
+                    onChange={(e) => handleDropdownChange("select2", e)}
                     value={selectedValues.select2}
                   >
                     <option defaultValue>Select Type of questions</option>
@@ -162,7 +141,7 @@ const Modal = (props) => {
                   <select
                     className="form-select col"
                     aria-label="Default select example"
-                    onChange={(e) => handleDropdownChange('select3', e)}
+                    onChange={(e) => handleDropdownChange("select3", e)}
                     value={selectedValues.select2}
                   >
                     <option defaultValue>select Number of Questions</option>
@@ -196,7 +175,6 @@ const Modal = (props) => {
   );
 };
 
-
 const Cards = (props) => {
   const [allUpdated, setAllUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -206,7 +184,11 @@ const Cards = (props) => {
     props.setCategory(title);
   };
 
-
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   return (
     <>
@@ -249,7 +231,7 @@ const Home = ({
   userId,
   setUserId,
   quiz,
-  setQuiz
+  setQuiz,
 }) => {
   console.log(userId);
   const [category, setCategory] = useState("");
@@ -262,7 +244,7 @@ const Home = ({
         token={token}
         setToken={setToken}
         setLogged={setLogged}
-        page ={'Home'}
+        page={"Home"}
       />
 
       <div className="container">
@@ -281,6 +263,8 @@ const Home = ({
             setOptions={setOptions}
             category={category}
             setCategory={setCategory}
+            user={user}
+            setUser={setUser}
           />
           <Cards
             title={"MongoDB"}
@@ -296,6 +280,8 @@ const Home = ({
             setOptions={setOptions}
             category={category}
             setCategory={setCategory}
+            user={user}
+            setUser={setUser}
           />
           <Cards
             title={"AI/ML"}
@@ -311,6 +297,8 @@ const Home = ({
             setOptions={setOptions}
             category={category}
             setCategory={setCategory}
+            user={user}
+            setUser={setUser}
           />
           <Cards
             title={"HTML"}
@@ -326,10 +314,23 @@ const Home = ({
             setOptions={setOptions}
             category={category}
             setCategory={setCategory}
+            user={user}
+            setUser={setUser}
           />
         </div>
       </div>
-      <Modal category={category} setCategory={setCategory} quiz={quiz} setQuiz={setQuiz}/>
+      <Modal
+        category={category}
+        setCategory={setCategory}
+        quiz={quiz}
+        setQuiz={setQuiz}
+        questions={questions}
+        setQuestions={setQuestions}
+        options={options}
+        setOptions={setOptions}
+        answers={answers}
+        setAnswers={setAnswers}
+      />
     </>
   );
 };
