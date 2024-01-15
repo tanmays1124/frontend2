@@ -1,7 +1,7 @@
 import React, { useState } from 'react';  
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import './Login.css'
 
 function Register() {  
   const [formData, setFormData] = useState({
@@ -62,10 +62,60 @@ function Register() {
     }
   }
 
+
+return(
+
+  <center>
+  <div className="login-container">
+    <div className="title">Registration</div>
+    <div className="content">
+      <form action="#" onSubmit={handleSubmit}>
+        <div className="user-details">
+          <div className="input-box">
+            <span className="details">First Name</span>
+            <input name ="first_name" type="text" placeholder="First Name" id="first_name" value={formData.first_name} onChange={handleInputChange} required/>
+          </div>
+          <div className="input-box">
+            <span className="details">Last Name</span>
+            <input name ="last_name" type="text" placeholder="Last Name" id="last_name" value={formData.last_Name} onChange={handleInputChange} required/>
+          </div>
+          <div className="input-box">
+            <span className="details">Email</span>
+            <input name ="email" type="email" placeholder="Emain" id="email" value={formData.email} onChange={handleInputChange} required/>
+          </div>
+          <div className="input-box">
+            <span className="details">Username</span>
+            <input name ="username" type="text" placeholder="Username" id="username" value={formData.username} onChange={handleInputChange} required/>
+          </div>
+          <div className="input-box">
+            <span className="details">Password</span>
+            <input name ="password" type="password" placeholder="Password" id="password" value={formData.password} onChange={handleInputChange} required/>
+          </div>
+          {/* <div className="input-box">
+            <span className="details">Confirm Password</span>
+            <inputname name="cpassword" type="password" placeholder="Confirm Password" id="cpassword" required/>
+          </div> */}
+        </div>
+
+
+        <div className="button">
+          <input type="submit" value="Register"/>
+        </div>
+        <Link to="/login">Login?</Link>
+      </form>
+    </div>
+  </div>
+
+  </center>
+)
+
+
+
+
 return(
   <>
          
-         <body>
+         {/* <body>
 <style jsx>{`
     
  
@@ -234,59 +284,8 @@ input{
         <button type="submit">Register</button>
         <Link to="/login">Login?</Link>
     </form>
-        </body>
+        </body> */}
   </>
 )
-
-
-  return (
-    <div className="form-container">
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text" 
-          placeholder="First Name"
-          name="first_name"
-          value={formData.firstName}
-          onChange={handleInputChange} 
-        />
-       
-        <input
-          type="text"
-          placeholder="Last Name"
-          name="last_name"
-          value={formData.lastName}
-          onChange={handleInputChange}
-        />
-        
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-        
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange} 
-        />
-       
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"  
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  );
-}
-
+      };
 export default Register;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+// import './Login.css'
 import axios from "axios";
 
 // import styles from './Login.module.css';
@@ -34,12 +34,16 @@ const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId })
       );
 
       setToken(response.data.token);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.id);
+      localStorage.setItem('username',response.data.username)
 
       setUser(response.data.username);
       console.log("token is " + token + " u -" + user);
       setLogged(true);
       setUserId(response.data.id)
       console.log(response.data)
+
       navigate("/home");
 
 
@@ -52,8 +56,7 @@ const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId })
 
   return (
     <>
-      <body>
-        <style jsx>
+        {/* <style jsx="true">
           {`
             *,
             *:before,
@@ -186,7 +189,7 @@ const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId })
         <form onSubmit={handleSubmit}>
           <h3>Login Here</h3>
 
-          <label for="username">Username</label>
+          <label htmlFor="username">Username</label>
           <input
             name="username"
             type="text"
@@ -196,20 +199,54 @@ const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId })
             onChange={handleInputChange}
           />
 
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             name="password"
             type="password"
             placeholder="Password"
-            id="password"
+            id="password"   
             value={formData.password}
             onChange={handleInputChange}
           />
 
           <button type="submit">Log In</button>
           <Link to="/register">Register?</Link>
-        </form>
-      </body>
+        </form> */}
+
+
+
+<center>
+        <div className="login-container">
+    <div className="title">Registration</div>
+    <div className="content">
+      <form action="#" onSubmit={handleSubmit}>
+        <div className="user-details">
+        
+          <div className="input-box">
+            <span className="details">Username</span>
+            <input name ="username" type="text" placeholder="Username" id="username" value={formData.username} onChange={handleInputChange} required/>
+          </div>
+          <div className="input-box">
+            <span className="details">Password</span>
+            <input name ="password" type="password" placeholder="Password" id="password" value={formData.password} onChange={handleInputChange} required/>
+          </div>
+
+        </div>
+
+
+        <div className="button">
+          <input type="submit" value="Login"/>
+        </div>
+        <Link to="/register">Register?</Link>
+      </form>
+    </div>
+  </div>
+
+
+
+</center>
+
+        
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './History.css'
+import "./History.css";
 import bg1 from "../images/history.jpg";
 import Navbar from "./Navbar";
 
@@ -35,18 +36,31 @@ const History = ({ userId, setUserId }) => {
   };
 
   const [questionHistory, setQuestionHistory] = useState([]);
-  const [domain, setDomain] = useState([]);
-  const [difficultyLevel, setDifficultyLevel] = useState([]);
-  const [score, setScore] = useState();
-  const [attemptedQuestion, setAttemptedQuestion] = useState([]);
-  const [submissionTime, setSubmissionTime] = useState([]);
+  const navigate = useNavigate();
+  const toJSON = (str) => {
+    str = str
+      .replace(/OrderedDict\(\[\(/g, "{")
+      .replace(/\]\)/g, "}")
+      .replace(/\)/g, "")
+      .replace(/\(/g, "")
+      .replace(/t\'\,/g, "t':")
+      .replace(/'/g, '"')
+      .replace(/True/g, "true")
+      .replace(/False/g, "false");
+
+    var jsonArray = JSON.parse(str);
+
+    return jsonArray;
+  };
+
+
 
   const fetchUserQuestionHistory = async () => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`
-        // "http://127.0.0.1:8000/api/questionhistoryget/?user_id=1"
+      const userid =  localStorage.getItem('userId');
 
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userid}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -54,86 +68,20 @@ const History = ({ userId, setUserId }) => {
       const data = await response.json();
 
       setQuestionHistory(data);
-      setDomain(data.map((item) => item.domain));
-      setDifficultyLevel(data.map((item) => item.difficulty_level));
-      setScore(data.map((item) => item.score));
-      setAttemptedQuestion(data.map((item) => item.attempted_questions));
-      setSubmissionTime(data.map((item) => item.submission_time));
-      console.log(questionHistory)
+      console.log(data)
+
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
 
   useEffect(() => {
+    if (!localStorage.getItem('token')){
+      navigate('/login')
+    }
     fetchUserQuestionHistory();
+
   }, []);
-
-  useEffect(()=>{
-    // const orderedDictData = questionHistory.map((item) => item.attempted_questions)
-    // const formattedData = orderedDictData.map(item => {
-    //   const parsedDict = JSON.parse(item.slice(2, -2)); // Remove brackets and parse as JSON
-    //   return {
-    //     q_text: `question: ${parsedDict.get('q_text')}`,
-    //     is_correct: parsedDict.get('is_correct') === 'True', // Convert string 'True' to boolean true
-    //   };
-    // });
-    
-    // console.log(formattedData);
-    // const orderedDictData = questionHistory.map((item) => item.attempted_questions);
-
-    
-    // console.log(orderedDictData);
-        
-// setAttemptedQuestion(formattedData)
-// const orderedDictData = questionHistory.map((item) => item.attempted_questions);
-
-// const parseOrderedDict = (item) => {
-//   try {
-//     // Extract the content within OrderedDict([...])
-//     const content = item.match(/\[.*\]/)[0];
-
-//     // Replace single quotes with double quotes
-//     const cleanedContent = content.replace(/'/g, '"');
-
-//     // Parse the cleaned content as JSON
-//     const parsedArray = eval(cleanedContent); // Using eval to convert string to array
-
-//     // Convert the array of key-value pairs to an object
-//     const parsedDict = Object.fromEntries(parsedArray);
-
-//     return parsedDict;
-//   } catch (error) {
-//     console.error('Error parsing JSON:', error);
-//     return null;
-//   }
-// };
-
-// const formattedData = orderedDictData.map((item) => {
-//   const parsedDict = parseOrderedDict(item);
-
-//   if (parsedDict) {
-//     return {
-//       q_text: `question: ${parsedDict.q_text}`,
-//       is_correct: parsedDict.is_correct === 'True', // Convert string 'True' to boolean true
-//     };
-//   } else {
-//     return {
-//       q_text: 'Error parsing question',
-//       is_correct: false,
-//     };
-//   }
-// });
-
-// console.log(attemptedQuestion);
-
-
-  },[questionHistory,domain,difficultyLevel,score,attemptedQuestion])
-
-
-// useEffect(()=>{
-//   console.log(attemptedQuestion)
-// },[attemptedQuestion])
 
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
@@ -141,33 +89,30 @@ const History = ({ userId, setUserId }) => {
     setSelectedQuiz(quiz);
   };
 
-function conversion(timestamp)
-{
-// Get the current date and time in IST
-const currentDate = new Date(timestamp);
-const options = { timeZone: 'Asia/Kolkata' };
+  function conversion(timestamp) {
+    const currentDate = new Date(timestamp);
+    const options = { timeZone: "Asia/Kolkata" };
 
-// Extract date components
-const year = currentDate.toLocaleString('en-IN', { year: 'numeric' });
-const month = currentDate.toLocaleString('en-IN', { month: '2-digit' });
-const day = currentDate.toLocaleString('en-IN', { day: '2-digit' });
+    const year = currentDate.toLocaleString("en-IN", { year: "numeric" });
+    const month = currentDate.toLocaleString("en-IN", { month: "2-digit" });
+    const day = currentDate.toLocaleString("en-IN", { day: "2-digit" });
 
-// Extract time components
-const hours = currentDate.toLocaleString('en-IN', { hour: '2-digit', hour12: false });
-const minutes = currentDate.toLocaleString('en-IN', { minute: '2-digit' });
-const seconds = currentDate.toLocaleString('en-IN', { second: '2-digit' });
+    const hours = currentDate.toLocaleString("en-IN", {
+      hour: "2-digit",
+      hour12: false,
+    });
+    const minutes = currentDate.toLocaleString("en-IN", { minute: "2-digit" });
+    const seconds = currentDate.toLocaleString("en-IN", { second: "2-digit" });
 
-// Create the formatted date and time string in IST
-const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 
-return formattedDateTime;
+    return formattedDateTime;
+  }
 
-}
-
-  //   const data = JSON.stringify(questionHistory, null)
   return (
     <>
       <Navbar page={"History"} />
+
       {questionHistory.length == 0 ? (
         <div className="contained" style={styles.contained}>
           <div className="text" style={styles.text}>
@@ -178,47 +123,52 @@ return formattedDateTime;
         </div>
       ) : (
         <div className="quiz-history-container">
-      <div className="quiz-history">
-        <center>
-          {/* <h2>Quiz History</h2> */}
-        </center>
-        <ul className="quiz-list">
-          {questionHistory.map((quiz) => (
-            <li
-              key={quiz.id}
-              className={`quiz-card ${selectedQuiz === quiz ? 'selected' : ''}`}
-              onClick={() => handleQuizClick(quiz)}
-            >
-              <div className="quiz-header">
-                <span>{quiz.domain}</span>
-              </div>
-              <div className="quiz-details">
-                <p>Score: {quiz.score}</p>
-                {/* <p>Questions: {quiz.questions}</p> */}
-                <p>Difficulty: {quiz.difficulty_level}</p>
-                <p>Time: {conversion(quiz.submission_time)}</p>
-              </div>
-              {/* {selectedQuiz === quiz && (
-                <div className="answers">
-                  {quiz.attempted_questions.map((attempt, index) => (
-                    <div
-                      key={index}
-                      className={`answer ${attempt.isCorrect ? 'correct' : 'wrong'}`}
-                    >
-                     {attempt.q_text}  <span class="with-space">&nbsp;</span>{attempt.is_correct ? 'Correct' : 'Wrong'}
+          <div className="quiz-history">
+            <center>
+              {" "}
+              <h2>Quiz History</h2>{" "}
+            </center>
+            <ul className="quiz-list">
+              {questionHistory.map((quiz) => (
+                <li
+                  key={quiz.id}
+                  className={`quiz-card ${
+                    selectedQuiz === quiz ? "selected" : ""
+                  }`}
+                  onClick={() => handleQuizClick(quiz)}
+                >
+                  <div className="quiz-header">
+                    <span>{quiz.domain}</span>
+                  </div>
+                  <div className="quiz-details">
+                    <p>Score: {quiz.score}</p>
+                    <p>Difficulty: {quiz.difficulty_level}</p>
+                    <p>Time: {conversion(quiz.submission_time)}</p>
+                  </div>
+                  {selectedQuiz === quiz && (
+                    <div className="answers">
+                      {toJSON(selectedQuiz.attempted_questions).map(
+                        (attempt, index) => (
+                          <div
+                            key={index}
+                            className={`answer ${
+                              attempt.is_correct ? "correct" : "wrong"
+                            }`}
+                          >
+                            {attempt.q_text}{" "}
+                            <span className="with-space">&nbsp;</span>
+                            {attempt.is_correct ? "Correct" : "Wrong"}
+                          </div>
+                        )
+                      )}
                     </div>
-                  ))}
-                </div>
-              )} */}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
-
-
-    
     </>
   );
 };

@@ -1,14 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 
 const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
+  const navigate = useNavigate()
+
   const handleLogout = () => {
     console.log("log out");
     setToken("");
+
+    console.log(localStorage.getItem('uerId'));
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+
     setLogged(false);
+    navigate('/login');
   };
   let history=''
   let home=''
@@ -47,7 +57,7 @@ return(
             Profile
           </Link>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to="/login" onClick={handleLogout}>Logout</Link></li>
+            <li><div className="dropdown-item" onClick={handleLogout}>Logout</div></li>
             <li><Link className="dropdown-item" to="#">Edit Profile</Link></li>
           </ul>
         </li>

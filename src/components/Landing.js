@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 // import './Landing.css';
 import bg from "../images/bg.png";
@@ -116,6 +116,19 @@ document.body.style.overflowX = styles.body.overflowX;
 document.documentElement.style.margin = styles.body.margin;
 document.documentElement.style.padding = styles.body.padding;
 document.documentElement.style.overflowX = styles.body.overflowX;
+
+const navigate = useNavigate()
+
+useEffect(()=>{
+  const tkn = localStorage.getItem('token');
+  if(tkn) {
+    navigate('/home')
+  }
+  // else{
+  //   navigate('/login')
+  // }
+
+},[])
 
   return (
     <>

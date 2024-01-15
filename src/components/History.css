@@ -42,6 +42,7 @@
   
   .quiz-card.selected {
     background-color: #f8f8f8;
+
     
   }
   
@@ -56,11 +57,15 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+
   }
   
   .answers {
     margin-top: 10px;
+    transition: 2s ease-in-out;
+
     /* display: inline; */
+
   }
   
   .answer {
@@ -81,16 +86,11 @@
     /* padding: 1px; */
   }
   
-  body{
-    /* background-color:rgb(167, 205, 214); */
-  }
+ 
   .with-space{
     /* display: flex; */
     /* margin-top: -5.5%; */
     margin-left: 88%;
     /* margin-block-end: -8px; */
     
-  }
-  .navbar{
-    /* background-color:rgb(154, 204, 218); */
   }

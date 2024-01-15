@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Loading from "./Loading";
-// import Quiz from "./Quiz";
 import axios from "axios";
 
 const Modal = (props) => {
@@ -273,18 +272,10 @@ const Modal = (props) => {
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
                 onClick={handleStart}
-
               >
                 Start Quiz
               </button>
               
-              {/* <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleStart}
-              >
-                Start Quiz
-              </button> */}
             </div>
           </div>
         </div>
@@ -294,74 +285,11 @@ const Modal = (props) => {
 };
 
 const Cards = (props) => {
-  // const [loading, setLoading] = useState(true);
 
   const handleModal = (title) => {
     props.setCategory(title);
   };
 
-  // const handleBeginNowClick = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
-  //       params: {
-  //         category: props.category,
-  //         difficulty: "easy",
-  //         num_questions: 2,
-  //       },
-  //     });
-
-  //     let que = [];
-  //     let ans = [];
-  //     let opt = [];
-  //     function myFunction(item) {
-  //       let op = [];
-  //       op.push(item.option_a);
-  //       op.push(item.option_b);
-  //       op.push(item.option_c);
-  //       op.push(item.option_d);
-
-  //       que.push(item.question);
-  //       ans.push(item.answer);
-
-  //       opt.push(op);
-  //     }
-  //     response.data.forEach(myFunction);
-  //     props.setAnswers(ans);
-  //     props.setQuestions(que);
-  //     props.setOptions(opt);
-  //     console.log(
-  //       "All three states are updated:",
-  //       props.questions,
-  //       props.options,
-  //       props.answers
-  //     );
-  //     navigate("/quiz");
-  //   } catch (err) {
-  //     console.log("Error hai bhai" + err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     setLoading(false);
-  //   }
-    
-  // }, [props.questions, props.options, props.answers]);
-
-  // useEffect(() => {
-  //   if (allUpdated) {
-  //     navigate("/quiz");
-
-  //     console.log(
-  //       "All three states are updated:",
-  //       props.questions,
-  //       props.options,
-  //       props.answers
-  //     );
-  //   }
-  // }, [allUpdated]);
 
   return (
     <>
@@ -408,10 +336,20 @@ const Home = ({
   typeOfQuestion,
   setTypeOfquestion,
   number,
-  setNumber
+  setNumber,
+  category,
+  setCategory
 }) => {
   console.log(userId);
-  const [category, setCategory] = useState("");
+  console.log(typeof localStorage.getItem('userId'))
+  const navigate = useNavigate();
+
+useEffect(()=>{
+  if (!localStorage.getItem('token')){
+    navigate('/login')
+  }
+})
+
 
   return (
     <>
@@ -505,12 +443,15 @@ const Home = ({
         setOptions={setOptions}
         category={category}
         setCategory={setCategory}
-              difficultyLevel = {difficultyLevel}
-              setDifficultyLevel = {setDifficultyLevel}
-              typeOfQuestion = {typeOfQuestion}
-              setTypeOfquestion = {setTypeOfquestion}
-              number  ={number}
-              setNumber = {setNumber}
+        difficultyLevel = {difficultyLevel}
+        setDifficultyLevel = {setDifficultyLevel}
+        typeOfQuestion = {typeOfQuestion}
+        setTypeOfquestion = {setTypeOfquestion}
+        number  ={number}
+        setNumber = {setNumber}
+        userId = {userId}
+        setUserId = {setUserId}
+
       />
     </>
   );

@@ -7,6 +7,8 @@ import History from "./components/History";
 import Registration from "./components/Registeration";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
+// import ProtectedRoute from './components/ProtectedRoute';
+
 // import Quiz from "./components/Quiz";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
@@ -26,6 +28,8 @@ const App = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('')
   const [typeOfQuestion, setTypeOfquestion] = useState('')
   const [number, setNumber] = useState('')
+  const [category, setCategory] = useState("");
+
 
   return (
     <Router>
@@ -75,6 +79,8 @@ const App = () => {
               setTypeOfquestion = {setTypeOfquestion}
               number  ={number}
               setNumber = {setNumber}
+              category = {category}
+              setCategory = {setCategory}
             />
           }
         />
@@ -110,6 +116,14 @@ const App = () => {
               setUserId = {setUserId}
               quiz = {quiz}
               setQuiz = {setQuiz}
+              difficultyLevel = {difficultyLevel}
+              setDifficultyLevel = {setDifficultyLevel}
+              typeOfQuestion = {typeOfQuestion}
+              setTypeOfquestion = {setTypeOfquestion}
+              number  ={number}
+              setNumber = {setNumber}
+              category = {category}
+              setCategory = {setCategory}
               
             />
           }
