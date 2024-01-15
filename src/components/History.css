@@ -8,7 +8,7 @@
   }
   
   .quiz-history {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     /* background-color:rgb(154, 204, 218); */
   
@@ -18,7 +18,9 @@
     list-style: none;
     padding: 0;
     box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.459);
-    /* background-color:rgb(154, 204, 218); */
+    background-color:#f8f8f8;
+    max-height: 100vh;
+    overflow-y: scroll;
   
   }
   
@@ -28,7 +30,7 @@
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     cursor: pointer;
     margin: 10px;
-    /* background-color:rgb(154, 204, 218); */
+    background-color:#f8f8f8;
   
     
   
@@ -75,14 +77,14 @@
   }
   
   .correct {
-    background-color: #81e78e;
+    background-color: #2efe85;
     /* padding: 8px; */
     /* padding: 1px; */
     
   }
   
   .wrong {
-    background-color: #ffcdd2;
+    background-color: #ff4646;
     /* padding: 1px; */
   }
   

@@ -1,6 +1,6 @@
 // import react from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "./App.css";
+import "./App.css";
 import Home from "./components/Home";
 // import Navbar from './components/Navbar'
 import History from "./components/History";

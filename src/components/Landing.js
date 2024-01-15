@@ -2,7 +2,7 @@ import { Link,useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 // import './Landing.css';
-import bg from "../images/bg.png";
+import bg from "../images/bg.jpg";
 
 const Landing = () => {
   const [isHoveredlog, setIsHoveredlog] = useState(false);

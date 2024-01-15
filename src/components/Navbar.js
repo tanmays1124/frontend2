@@ -57,7 +57,7 @@ return(
             Profile
           </Link>
           <ul className="dropdown-menu">
-            <li><div className="dropdown-item" onClick={handleLogout}>Logout</div></li>
+            <li><div className="dropdown-item" onClick={handleLogout} style={{ cursor: "pointer"}} >Logout</div></li>
             <li><Link className="dropdown-item" to="#">Edit Profile</Link></li>
           </ul>
         </li>
