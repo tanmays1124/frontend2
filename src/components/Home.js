@@ -3,6 +3,7 @@ import "./Home.css";
 import linux from "../images/linux.jpg";
 import sql from "../images/sql.jpg";
 import ml from "../images/ml.jpg";
+import mongodb from "../images/mongodb.jpg";
 import html from "../images/html.jpg";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -306,7 +307,7 @@ const Cards = (props) => {
             <img src={props.image} className="card-img-top" alt="title" />
             <div className="card-body">
               <h5 className="card-title">
-                <Link to="#">{props.title}</Link>
+                <p>{props.title}</p>
               </h5>
               <p className="card-text">{props.content}</p>
             </div>
@@ -383,9 +384,9 @@ useEffect(()=>{
           />
           <Cards
             title={"MongoDB"}
-            image={sql}
+            image={mongodb}
             content={
-              "Click to begin attempt on SQL and it's sub-domain topics."
+              "Click to begin attempt on Mongo and it's sub-domain topics."
             }
             questions={questions}
             setQuestions={setQuestions}
