@@ -217,7 +217,7 @@ const Login = ({ token, setToken, user, setUser, setLogged, userId, setUserId })
 
 <center>
         <div className="login-container">
-    <div className="title">Registration</div>
+    <div className="title">Login</div>
     <div className="content">
       <form action="#" onSubmit={handleSubmit}>
         <div className="user-details">

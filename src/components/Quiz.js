@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Quiz.css";
 
 const Quiz = (props) => {
-  const styles = {
-    body: {
-      width: "100",
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
+  // const styles = {
+  //   body: {
+  //     width: "100",
+  //     height: "100vh",
+  //     display: "flex",
+  //     justifyContent: "center",
 
-      overflowY: "hidden",
-    },
+  //     overflowY: "hidden",
+  //   },
 
-    card: {
-      height: "50%",
-      width: "50%",
-    },
+  //   card: {
+  //     height: "50%",
+  //     width: "50%",
+  //   },
 
-    question: {
-      textAlign: "center",
-    },
+  //   question: {
+  //     textAlign: "center",
+  //   },
 
-    options: {
-      marginTop: "30px",
-    },
-  };
+  //   options: {
+  //     marginTop: "30px",
+  //   },
+  // };
 
   const [currIndex, setCurrIndex] = useState(0);
   const [currQuestion, setCurrQuestion] = useState(props.questions[0]);
@@ -34,150 +35,173 @@ const Quiz = (props) => {
   const [attempted, setAttempted] = useState([]);
   const [isCorrect, setIsCorrect] = useState([]);
 
-  const [score,setScore] = useState(0);
-  const navigate = useNavigate()
-
-
-
-
+  // const [score, setScore] = useState(0);
+  const navigate = useNavigate();
 
   const handleSelect = (event) => {
-
     const val = event.target.textContent;
+    const option = event.target;
+    option.style.background = "orange";
 
     if (val === currOptions[currAnswer]) {
       console.log("correct");
-      console.log(currQuestion)
+      console.log(currQuestion);
       setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
       setIsCorrect((prevIsCorrect) => [...prevIsCorrect, true]);
-      setScore(score+1)
-      console.log(score);
-
-
+      props.setScore(props.score + 1);
+      console.log(props.score);
     } else {
       console.log("Incorrect");
-      console.log(currQuestion)
+      console.log(currQuestion);
       setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
       setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
     }
   };
 
   const handleNext = () => {
+    const options = document.getElementsByClassName("option");
+  for (const option of options) {
+    option.style.backgroundColor = 'white';
+  }
     if (currIndex < props.questions.length - 1) {
       setCurrIndex((prevIndex) => prevIndex + 1);
       setCurrAnswer(props.answers[currIndex + 1]);
       setCurrQuestion(props.questions[currIndex + 1]);
       setCurrOptions(props.options[currIndex + 1]);
-    } 
-    else{
-      console.log(attempted)
-      console.log(isCorrect)
-      console.log(props.userId)
-      const userid =  localStorage.getItem('userId');
+    } else {
+      console.log(attempted);
+      console.log(isCorrect);
+      console.log(props.userId);
+      const userid = localStorage.getItem("userId");
 
       const postData = async () => {
-        const url = 'http://127.0.0.1:8000/api/questionhistorycreate/';
-      
+        const url = "http://127.0.0.1:8000/api/questionhistorycreate/";
+
         const newQuestionHistory = {
           user: userid,
           domain: props.category,
           difficulty_level: props.difficultyLevel,
-          score: score,
+          score: props.score,
           attempted_questions: attempted.map((q_text, index) => ({
             q_text,
             is_correct: isCorrect[index],
-          }))
-          
-
-          
+          })),
         };
-      
+
         try {
           const response = await fetch(url, {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify(newQuestionHistory),
           });
-      
+
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-      
+
           const responseData = await response.json();
-          console.log('New Question History created:', responseData);
+          console.log("New Question History created:", responseData);
         } catch (error) {
-          console.error('Error posting data:', error);
+          console.error("Error posting data:", error);
         }
       };
-      
+
       // Call the postData function
       postData();
-      
+
+      navigate('/quizend')
     }
   };
-  
-  useEffect(()=>{
-    if (!localStorage.getItem('token')){
-      navigate('/login')
-    }
-  })
 
   useEffect(() => {
-    if (!localStorage.getItem('token')){
-      navigate('/login')
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  });
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
     }
     console.log(currAnswer, currQuestion, currIndex, currOptions);
   }, [currAnswer, currQuestion, currIndex, currOptions]);
 
-
-
-
   return (
-    <div className="body" style={styles.body}>
-      <div className="container text-center">
-        <div className="question" style={styles.question}>
-          {currQuestion}
+    // <div className="body" style={styles.body}>
+    //   <div className="container text-center">
+    //     <div className="question" style={styles.question}>
+    //       {currQuestion}
+    //     </div>
+    //     <div className="row gx-1 options" style={styles.options}>
+    //       <button
+    //         type="button"
+    //         className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option"
+    //         onClick={handleSelect}
+    //       >
+    //         {currOptions[0]}
+    //       </button>
+    //       <button
+    //         type="button"
+    //         className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option second"
+    //         onClick={handleSelect}
+    //       >
+    //         {currOptions[1]}
+    //       </button>
+    //       <button
+    //         type="button"
+    //         className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option"
+    //         onClick={handleSelect}
+    //       >
+    //         {currOptions[2]}
+    //       </button>
+    //       <button
+    //         type="button"
+    //         className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option forth"
+    //         onClick={handleSelect}
+    //       >
+    //         {currOptions[3]}
+    //       </button>
+    //     </div>
+    //     <button
+    //       type="button"
+    //       className="col-4 btn-outline-secondary nextQuestion"
+    //       onClick={handleNext}
+    //     >
+    //       Next
+    //     </button>
+    //   </div>
+    // </div>
+
+    <div className="quiz-container">
+      <h1>Quiz</h1>
+      <div className="question-container">
+        <p className="question">{currQuestion}</p>
+        <div className="centered-container">
+          <div className="options-container">
+            <div className="option-pair">
+              <div className="option" data-answer="1" onClick={handleSelect}>
+                {currOptions[0]}
+              </div>
+              <div className="option" data-answer="2" onClick={handleSelect}>
+                {currOptions[1]}
+              </div>
+            </div>
+            <div className="option-pair">
+              <div className="option" data-answer="3" onClick={handleSelect}>
+                {currOptions[2]}
+              </div>
+              <div className="option" data-answer="4" onClick={handleSelect}>
+                {currOptions[3]}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="row gx-1 options" style={styles.options}>
-          <button
-            type="button"
-            className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option"
-            onClick={handleSelect}
-          >
-            {currOptions[0]}
-          </button>
-          <button
-            type="button"
-            className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option second"
-            onClick={handleSelect}
-          >
-            {currOptions[1]}
-          </button>
-          <button
-            type="button"
-            className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option"
-            onClick={handleSelect}
-          >
-            {currOptions[2]}
-          </button>
-          <button
-            type="button"
-            className="col-xl-6 col-md-12 mb-4 btn btn-outline-primary option forth"
-            onClick={handleSelect}
-          >
-            {currOptions[3]}
-          </button>
-        </div>
-        <button
-          type="button"
-          className="col-4 btn-outline-secondary nextQuestion"
-          onClick={handleNext}
-        >
-          Next
-        </button>
       </div>
+      <button className="next-button" onClick={handleNext}>
+        Next
+      </button>
     </div>
   );
 };

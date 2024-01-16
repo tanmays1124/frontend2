@@ -9,7 +9,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
 
   const handleLogout = () => {
     console.log("log out");
-    setToken("");
+    // setToken("");
 
     console.log(localStorage.getItem('uerId'));
 
@@ -17,7 +17,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
 
-    setLogged(false);
+    // setLogged(false);
     navigate('/login');
   };
   let history=''

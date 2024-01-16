@@ -81,7 +81,7 @@ return(
           </div>
           <div className="input-box">
             <span className="details">Email</span>
-            <input name ="email" type="email" placeholder="Emain" id="email" value={formData.email} onChange={handleInputChange} required/>
+            <input name ="email" type="email" placeholder="Email" id="email" value={formData.email} onChange={handleInputChange} required/>
           </div>
           <div className="input-box">
             <span className="details">Username</span>

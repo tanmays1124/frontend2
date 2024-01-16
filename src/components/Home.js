@@ -155,7 +155,8 @@ const Modal = (props) => {
       props.answers.length > 0
     ) {
       setAllUpdated(true);
-      // navigate("/quiz");
+      navigate("/quiz");
+      setAllUpdated(false)
       console.log(props.questions,props.options,props.answers)
     }
   }, [props.questions, props.options, props.answers]);
@@ -167,30 +168,32 @@ const Modal = (props) => {
 
   
 
-  useEffect(() => {
-    if (allUpdated) {
-      const delayAndNavigate = async () => {
-        // Perform some actions here before navigating
-        console.log('Performing actions...');
+  // useEffect(() => {
+  //   if (allUpdated) {
+  //     const delayAndNavigate = async () => {
+  //       // Perform some actions here before navigating
+  //       console.log('Performing actions...');
   
-        // Pause for 2 seconds
-        await new Promise(resolve => setTimeout(resolve, 2000));
+  //       // Pause for 2 seconds
+  //       await new Promise(resolve => setTimeout(resolve, 1000));
+        
   
-        // Navigate to another page
-        navigate('/quiz');
-      };
-      delayAndNavigate();
+  //       // Navigate to another page
+  //       navigate('/quiz');
+  //       setAllUpdated(false)
+  //     };
+  //     delayAndNavigate();
 
 
 
-      console.log(
-        "All three states are updated:",
-        props.questions,
-        props.options,
-        props.answers
-      );
-    }
-  }, [allUpdated]);
+  //     console.log(
+  //       "All three states are updated:",
+  //       props.questions,
+  //       props.options,
+  //       props.answers
+  //     );
+  //   }
+  // }, [allUpdated]);
 
 
 

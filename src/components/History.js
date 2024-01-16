@@ -27,6 +27,7 @@ const History = ({ userId, setUserId }) => {
       display: "grid",
       placeItems: "center",
       alignItems: "center",
+      backgroundColor: "white"
     },
     text: {
       fontSize: "larger",

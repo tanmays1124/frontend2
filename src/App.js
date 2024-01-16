@@ -8,7 +8,7 @@ import Registration from "./components/Registeration";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
 // import ProtectedRoute from './components/ProtectedRoute';
-
+import Quizend from "./components/Quizend";
 // import Quiz from "./components/Quiz";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
@@ -29,6 +29,7 @@ const App = () => {
   const [typeOfQuestion, setTypeOfquestion] = useState('')
   const [number, setNumber] = useState('')
   const [category, setCategory] = useState("");
+  const [score, setScore] = useState(0)
 
 
   return (
@@ -124,10 +125,13 @@ const App = () => {
               setNumber = {setNumber}
               category = {category}
               setCategory = {setCategory}
+              score = {score}
+              setScore = {setScore}
               
             />
           }
         />
+        <Route path='/quizend' exact element={<Quizend score={score}/>}/>
       </Routes>
     </Router>
   );
