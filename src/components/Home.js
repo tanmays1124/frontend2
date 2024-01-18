@@ -365,7 +365,7 @@ useEffect(()=>{
         setLogged={setLogged}
         page={"Home"}
       />
-
+<div className="background">
       <div className="container">
         <div className="row">
           <Cards
@@ -437,6 +437,7 @@ useEffect(()=>{
             setUser={setUser}
           />
         </div>
+      </div>
       </div>
       <Modal
         questions={questions}

@@ -2,17 +2,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
-// import Navbar from './components/Navbar'
 import History from "./components/History";
 import Registration from "./components/Registeration";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
-// import ProtectedRoute from './components/ProtectedRoute';
 import Quizend from "./components/Quizend";
-// import Quiz from "./components/Quiz";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
 import Quiz from  "./components/Quiz";
+import Forgot from  "./components/Forgot";
+import Profile from "./components/Profile";
 
 import { useState } from "react";
 
@@ -132,6 +131,8 @@ const App = () => {
           }
         />
         <Route path='/quizend' exact element={<Quizend score={score}/>}/>
+        <Route path='/forgot' exact element = {<Forgot/>} />   
+        <Route path='/profile' exact element = {<Profile/>} />
       </Routes>
     </Router>
   );

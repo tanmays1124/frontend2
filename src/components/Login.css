@@ -11,16 +11,21 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    background: linear-gradient(#ff8901,#ffa600);
+
 }  */
 .login-container{
-  margin-top: 100px;  
-  max-width: 700px;
+  margin-top: 100px;
+  margin-right: 10px;
+  margin-left: 500px;  
+  max-width: 500px;
   width: 100%;
   background-color: #fff;
   padding: 25px 30px;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    /* border: 2px solid #548099; */
+
 }
 .login-container .title{
   font-size: 25px;
@@ -35,7 +40,7 @@
   height: 3px;
   width: 30px;
   border-radius: 5px;
-  background: #ffa600;
+  background: #548099;
 }
 .content form .user-details{
   display: flex;
@@ -65,7 +70,7 @@ form .input-box span.details{
 }
 .user-details .input-box input:focus,
 .user-details .input-box input:valid{
-  border-color: #ffa600;
+  border-color: #548099;
 }
  form .gender-details .gender-title{
   font-size: 20px;
@@ -102,7 +107,7 @@ form .input-box span.details{
  }
  form .button{
    height: 45px;
-   margin: 35px 0
+   margin: 35px 0;
  }
  form .button input{
    height: 100%;
@@ -115,11 +120,11 @@ form .input-box span.details{
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: #ffa600;
+   background: rgb(124, 207, 255);
  }
  form .button input:hover{
   /* transform: scale(0.99); */
-  background: #ff8901;
+  background: rgb(89, 189, 247);
   }
  @media(max-width: 584px){
  .login-container{
