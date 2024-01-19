@@ -306,7 +306,7 @@ const Cards = (props) => {
           data-bs-target="#staticBackdrop"
           onClick={() => handleModal(props.title)}
         >
-          <div className="card">
+          <div className="card shadow-lg rounded bg-secondary domain-card">
             <img src={props.image} className="card-img-top" alt="title" />
             <div className="card-body">
               <h5 className="card-title">

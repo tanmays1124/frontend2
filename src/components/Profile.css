@@ -1,0 +1,44 @@
+
+.profile-button{
+    width: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    
+    letter-spacing: 1px;
+    transition: 0.2s ease;
+    margin: 15px;
+    
+}
+
+
+
+/* .profile-container{
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+} */
+
+
+.profile-container.bg-secondary {
+    --bs-bg-opacity: 0.4;
+    background-color: rgb(241, 241, 241) !important;
+    border-radius: 50px !important;
+    margin-top: 10% !important;
+}
+
+.profile-button.btn-outline-primary{
+    --bs-btn-hover-color: white;
+    --bs-btn-hover-bg: #4d94ff;
+    --bs-btn-hover-border-color: rgb(204, 25, 25);
+    border: 0.9px solid #4d94ff !important;
+}
+
+
+    
+@media (max-width: 600px) {
+    .profile-container.bg-secondary {
+      margin-top: 20% !important;
+    }
+  }
+
+
