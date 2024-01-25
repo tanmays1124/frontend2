@@ -1,40 +1,91 @@
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import Box from '@mui/material/Box';
-// import "../App.css";
-// import "../home.css";
-import { data } from '../Database';
+import Sidenav from './Sidenav';
 
 function LineGraph() {
-  const initialData = {
+  const [data, setDatabaseData] = useState([]);
+  const [userId, setUserId] = useState('');
+  const [selectedDomain, setSelectedDomain] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [state, setState] = useState({
     options: {
       colors: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"],
       chart: {
         id: "basic-bar",
       },
     },
-    series: data.map(item => ({
-      name: `${item.name}-${item.difficulty}`,
-      data: item.data,
-    })),
-  };
+    series: [],
+  });
 
-  const [state, setState] = useState({ ...initialData });
-  const [selectedDomain, setSelectedDomain] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`);
+        const fetchedData = await response.json();
+        setDatabaseData(fetchedData);
+
+        console.log(fetchedData);
+
+        const initialSeries = fetchedData.reduce((acc, item) => {
+          const seriesIndex = acc.findIndex(seriesItem => seriesItem.name === `${item.domain}-${item.difficulty_level}`);
+          if (seriesIndex !== -1) {
+            acc[seriesIndex].data.push({
+              x: item.submission_time,
+              y: item.score,
+            });
+          } else {
+            acc.push({
+              name: `${item.domain}-${item.difficulty_level}`,
+              data: [{
+                x: item.submission_time,
+                y: item.score,
+              }],
+            });
+          }
+          return acc;
+        }, []);
+
+        setState((prevState) => ({
+          ...prevState,
+          series: initialSeries,
+        }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
 
   const handleDomainChange = (event) => {
     const selectedDomain = event.target.value;
     setSelectedDomain(selectedDomain);
 
-    const filteredSeries = initialData.series.filter((series) =>
-      series.name.includes(selectedDomain)
-    );
+    const filteredSeries = data.filter((item) =>
+      item.domain.includes(selectedDomain)
+    ).reduce((acc, item) => {
+      const seriesIndex = acc.findIndex(seriesItem => seriesItem.name === `${item.domain}-${item.difficulty_level}`);
+      if (seriesIndex !== -1) {
+        acc[seriesIndex].data.push({
+          x: item.submission_time,
+          y: item.score,
+        });
+      } else {
+        acc.push({
+          name: `${item.domain}-${item.difficulty_level}`,
+          data: [{
+            x: item.submission_time,
+            y: item.score,
+          }],
+        });
+      }
+      return acc;
+    }, []);
 
     setState({
       options: {
-        ...initialData.options,
+        ...state.options,
       },
       series: filteredSeries,
     });
@@ -46,34 +97,42 @@ function LineGraph() {
     const selectedDifficulty = event.target.value;
     setSelectedDifficulty(selectedDifficulty);
 
-    let filteredSeries;
-
-    if (selectedDifficulty === "easy" || selectedDifficulty === "Medium" || selectedDifficulty === "Difficult") {
-      // Display all levels for the selected difficulty
-      filteredSeries = initialData.series.filter((series) =>
-        series.name.includes(selectedDomain) && series.name.includes(selectedDifficulty)
-      );
-    } else {
-      // Display only the selected difficulty level
-      filteredSeries = initialData.series.filter((series) =>
-        series.name.includes(selectedDomain)
-      );
-    }
+    const filteredSeries = data.filter((item) =>
+      item.difficulty_level.includes(selectedDifficulty)
+    ).reduce((acc, item) => {
+      const seriesIndex = acc.findIndex(seriesItem => seriesItem.name === `${item.domain}-${item.difficulty_level}`);
+      if (seriesIndex !== -1) {
+        acc[seriesIndex].data.push({
+          x: item.submission_time,
+          y: item.score,
+        });
+      } else {
+        acc.push({
+          name: `${item.domain}-${item.difficulty_level}`,
+          data: [{
+            x: item.submission_time,
+            y: item.score,
+          }],
+        });
+      }
+      return acc;
+    }, []);
 
     setState({
       options: {
-        ...initialData.options,
+        ...state.options,
       },
       series: filteredSeries,
     });
   };
 
-  const domainNames = [...new Set(data.map(item => item.name))];
-  const difficultyLevels = ["easy", "Medium", "Difficult"];
+  const domainNames = [...new Set(data.map(item => item.domain))];
+  const difficultyLevels = ["easy", "medium", "difficult"];
 
   return (
     <>
       <Box sx={{ display: 'flex' }}>
+        <Sidenav />
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <div className="App">
@@ -123,6 +182,3 @@ function LineGraph() {
 }
 
 export default LineGraph;
-
-
-
