@@ -89,6 +89,7 @@ const Modal = (props) => {
 
 
     try {
+
       const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
         params: {
           category: props.category,
@@ -201,6 +202,7 @@ const Modal = (props) => {
 
   return (
     <>
+    
       <div
         className="modal fade"
         id="staticBackdrop"

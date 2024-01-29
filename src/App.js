@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import History from "./components/History (1)";
-import Registration from "./components/Registeration";
+import Registration from "./components/Registration";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Quizend from "./components/Quizend";
@@ -96,15 +96,20 @@ const App = () => {
           setUserId = {setUserId}/>}
         />
 
-        <Route path="/dashboard" exact element={<Pie />} 
-              userId = {userId}
-              setUserId = {setUserId}/>
-         <Route path="/bgraph" exact element={<Bargraph />} 
+        <Route
+          path="/dashboard"
+          exact
+          element={<Dashboard user={user} setUser={setUser} 
+          userId = {userId}
+          setUserId = {setUserId}/>}
+        />
+
+         {/* <Route path="/bgraph" exact element={<Bargraph />} 
               userId = {userId}
               setUserId = {setUserId}/>
          <Route path="/lgraph" exact element={<Linegraph />} 
               userId = {userId}
-              setUserId = {setUserId}/>
+              setUserId = {setUserId}/> */}
 
         <Route path="/leaderboard" exact element={<Leaderboard 
               userId = {userId}

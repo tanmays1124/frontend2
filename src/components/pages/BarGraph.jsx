@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import Box from '@mui/material/Box';
 import Sidenav from './Sidenav';
 
+
 function BarGraph() {
   const [data, setDatabaseData] = useState([]);
   const [userId, setUserId] = useState('');
@@ -152,11 +153,11 @@ function BarGraph() {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <Sidenav />
+        {/* <Sidenav /> */}
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <div className="App">
             <h1>
-              Bar Chart <i className="fas fa-user"></i>
+              Bar Chart <i className="fas fa-chart-bar"></i>
             </h1>
             <div className="dropdown-container">
             <label htmlFor="domainDropdown">Select Domain:</label>
