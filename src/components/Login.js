@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import log from "../images/Log.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./Login.css";
 
 const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
@@ -11,6 +13,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -18,6 +21,10 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
       ...formData,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (event) => {
@@ -73,15 +80,27 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                   </div>
                   <div className="inputbox">
                     <span className="details">Password</span>
-                    <input
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                      id="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <div className="password-input-container">
+                      <input
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        id="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      <span
+                        className="toggle-password"
+                        onClick={handleTogglePassword}
+                      >
+                        {showPassword ? (
+                          <FontAwesomeIcon icon={faEyeSlash} />
+                        ) : (
+                          <FontAwesomeIcon icon={faEye} />
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="button">

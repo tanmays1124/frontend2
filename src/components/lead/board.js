@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Profiles from './profiles';
 import { Leaderboard } from './database';
-import '../board.css'; // Import the CSS file
+import './board.css'; // Import the CSS file
 
 export default function Board() {
   const [difficulty, setDifficulty] = useState('Easy'); // Default difficulty set to 'Easy'

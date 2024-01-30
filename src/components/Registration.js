@@ -296,6 +296,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Login.css'
 import log from '../images/Log.png';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Register() {  
   const [formData, setFormData] = useState({
@@ -305,6 +308,7 @@ function Register() {
     first_name: '',
     last_name: ''
   });
+  library.add(faEye, faEyeSlash);
 
   const [error, setError] = useState(null);
   const [mssg, setMssg] = useState('');
@@ -322,10 +326,11 @@ function Register() {
     setShowPassword(!showPassword);
   };
 
-  const validatePassword = (value) => {
-    const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return alphanumericRegex.test(value);
-  };
+const validatePassword = (value) => {
+  const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@])[A-Za-z\d@]{8,}$/;
+  return alphanumericRegex.test(value);
+};
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -384,6 +389,7 @@ function Register() {
                   <span className="details">Last Name</span>
                   <input name="last_name" type="text" placeholder="Last Name" id="last_name" value={formData.last_Name} onChange={handleInputChange} required/>
                 </div>
+
                 <div className="inputbox">
                   <span className="details">Email</span>
                   <input name="email" type="email" placeholder="Email" id="email" value={formData.email} onChange={handleInputChange} required/>
@@ -394,9 +400,22 @@ function Register() {
                 </div>
                 <div className="inputbox">
                   <span className="details">Password</span>
-                  <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" id="password" value={formData.password} onChange={handleInputChange} required/>
-                  <span className="toggle-password" onClick={handleTogglePassword}>{showPassword ? "Hide" : "Show"}</span>
+                  <div className="password-input-container">
+                    <input
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      id="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <span className="toggle-password" onClick={handleTogglePassword}>
+                      {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                    </span>
+                  </div>
                 </div>
+
               </div>
               <div className="button">
                 <input type="submit" value="Register"/>

@@ -200,3 +200,20 @@ form .user-details .input-box{
   font-weight: bold; /* Optional: Adjust font weight */
   margin-top: 10px; /* Optional: Adjust spacing from other elements */
 }
+
+
+.password-input-container {
+  position: relative;
+}
+
+.inputbox input {
+  padding-right: 30px; /* Adjust the padding to accommodate the eye icon */
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust the right distance as needed */
+  transform: translateY(-50%);
+  cursor: pointer;
+}

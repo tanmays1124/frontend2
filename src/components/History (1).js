@@ -112,7 +112,7 @@ const History = ({ userId, setUserId }) => {
 
   return (
     <>
-      <Navbar page={"History"} />
+      <Navbar />
 
       {questionHistory.length == 0 ? (
         <div className="contained" style={styles.contained}>

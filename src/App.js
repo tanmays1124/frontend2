@@ -111,7 +111,7 @@ const App = () => {
               userId = {userId}
               setUserId = {setUserId}/> */}
 
-        <Route path="/leaderboard" exact element={<Leaderboard 
+        <Route path="/leaderboard" exact element={<Leaderboard user={user} setUser={setUser}
               userId = {userId}
               setUserId = {setUserId}/>} />
 
