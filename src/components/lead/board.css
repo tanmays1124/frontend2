@@ -3,6 +3,7 @@
 /* Container Styles */
 .container {
     display: flex;
+    width:auto;
   }
   
   /* Sidebar Styles */

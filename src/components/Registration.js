@@ -291,14 +291,19 @@
 // )
 //       };
 // export default Register;
+
+
+//- -------------------    -- - - - - -- - - - - - - - - - - --  --  - - -
+
+
 import React, { useState } from 'react';  
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Login.css'
 import log from '../images/Log.png';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Register() {  
   const [formData, setFormData] = useState({
@@ -308,7 +313,7 @@ function Register() {
     first_name: '',
     last_name: ''
   });
-  library.add(faEye, faEyeSlash);
+  // library.add(faEye, faEyeSlash);
 
   const [error, setError] = useState(null);
   const [mssg, setMssg] = useState('');
@@ -322,9 +327,9 @@ function Register() {
     });
   }
 
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const handleTogglePassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
 const validatePassword = (value) => {
   const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@])[A-Za-z\d@]{8,}$/;
@@ -332,45 +337,47 @@ const validatePassword = (value) => {
 };
 
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const psswd = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const psswd = document.getElementById('password').value;
+  const email = document.getElementById('email').value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const alertElement = document.getElementById('alert');
-    
-    if (!emailRegex.test(email)) {
-      setMssg("Invalid email format");
-      if (alertElement) alertElement.style.display='block';
-      return;
-    }
+  const alertElement = document.getElementById('alert');
 
-    if (psswd.length < 8 || !validatePassword(psswd)) {
-      setMssg("Password should be alphanumeric and at least 8 characters long");
-      if (alertElement) alertElement.style.display='block';
-      return;
-    }
+  if (!emailRegex.test(email)) {
+    setMssg("Invalid email format");
+    if (alertElement) alertElement.style.display = 'block';
+    return;
+  }
 
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
-      setError(null);
-      console.log(response.data);
-      window.location.href = '/login';
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        const errorData = err.response.data;
-        if (errorData.email) {
-          setMssg("Email already exists");
-        } else if (errorData.username) {
-          setMssg("Username already exists");
-        }
-        if (alertElement) alertElement.style.display='block';
-      } else {
-        setError(err.message);
+  if (psswd.length < 8 || !validatePassword(psswd)) {
+    setMssg("Password should be alphanumeric and at least 8 characters long");
+    if (alertElement) alertElement.style.display = 'block';
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
+    setError(null);
+    console.log(response.data);
+    window.location.href = '/login';
+  } catch (err) {
+    if (err.response && err.response.status === 409) {
+      const errorData = err.response.data;
+      if (errorData.email) {
+        setMssg("Email already exists");
+      } else if (errorData.username) {
+        setMssg("Username already exists");
       }
+      if (alertElement) alertElement.style.display = 'block';
+    } else {
+      setError(err.message);
     }
   }
+}
+
+
 
   return (
     <center>
@@ -410,9 +417,9 @@ const validatePassword = (value) => {
                       onChange={handleInputChange}
                       required
                     />
-                    <span className="toggle-password" onClick={handleTogglePassword}>
+                    {/* <span className="toggle-password" onClick={handleTogglePassword}>
                       {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 

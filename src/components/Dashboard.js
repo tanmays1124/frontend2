@@ -4,15 +4,16 @@ import BarGraph from './pages/BarGraph';
 import LineGraph from './pages/LineGraph';
 import "./pages/Dash.css";
 import Navbar from "./Navbar";
+import Layout from './Layout';
 
-function Dashboard({ userId }) {
+function Dashboard({ userId ,open}) {
   return (
     <>
+      <Layout open={open}>
       <div className='bo'>
         <Box sx={{ display: 'flex' }}>
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <div className="App">
-              <Navbar page={"Dashboard"} />
               <div className='das'>
                 <h1>
                   Dashboard <i className="fas fa-tachometer-alt"></i>
@@ -30,6 +31,7 @@ function Dashboard({ userId }) {
           </Box>
         </Box>
       </div>
+      </Layout>
     </>
   );
 }

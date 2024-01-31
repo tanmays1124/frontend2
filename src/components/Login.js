@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import log from "../images/Log.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./Login.css";
 
 const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
@@ -23,9 +23,9 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
     });
   };
 
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const handleTogglePassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -90,7 +90,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                         onChange={handleInputChange}
                         required
                       />
-                      <span
+                      {/* <span
                         className="toggle-password"
                         onClick={handleTogglePassword}
                       >
@@ -99,11 +99,11 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                         ) : (
                           <FontAwesomeIcon icon={faEye} />
                         )}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
-                <div className="button">
+                <div className="button" >
                   <input type="submit" value="Login" />
                 </div>
                 <Link to="/register">Register?</Link>

@@ -20,6 +20,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import HistoryIcon from '@mui/icons-material/History';
 import PersonIcon from '@mui/icons-material/Person';
 import InfoIcon from '@mui/icons-material/Info';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'; 
 
 const drawerWidth = 240;
 
@@ -50,9 +51,10 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
+  justifyContent: 'center', // Center content horizontally
   padding: theme.spacing(0, 1),
   opacity: 1.0,
+  width: '100%', // Set width to 100%
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -76,7 +78,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false); // Change default state to false
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -85,7 +87,6 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
     localStorage.removeItem('username');
     navigate('/login');
   };
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -187,26 +188,34 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
         </List>
         <Divider />
         <List>
-        <ListItem disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemText
-                primary="Logout"
+           <ListItem disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
+              <ListItemButton
                 sx={{
-                  opacity: open ? 1 : 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
                 }}
-              />
-            </ListItemButton>
-          </ListItem>
-
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Logout"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'left',
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
         </List>
       </Drawer>
     </Box>

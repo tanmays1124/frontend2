@@ -4,8 +4,9 @@ import axios from "axios";
 import "./History (1).css";
 import bg1 from "../images/history.jpg";
 import Navbar from "./Navbar";
+import Layout from './Layout';
 
-const History = ({ userId, setUserId }) => {
+const History = ({ userId, setUserId ,open}) => {
   const styles = {
     background: {
       backgroundImage: `url(${bg1})`,
@@ -112,8 +113,7 @@ const History = ({ userId, setUserId }) => {
 
   return (
     <>
-      <Navbar />
-
+        <Layout open={open}>
       {questionHistory.length == 0 ? (
         <div className="contained" style={styles.contained}>
           <div className="text" style={styles.text}>
@@ -172,6 +172,7 @@ const History = ({ userId, setUserId }) => {
           </div>
         </div>
       )}
+      </Layout>
     </>
   );
 };

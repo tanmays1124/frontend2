@@ -25,19 +25,28 @@ function LineGraph({ userId }) {
         setDatabaseData(fetchedData);
 
         const initialSeries = fetchedData.reduce((acc, item) => {
-          const seriesIndex = acc.findIndex(seriesItem => seriesItem.name === `${item.domain}-${item.difficulty_level}`);
+          // Format the time data as a JavaScript Date object
+          const submissionTime = new Date(item.submission_time);
+
+          const seriesIndex = acc.findIndex(
+            (seriesItem) =>
+              seriesItem.name === `${item.domain}-${item.difficulty_level}`
+          );
+
           if (seriesIndex !== -1) {
             acc[seriesIndex].data.push({
-              x: item.submission_time,
+              x: submissionTime.getTime(), // Use the time value in milliseconds
               y: item.score,
             });
           } else {
             acc.push({
               name: `${item.domain}-${item.difficulty_level}`,
-              data: [{
-                x: item.submission_time,
-                y: item.score,
-              }],
+              data: [
+                {
+                  x: submissionTime.getTime(), // Use the time value in milliseconds
+                  y: item.score,
+                },
+              ],
             });
           }
           return acc;
@@ -89,11 +98,11 @@ function LineGraph({ userId }) {
 
     setSelectedDifficulty(""); // Reset selected difficulty when domain changes
   };
-
+  
   const handleDifficultyChange = (event) => {
     const selectedDifficulty = event.target.value;
     setSelectedDifficulty(selectedDifficulty);
-
+  
     const filteredSeries = data
       .filter((item) => {
         return (
@@ -124,15 +133,22 @@ function LineGraph({ userId }) {
         }
         return acc;
       }, []);
-
+  
+    // Update x-axis labels consistently for all difficulty levels
+    const xAxisLabels = { datetimeFormatter: { year: 'numeric', month: 'numeric', day: 'numeric' } };
+  
     setState({
       options: {
         ...state.options,
+        xaxis: {
+          ...state.options.xaxis,
+          ...xAxisLabels,
+        },
       },
       series: filteredSeries,
     });
   };
-
+  
   const domainNames = [...new Set(data.map(item => item.domain))];
   const difficultyLevels = ["easy", "medium", "difficult"];
 
@@ -170,17 +186,22 @@ function LineGraph({ userId }) {
               </div>
             )}
 
-            <div className="chart-container">
-              <div className="chart-title">Performance Comparison</div>
-              <div className="chart">
-                <Chart
-                  options={state.options}
-                  series={state.series}
-                  type="line"
-                  width="100%"
-                />
-              </div>
-            </div>
+                <div className="chart-container">
+                    <div className="chart-title">Performance Comparison</div>
+                    <div className="chart">
+                      <Chart
+                        options={{
+                          ...state.options,
+                          xaxis: {
+                            type: 'datetime', // Set x-axis type to datetime
+                          },
+                        }}
+                        series={state.series}
+                        type="line"
+                        width="100%"
+                      />
+                    </div>
+                  </div>
           </div>
         </Box>
       </Box>
