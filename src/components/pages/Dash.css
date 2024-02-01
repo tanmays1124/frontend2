@@ -1,5 +1,6 @@
 .bo {
-  background-color: #f5f5f5 !important;
+  /* background-color: #f5f5f5 !important; */
+  background: linear-gradient(#8572df40, rgba(0, 0, 0, 0));
     width: 100%;
   }
 

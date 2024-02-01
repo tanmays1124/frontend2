@@ -127,7 +127,7 @@ const History = ({ userId, setUserId ,open}) => {
           <div className="quiz-history">
             <center>
               {" "}
-              <h2>Quiz History</h2>{" "}
+              <h2>Quiz History </h2>{" "}
             </center>
             <ul className="quiz-list">
               {questionHistory.map((quiz) => (
@@ -139,7 +139,8 @@ const History = ({ userId, setUserId ,open}) => {
                   onClick={() => handleQuizClick(quiz)}
                 >
                   <div className="quiz-header">
-                    <span>{quiz.domain}</span>
+                  <span style={{ fontFamily: 'initial', fontSize: '16px', fontWeight: 'bold' }}>{quiz.domain}</span>
+
                   </div>
                   <div className="quiz-details">
                     <p>Score: {quiz.score}</p>

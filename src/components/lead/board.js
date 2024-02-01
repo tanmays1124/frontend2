@@ -1,12 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Profiles from './profiles';
-import { Leaderboard } from './database';
-import './board.css'; // Import the CSS file
+import axios from 'axios';
+import './board.css';
 
 export default function Board() {
-  const [difficulty, setDifficulty] = useState('Easy'); // Default difficulty set to 'Easy'
+  const [userid, setUserid] = useState('');
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [difficulty, setDifficulty] = useState('Easy');
   const [domain, setDomain] = useState('All');
   const [showDomainSelection, setShowDomainSelection] = useState(false);
+
+  useEffect(() => {
+    const fetchedUserId = localStorage.getItem('userId');
+    setUserid(fetchedUserId);
+
+    fetchUserProfileData(fetchedUserId);
+    fetchLeaderboardData(fetchedUserId);
+  }, []);
+
+  const fetchUserProfileData = (userId) => {
+    axios
+      .get(`http://127.0.0.1:8000/api/userprofile/${userId}`)
+      .then((response) => {
+        const userName = response.data.name || 'Unknown';
+        setLeaderboard((prevLeaderboard) => prevLeaderboard.map((user) => ({ ...user, name: userName })));
+      })
+      .catch((error) => {
+        console.error('Error fetching user profile data:', error);
+      });
+  };
+
+  const fetchLeaderboardData = (userId) => {
+    axios
+      .get(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`)
+      .then((response) => {
+        const fetchedLeaderboard = response.data.map((item) => ({
+          score: item.score,
+          domain: item.domain,
+          difficulty_level: item.difficulty_level,
+        }));
+        setLeaderboard(fetchedLeaderboard);
+
+        // Automatically select the domain button based on the fetched domain
+        if (fetchedLeaderboard.length > 0) {
+          setDomain(fetchedLeaderboard[0].domain);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching leaderboard data:', error);
+      });
+  };
 
   const handleDifficultyChange = (newDifficulty) => {
     setDifficulty(newDifficulty);
@@ -23,13 +66,26 @@ export default function Board() {
     // Perform any other necessary actions related to domain selection
   };
 
-  const filteredProfiles = Leaderboard.map(profile => ({
-    ...profile,
-    selectedDifficulty: difficulty,
-    selectedDomain: domain,
-    highlight: profile.scores[`${difficulty}-${domain}`] > 0
-  })).filter(profile => {
-    const score = profile.scores[`${profile.selectedDifficulty}-${profile.selectedDomain}`];
+  const filteredProfiles = leaderboard.map((profile) => {
+    const selectedDifficulty = difficulty;
+    const selectedDomain = domain;
+
+    const maxScore =
+      profile.score &&
+      Math.max(
+        profile.score[selectedDifficulty]?.[selectedDomain] || 0,
+        profile.score['Medium']?.[selectedDomain] || 0,
+        profile.score['Difficult']?.[selectedDomain] || 0
+      );
+
+    return {
+      ...profile,
+      selectedDifficulty,
+      selectedDomain,
+      maxScore,
+    };
+  }).filter((profile) => {
+    const score = profile.maxScore;
     return difficulty === 'All' || score !== undefined;
   });
 
@@ -37,9 +93,9 @@ export default function Board() {
     <div className="container">
       <div className="sidebar">
         <h2>LEADERBOARD</h2>
-        <br></br>
-        <hr></hr>
-        <br></br>
+        <br />
+        <hr />
+        <br />
         <h2>Select Difficulty:</h2>
         <div className="difficulty-buttons">
           <button onClick={() => handleDifficultyChange('Easy')}>Easy</button>
@@ -51,15 +107,16 @@ export default function Board() {
           <>
             <h2>Select Domain:</h2>
             <div className="domain-buttons">
-              <button onClick={() => handleDomainChange('Python')}>Python</button>
-              <button onClick={() => handleDomainChange('Linux')}>Linux</button>
-              {/* Add other domains as needed */}
+              {leaderboard.map((profile) => (
+                <button key={profile.domain} onClick={() => handleDomainChange(profile.domain)}>
+                  {profile.domain}
+                </button>
+              ))}
             </div>
           </>
         )}
       </div>
 
-     
       {(!showDomainSelection || domain !== 'All') && (
         <div className="board" style={{ textAlign: 'mid-center' }}>
           <h1 className='leaderboard'>LEADERBOARD</h1>

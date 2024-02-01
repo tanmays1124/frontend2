@@ -133,7 +133,7 @@ const Quiz = (props) => {
 
   return (
     <div className="quiz-container">
-      <h1>Quiz</h1>
+      <center><h1>Quiz</h1></center>
       <div className="question-container">
         <p className="question">{currQuestion}</p>
         <div className="centered-container">

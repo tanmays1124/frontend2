@@ -1,10 +1,9 @@
 
-
 .quiz-history-container {
-    margin-top: 90px;
+    margin-top: 10px;
     padding: 20px;
     box-shadow: 1px 5px 16px 0px rgba(185, 192, 191, 0.493);
-    /* background-color:rgb(154, 204, 218); */
+    background: linear-gradient(#8572df40, rgba(0, 0, 0, 0));
     height: max-content;
   }
   
@@ -19,7 +18,7 @@
     list-style: none;
     padding: 0;
     box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.459);
-    background-color:#f8f8f8;
+    background-color: linear-gradient(#63b7e740, rgba(231, 230, 230, 0));
     max-height: 100vh;
     overflow-y: scroll;
   
@@ -31,7 +30,7 @@
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     cursor: pointer;
     margin: 10px;
-    background-color:#f8f8f8;
+    background-color: linear-gradient(#63b7e740, rgba(231, 230, 230, 0));
   
     
   
@@ -41,25 +40,35 @@
     background-color: #eee;
     transform: scale(1.02);
     box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.459);
+
   }
   
   .quiz-card.selected {
     background-color: #f8f8f8;
+    /* background: linear-gradient(#8572df40, rgba(0, 0, 0, 0)); */
 
     
   }
   
   .quiz-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    /* font-family: 'Franklin Gothic Medium'; */
+    /* font-size: 16px; Adjust font size as needed */
+    /* font-weight: bold; */
+    
   }
   
   .quiz-details {
     display: flex;
     justify-content: space-between;
+    /* justify-content: center; */
     align-items: center;
     margin-top: 10px;
+    /* font-family: 'YourChosenFont', cursive; */
+    
+    
 
   }
   
