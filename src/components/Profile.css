@@ -1,45 +1,119 @@
+/* .profile-container {
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(241, 241, 241) !important;
+    max-width: 800px;
+  }
+  
+  
+  .profile-image-container {
+    text-align: center;
+  }
+  
+  .profile-image-container img {
+    border-radius: 50%;
+  }
+  
+  .profile-info-container {
+    padding: 20px !important;
 
-.profile-button{
+  }
+  
+  .profile-button {
     width: 150px;
     padding: 10px;
     border: none;
     border-radius: 10px;
-    
     letter-spacing: 1px;
     transition: 0.2s ease;
     margin: 15px;
-    
-}
-
-
-
-/* .profile-container{
-    border-radius: 10px !important;
-    margin-top: 20px !important;
-} */
-
-
-.profile-container.bg-secondary {
+  }
+  
+  .profile-container.bg-secondary {
     --bs-bg-opacity: 0.4;
     background-color: rgb(241, 241, 241) !important;
     border-radius: 50px !important;
-    padding: 20px !important;
-    /* margin-top: 10% !important; */
-}
-
-.profile-button.btn-outline-primary{
+    height: 100%;
+    width: 70%;
+  }
+  
+  .profile-button.btn-outline-primary {
     --bs-btn-hover-color: white;
     --bs-btn-hover-bg: #4d94ff;
     --bs-btn-hover-border-color: rgb(204, 25, 25);
     border: 0.9px solid #4d94ff !important;
-}
+    width :fit-content;
+  }
 
+  .rounded-circle {
+    border-radius: 50%!important;
+    width: 175px;
+    height: 175px;
+  }
 
-    
-@media (max-width: 600px) {
+  
+  @media (max-width: 600px) {
+    .profile-container.bg-secondary {
+        width:100%;
+      margin-top: 20% !important;
+    }
+  }
+*/
+  
+  .upload {
+    margin-left: 15%;
+    width:fit-content;
+  }
+  .profile-container {
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(241, 241, 241) !important;
+    max-width: 800px;
+  }
+  
+  .profile-image-container {
+    text-align: center;
+  }
+  
+  .profile-image-container img {
+    margin-left: 69px;
+    border-radius: 50%;
+  }
+  
+  .profile-info-container {
+    padding: 20px !important;
+  }
+  
+  .profile-button {
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    transition: 0.2s ease;
+    margin: 15px;
+  }
+  
+  .profile-container.bg-secondary {
+    --bs-bg-opacity: 0.4;
+    background-color: rgb(241, 241, 241) !important;
+    border-radius: 30px !important;
+  }
+  
+  .profile-button.btn-outline-primary {
+    --bs-btn-hover-color: white;
+    --bs-btn-hover-bg: #4d94ff;
+    --bs-btn-hover-border-color: rgb(204, 25, 25);
+    border: 0.9px solid #4d94ff !important;
+  }
+  
+  @media (max-width: 600px) {
     .profile-container.bg-secondary {
       margin-top: 20% !important;
     }
   }
-
-
+  

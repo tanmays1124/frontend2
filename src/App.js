@@ -15,6 +15,7 @@ import Profile from "./components/Profile";
 import Linegraph from "./components/pages/LineGraph";
 import Bargraph from "./components/pages/BarGraph";
 import Pie from "./components/pages/Pie";
+// import bg from "../images/bg33.jpg";
 
 import { useState } from "react";
 

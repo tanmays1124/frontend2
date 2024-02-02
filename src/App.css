@@ -2,9 +2,14 @@
 body {
   margin: 0;
   padding: 0;
-  /* background-image: url('images/bg.jpg'); */
+  background-image: url('images/bg33.jpg') !important;
   background-size: 100vw 100vh;
-  background-color: #e4e9f7 !important;
+  /* background-color: whitesmoke !important; */
+  background-color: linear-gradient(#8572df40, rgba(0, 0, 0, 0)) ;
+
+   
+
+
 
   
 }
