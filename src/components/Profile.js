@@ -130,9 +130,11 @@ const Profile = () => {
       setLastName(data.last_name);
       setUsername(data.username);
       setEmail(data.email);
-
+       
+      if (data.photo != null){
       const completePhotoUrl = `http://127.0.0.1:8000${data.photo}`;
       setPhotoSrc(completePhotoUrl);
+      }
 
       setIsImageChanged(false);
     } catch (error) {

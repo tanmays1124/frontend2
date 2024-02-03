@@ -134,7 +134,7 @@ const History = ({ userId, setUserId ,open}) => {
                 <li
                   key={quiz.id}
                   className={`quiz-card ${
-                    selectedQuiz === quiz ? "selected" : ""
+                    selectedQuiz === quiz ? "selected" : ""} ${quiz.difficulty_level.toLowerCase() 
                   }`}
                   onClick={() => handleQuizClick(quiz)}
                 >
@@ -142,10 +142,12 @@ const History = ({ userId, setUserId ,open}) => {
                   <span style={{ fontFamily: 'initial', fontSize: '16px', fontWeight: 'bold' }}>{quiz.domain}</span>
 
                   </div>
-                  <div className="quiz-details">
-                    <p>Score: {quiz.score}</p>
-                    <p>Difficulty: {quiz.difficulty_level}</p>
-                    <p>Time: {conversion(quiz.submission_time)}</p>
+                  <div className="quiz-details"style={{fontFamily:'fantasy'}}>
+        
+                    <p style={{fontFamily:'serif',fontSize:18}}>Score: {quiz.score}</p>
+                    <p style={{fontFamily:'serif',fontSize:18}}>Difficulty: {quiz.difficulty_level}</p>
+                    <p style={{fontFamily:'serif',fontSize:18}}>Time: {conversion(quiz.submission_time)}</p>
+                  
                   </div>
                   {selectedQuiz === quiz && (
                     <div className="answers">

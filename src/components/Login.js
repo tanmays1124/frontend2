@@ -50,7 +50,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
 
   return (
     <>
-      {/* <center>
+      <center>
         <div className="partition">
           <div
             className="partition-image"
@@ -102,9 +102,9 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
             </div>
           </div>
         </div>
-      </center> */}
+      </center>
 
-<div className="login-wrap">
+{/* <div className="login-wrap">
       <div className="login-html">
         <input id="tab-1" type="radio" name="tab" className="sign-in" checked />
         <label htmlFor="tab-1" className="tab">
@@ -182,7 +182,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
     </>
   );
 };

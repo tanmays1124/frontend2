@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import Box from '@mui/material/Box';
 import Sidenav from './Sidenav';
+import "./LineGraph.css";
 
 function LineGraph({ userId }) {
   const [data, setDatabaseData] = useState([]);
@@ -13,7 +14,7 @@ function LineGraph({ userId }) {
       chart: {
         id: "basic-line",
       },
-    },
+  },
     series: [],
   });
 
@@ -154,14 +155,15 @@ function LineGraph({ userId }) {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
-        {/* <Sidenav /> */}
-
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <div className="App">
-            <h1>
-              Line Chart <i className="fas fa-chart-line"></i>
-            </h1>
+    <div className='bb'>
+        <Box sx={{ display: 'flex' }}>
+          {/* <Sidenav /> */}
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <div className="App">
+              <h1 style={{ color: '#1565C0' }}> 
+                Line Chart <i className="fas fa-chart-line"></i>
+              </h1>
+              <div className="divider" style={{ borderBottom: '2px solid #1565C0', fontWeight: 'bold', marginBottom: '10px' }}></div>
             <label>Select Domain:</label>
             <select onChange={handleDomainChange} value={selectedDomain}>
               <option value="">Select Domain</option>
@@ -205,6 +207,7 @@ function LineGraph({ userId }) {
           </div>
         </Box>
       </Box>
+      </div>
     </>
   );
 }

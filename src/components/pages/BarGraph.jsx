@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import Box from '@mui/material/Box';
+import "./BarGraph.css";
 
 function BarGraph({ userId }) {
   const [data, setDatabaseData] = useState([]);
@@ -68,6 +69,7 @@ function BarGraph({ userId }) {
             ),
         },
       },
+      
       series: [],
     };
 
@@ -150,12 +152,13 @@ function BarGraph({ userId }) {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
+       <Box sx={{ display: 'flex' }}>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <div className="App">
-            <h1>
+            <h1 style={{ color: '#1565C0' }}>
               Bar Chart <i className="fas fa-chart-bar"></i>
             </h1>
+            <div className="divider" style={{ borderBottom: '2px solid #1565C0', fontWeight: 'bold', marginBottom: '10px' }}></div>
             <div className="dropdown-container">
               <label htmlFor="domainDropdown">Select Domain:</label>
               <select id="domainDropdown" onChange={handleDomainChange} value={selectedDomain}>
