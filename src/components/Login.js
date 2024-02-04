@@ -97,7 +97,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                   <input type="submit" value="Login" />
                 </div>
                 <Link to="/register">Register?</Link>
-                <Link to="/forgot">Forgot Password</Link>
+                <Link to="http://127.0.0.1:8000/api/forgot_password/">Forgot Password</Link>
               </form>
             </div>
           </div>

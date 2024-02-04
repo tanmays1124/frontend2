@@ -1,10 +1,19 @@
 import { useNavigate } from 'react-router-dom';  
 import './Quizend.css'
+import { useEffect } from 'react';
 
 
 
 const Quizend = (props) => {
     const navigate = useNavigate()
+
+  useEffect(()=>{
+    props.setQuestions([])
+    props.setAnswers([])
+    props.setOptions([])
+  },[])
+
+
     const handleClick =() =>{
         navigate('/history')
     }

@@ -9,77 +9,20 @@ import "./pages/Dash.css";
 import Navbar from "./Navbar";
 import Layout from './Layout';
 
-function Dashboard({ userId, open }) {
+function Dashboard({ open }) {
   const [quizData, setQuizData] = useState([]);
+  const [totalQuizzes, setTotalQuizzes] = useState(0);
+  const [totalIncorrectQuestions, setTotalIncorrectQuestions] = useState(0);
+  const [totalCorrectQuestions, setTotalCorrectQuestions] = useState(0);
   
-  const totalQuizzes = quizData.length;
-  const totalIncorrectQuestions = quizData.reduce((total, item) => {
-    try {
-      const attemptedQuestions = typeof item.attempted_questions === 'string'
-        ? item.attempted_questions
-        .replace(/OrderedDict\(/g, '')
-        .replace(/\)/g, '')
-        .replace(/True/g, 'true')
-        .replace(/False/g, 'false')
-        .replace(/'/g, '"')
-        : item.attempted_questions;
-  
-      const cleanedQuestions = JSON.parse(attemptedQuestions);
-  
-      const incorrectCount = Array.isArray(cleanedQuestions)
-        ? cleanedQuestions.reduce((acc, question) => acc + (question && question.is_correct === false ? 1 : 0), 0)
-        : 0;
-  
-      return total + incorrectCount;
-    } catch (error) {
-      console.error('Error in totalIncorrectQuestions:', error);
-      return total;
-    }
-  }, 0);
-  
-  
-  
-
-  const totalCorrectQuestions = quizData.reduce((total, item) => {
-    try {
-      const attemptedQuestions = typeof item.attempted_questions === 'string'
-        ? item.attempted_questions
-            .replace(/OrderedDict\(/g, '')
-            .replace(/\)/g, '')
-            .replace(/True/g, 'true')
-            .replace(/False/g, 'false')
-            .replace(/'/g, '"')
-        : item.attempted_questions;
-  
-      const cleanedQuestions = JSON.parse(attemptedQuestions);
-  
-      const correctCount = Array.isArray(cleanedQuestions)
-        ? cleanedQuestions.reduce((acc, question) => acc + (question && question.is_correct === true ? 1 : 0), 0)
-        : 0;
-  
-      return total + correctCount;
-    } catch (error) {
-      console.error('Error in totalCorrectQuestions:', error);
-      return total;
-    }
-  }, 0);
-  
-  
-  
-  
-
-
-
-const totalQuestions = totalCorrectQuestions + totalIncorrectQuestions;
-
-
-
 
 
 
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
+        const userId = localStorage.getItem('userId')
+
         const response = await fetch(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`);
         const fetchedData = await response.json();
   
@@ -94,11 +37,90 @@ const totalQuestions = totalCorrectQuestions + totalIncorrectQuestions;
     };
   
     fetchQuizData();
-  }, [userId]);
+  }, []);
   
+
+
   // Log quizData to check its structure and content
   useEffect(() => {
     console.log('Quiz Data:', quizData);
+    
+  setTotalQuizzes(quizData.length);
+  // print(totalQuizzes)
+  const incorrectQuestions = quizData.reduce((total, item) => {
+    try {
+      const attemptedQuestions = typeof item.attempted_questions === 'string'
+        ? item.attempted_questions
+        .replace(/OrderedDict\(\[\(/g, "{")
+      .replace(/\]\)/g, "}")
+      .replace(/\)/g, "")
+      .replace(/\(/g, "")
+      .replace(/t\'\,/g, "t':")
+      .replace(/'/g, '"')
+      .replace(/True/g, "true")
+      .replace(/False/g, "false")
+        : item.attempted_questions;
+  
+      const cleanedQuestions = JSON.parse(attemptedQuestions);
+  
+      const incorrectCount = Array.isArray(cleanedQuestions)
+        ? cleanedQuestions.reduce((acc, question) => acc + (question && question.is_correct === false ? 1 : 0), 0)
+        : 0;
+  
+      return total + incorrectCount;
+    } catch (error) {
+      console.error('Error in totalIncorrectQuestions:', error);
+      return total;
+    }
+  }, 0);
+
+  setTotalIncorrectQuestions(incorrectQuestions)
+  console.log(totalIncorrectQuestions)
+  
+  
+  
+
+  const correctQuestions = quizData.reduce((total, item) => {
+    try {
+      const attemptedQuestions = typeof item.attempted_questions === 'string'
+        ? item.attempted_questions
+        .replace(/OrderedDict\(\[\(/g, "{")
+        .replace(/\]\)/g, "}")
+        .replace(/\)/g, "")
+        .replace(/\(/g, "")
+        .replace(/t\'\,/g, "t':")
+        .replace(/'/g, '"')
+        .replace(/True/g, "true")
+        .replace(/False/g, "false")
+        : item.attempted_questions;
+  
+      const cleanedQuestions = JSON.parse(attemptedQuestions);
+      // print(cleanedQuestions)
+  
+      const correctCount = Array.isArray(cleanedQuestions)
+        ? cleanedQuestions.reduce((acc, question) => acc + (question && question.is_correct === true ? 1 : 0), 0)
+        : 0;
+      console.log(total+correctCount)
+      return total + correctCount;
+    } catch (error) {
+      console.error('Error in totalCorrectQuestions:', error);
+      return total;
+    }
+  }, 0);
+
+  setTotalCorrectQuestions(correctQuestions)
+  console.log(totalCorrectQuestions)
+
+  
+  
+  
+  
+
+
+
+
+
+
   }, [quizData]);
   
   
@@ -106,8 +128,7 @@ const totalQuestions = totalCorrectQuestions + totalIncorrectQuestions;
     console.log('Total Quizzes:', totalQuizzes);
     console.log('Total Incorrect Questions:', totalIncorrectQuestions);
     console.log('Total Correct Questions:', totalCorrectQuestions);
-    console.log('Total Questions:', totalQuestions);
-  }, [totalQuizzes, totalIncorrectQuestions, totalCorrectQuestions, totalQuestions]);
+  }, [totalQuizzes, totalIncorrectQuestions, totalCorrectQuestions]);
 
 
   
@@ -132,7 +153,7 @@ const totalQuestions = totalCorrectQuestions + totalIncorrectQuestions;
                         Quizzes
                       </Typography>
                       <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
-                        {totalQuizzes}
+                        {quizData.length}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -162,17 +183,17 @@ const totalQuestions = totalCorrectQuestions + totalIncorrectQuestions;
                         Questions
                       </Typography>
                       <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
-                        {totalQuestions}
+                        {totalCorrectQuestions+totalIncorrectQuestions}
                       </Typography>
                     </CardContent>
                   </Card>
                 </div>
                 <div className="card-container-22" style={{ display: 'flex' }}>
                   <div className="card-12">
-                    <LineGraph userId={userId} />
+                    <LineGraph />
                   </div>
                   <div className="card-12">
-                    <BarGraph userId={userId} />
+                    <BarGraph />
                   </div>
                 </div>
               </div>

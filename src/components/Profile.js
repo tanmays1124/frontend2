@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import "./Profile.css"; // Make sure this import is correct
 import axios from "axios";
 import Layout from "./Layout";
@@ -17,6 +18,7 @@ const Profile = () => {
   const [disableSave, setDisableSave] = useState(true);
   const [disableChooseFile, setDisableChooseFile] = useState(true);
 
+  const navigate = useNavigate()
   const userId = localStorage.getItem("userId");
 
   const handleUpdate = () => {
@@ -112,8 +114,23 @@ const Profile = () => {
     }
   };
   const handleDelete = async() =>{
+    try {
+      // Make a DELETE request to the deleteUserProfile API endpoint
+      const response = await axios.post(`http://127.0.0.1:8000/api/delete/${userId}`);
+      
+      // Check if the request was successful
+      if (response.status === 204) {
+        console.log('User profile deleted successfully.');
+        navigate('/login')
+        // Perform any additional actions you want after successful deletion
+      } else {
+        console.error('Failed to delete user profile:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error occurred while deleting user profile:', error);
+    }
+  };
 
-  }
 
   const fetchUserData = async () => {
     try {
@@ -208,14 +225,14 @@ const Profile = () => {
                   <div>
                     <label className="upload">
                       <input
-                        className="btn btn-outline-primary"
+                        className="uploaded"
                         type="file"
                         accept="image/*"
                         onChange={handlePhotoChange}
                         disabled={disableChooseFile}
                         id="profilePictureInput"
                       />
-                      <span>Upload Image</span>
+                      
                     </label>
                   </div>
                 ) : null}

@@ -14,7 +14,7 @@ import Layout from './Layout';
 
 
 const Modal = (props) => {
-  const [allUpdated, setAllUpdated] = useState(false);
+  // const [allUpdated, setAllUpdated] = useState(false);
   const navigate = useNavigate();
 
   const [selectedValues, setSelectedValues] = useState({
@@ -157,9 +157,9 @@ const Modal = (props) => {
       props.answers &&
       props.answers.length > 0
     ) {
-      setAllUpdated(true);
+      props.setAllUpdated(true);
       navigate("/quiz");
-      setAllUpdated(false)
+      
       console.log(props.questions,props.options,props.answers)
     }
   }, [props.questions, props.options, props.answers]);
@@ -310,7 +310,7 @@ const Cards = (props) => {
           data-bs-target="#staticBackdrop"
           onClick={() => handleModal(props.title)}
         >
-          <div className="card shadow-lg rounded bg-secondary domain-card">
+          <div className="card rounded bg-secondary domain-card">
             <img src={props.image} className="card-img-top" alt="title" />
             <div className="card-body">
               <h5 className="card-title">
@@ -346,7 +346,9 @@ const Home = ({
   number,
   setNumber,
   category,
-  setCategory
+  setCategory,
+  allUpdated,
+  setAllUpdated
 }) => {
   console.log(userId);
   console.log(typeof localStorage.getItem('userId'))
@@ -466,6 +468,74 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
             user={user}
             setUser={setUser}
           />
+           <Cards
+            title={"HTML"}
+            image={html}
+            content={
+              "Click to begin attempt on HTML and it's sub-domain topics."
+            }
+            questions={questions}
+            setQuestions={setQuestions}
+            answers={answers}
+            setAnswers={setAnswers}
+            options={options}
+            setOptions={setOptions}
+            category={category}
+            setCategory={setCategory}
+            user={user}
+            setUser={setUser}
+          />
+           <Cards
+            title={"HTML"}
+            image={html}
+            content={
+              "Click to begin attempt on HTML and it's sub-domain topics."
+            }
+            questions={questions}
+            setQuestions={setQuestions}
+            answers={answers}
+            setAnswers={setAnswers}
+            options={options}
+            setOptions={setOptions}
+            category={category}
+            setCategory={setCategory}
+            user={user}
+            setUser={setUser}
+          />
+           <Cards
+            title={"HTML"}
+            image={html}
+            content={
+              "Click to begin attempt on HTML and it's sub-domain topics."
+            }
+            questions={questions}
+            setQuestions={setQuestions}
+            answers={answers}
+            setAnswers={setAnswers}
+            options={options}
+            setOptions={setOptions}
+            category={category}
+            setCategory={setCategory}
+            user={user}
+            setUser={setUser}
+          />
+           <Cards
+            title={"HTML"}
+            image={html}
+            content={
+              "Click to begin attempt on HTML and it's sub-domain topics."
+            }
+            questions={questions}
+            setQuestions={setQuestions}
+            answers={answers}
+            setAnswers={setAnswers}
+            options={options}
+            setOptions={setOptions}
+            category={category}
+            setCategory={setCategory}
+            user={user}
+            setUser={setUser}
+          />
         </div>
       </div>
       </div>
@@ -486,6 +556,8 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
         setNumber = {setNumber}
         userId = {userId}
         setUserId = {setUserId}
+        allUpdated={allUpdated}
+        setAllUpdated = {setAllUpdated}
 
       />
       

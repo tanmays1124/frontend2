@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Sidenav from './Sidenav';
 import "./LineGraph.css";
 
-function LineGraph({ userId }) {
+function LineGraph() {
   const [data, setDatabaseData] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
@@ -21,6 +21,8 @@ function LineGraph({ userId }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const userId = localStorage.getItem('userId')
+
         const response = await fetch(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`);
         const fetchedData = await response.json();
         setDatabaseData(fetchedData);
@@ -63,7 +65,7 @@ function LineGraph({ userId }) {
     };
 
     fetchData();
-  }, [userId]);
+  }, []);
 
   const handleDomainChange = (event) => {
     const selectedDomain = event.target.value;

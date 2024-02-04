@@ -18,8 +18,10 @@
   padding: 0;
   box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.459);
   background-color: linear-gradient(#63b7e740, rgba(231, 230, 230, 0));
-  max-height: 100vh;
-  overflow-y: scroll;
+  height: 100;
+  background-color: whitesmoke;
+
+  /* overflow-y: scroll; */
   
 
 }
@@ -30,7 +32,7 @@
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   cursor: pointer;
   margin: 10px;
-  background-color: linear-gradient(#63b7e740, rgba(231, 230, 230, 0));
+  background-color: whitesmoke;
 
   
 
@@ -42,17 +44,17 @@
   box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.459);
   &.easy {
     /* background: linear-gradient(#d6f5d6, #aaffaa);  */
-  box-shadow: 1px 2px 8px 0px rgba(130, 226, 130, 0.8);
+  box-shadow: 1px 2px 8px 0px rgb(95, 235, 95);
   }
 
   &.medium {
     /* background: linear-gradient(#fffae5, #ffd700);  */
-    box-shadow: 1px 2px 8px 0px rgba(255, 221, 0, 0.8); /* Lighter yellow shadow */
+    box-shadow: 1px 2px 8px 0px rgb(255, 221, 0); /* Lighter yellow shadow */
   }
 
   &.difficult {
     /* background: linear-gradient(#ffbdbd, #e74c3c); */
-    box-shadow: 1px 2px 8px 0px rgba(255, 99, 71, 0.8);
+    box-shadow: 1px 2px 8px 0px rgb(255, 43, 6);
   }
 
 }
