@@ -10,18 +10,29 @@ const Quiz = (props) => {
 
   const [attempted, setAttempted] = useState([]);
   const [isCorrect, setIsCorrect] = useState([]);
+  const [isSelected, setIsSelected] = useState(false)
+
+  const [timer, setTimer] = useState(15); 
+
 
   const navigate = useNavigate();
+
+  let val;
+  let option;
+  let selectedOptions
   
 
   const handleSelect = (event) => {
-    const val = event.target.textContent;
-    const option = event.target;
-    const selectedOptions = document.getElementsByClassName("option");
+    setIsSelected(true);
+    val = event.target.textContent;
+    option = event.target;
+    selectedOptions = document.getElementsByClassName("option");
     for (const selectedOption of selectedOptions) {
       selectedOption.style.background = "white";
     }
     option.style.background = "orange";
+    
+ 
 
     if (val === currOptions[currAnswer]) {
       console.log("correct");
@@ -36,9 +47,28 @@ const Quiz = (props) => {
       setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
       setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
     }
+    
   };
 
   const handleNext = () => {
+    if(val && option && selectedOptions)
+    {
+      console("Good to go!!")
+
+  }
+  else{
+    console.log("Incorrect");
+    console.log(currQuestion);
+    setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
+    setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
+  }
+
+
+
+
+
+
+
     const options = document.getElementsByClassName("option");
     for (const option of options) {
       option.style.backgroundColor = 'white';
@@ -52,6 +82,8 @@ const Quiz = (props) => {
 
       // Update Quiz History for the current question
       updateHistory(currQuestion, currOptions, currOptions[currAnswer]);
+      setTimer(15);
+
     } else {
       console.log(attempted);
       console.log(isCorrect);
@@ -99,11 +131,7 @@ const Quiz = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  });
+ 
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -130,11 +158,31 @@ const Quiz = (props) => {
       console.log("Question already attempted:", question);
     }
   };
+
+
+
+
+
   
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 0) {
+          clearInterval(timerInterval); // Stop the timer
+          handleNext(); // Move to the next question
+        }
+        return prevTimer - 1;
+      });
+    }, 1000); // Timer updates every second
+
+    // Cleanup function to clear the interval when the component unmounts or when moving to the next question
+    return () => clearInterval(timerInterval);
+  }, [currIndex]); // Runs whenever the current index changes
 
   return (
     <div className="quiz-container">
       <center><h1>Quiz</h1></center>
+      <div className="timer">{timer}</div>
       <div className="question-container">
         <p className="question">{currQuestion}</p>
         <div className="centered-container">
@@ -164,5 +212,4 @@ const Quiz = (props) => {
     </div>
   );
 };
-
 export default Quiz;

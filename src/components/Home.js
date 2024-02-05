@@ -91,11 +91,16 @@ const Modal = (props) => {
 
     try {
 
+      
+  const user_id = localStorage.getItem('userId')
+  
       const response = await axios.get("http://127.0.0.1:8000/api/questions/", {
         params: {
           category: props.category,
+          user_id: user_id,
           difficulty: difficulty,
           num_questions: num_questions,
+          
         },
       });
 

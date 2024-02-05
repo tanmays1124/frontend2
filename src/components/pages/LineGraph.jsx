@@ -22,10 +22,6 @@ function LineGraph() {
     const fetchData = async () => {
       try {
         const userId = localStorage.getItem('userId')
-<<<<<<< HEAD
-=======
-
->>>>>>> 85482ddd6824ed93fc7ca04978cc6ad6790f6a2c
         const response = await fetch(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`);
         const fetchedData = await response.json();
         setDatabaseData(fetchedData);

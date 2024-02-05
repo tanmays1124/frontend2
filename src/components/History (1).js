@@ -126,7 +126,7 @@ const History = ({ userId, setUserId ,open}) => {
         <div className="quiz-history-container">
           <div className="quiz-history">
             <center>
-              {" "}
+              
               <h2>Quiz History </h2>{" "}
             </center>
             <ul className="quiz-list">
@@ -159,11 +159,9 @@ const History = ({ userId, setUserId ,open}) => {
                               attempt.is_correct ? " correct" : "wrong"
                             }`}
                           >
-                            {/* {attempt.q_text}{" "}
-                            <span className="with-space">&nbsp;</span>
-                            {attempt.is_correct ? "Correct" : "Wrong"} */}
-                             {<span className="symbol">{attempt.is_correct ? '✔' : '✘'}</span>}
-                             {<span className="question-text">{attempt.q_text}</span>}
+                             <span className="symbol">{attempt.is_correct ? '✔' : '✘'}</span>
+                             <span className="question-text">{attempt.q_text}</span>
+
                           </div>
                         )
                       )}

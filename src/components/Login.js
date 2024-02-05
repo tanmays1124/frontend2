@@ -50,12 +50,12 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
 
   return (
     <>
-      <center>
+    <center>
         <div className="partition">
-          <div
+          {/* <div
             className="partition-image"
             style={{ backgroundImage: `url(${log})` }}
-          ></div>
+          ></div> */}
           <div className="login-container">
             <div className="title">Login</div>
             <div className="content">
@@ -67,7 +67,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
               <form action="#" onSubmit={handleSubmit}>
                 <div className="user-details">
                   <div className="inputbox">
-                    <span className="details">Username</span>
+                    {/* <span className="details">Username</span> */}
                     <input
                       name="username"
                       type="text"
@@ -79,7 +79,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                     />
                   </div>
                   <div className="inputbox">
-                    <span className="details">Password</span>
+                    {/* <span className="details">Password</span> */}
                     <div className="password-input-container">
                       <input
                         name="password"
@@ -96,13 +96,14 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                 <div className="button" >
                   <input type="submit" value="Login" />
                 </div>
-                <Link to="/register">Register?</Link>
-                <Link to="http://127.0.0.1:8000/api/forgot_password/">Forgot Password</Link>
+                <Link to="/register"className="register-link">Register?</Link>
+                <Link to="http://127.0.0.1:8000/api/forgot_password/" className="forgot">Forgot Password</Link>
               </form>
             </div>
           </div>
         </div>
-      </center>
+        </center>
+  
 
 {/* <div className="login-wrap">
       <div className="login-html">

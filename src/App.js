@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import Quiz from "./components/Quiz";
 import Forgot from "./components/Forgot";
 import Profile from "./components/Profile";
+import Leaderboard from "./components/lead/board.js";
 // import Linegraph from "./components/pages/LineGraph";
 // import Bargraph from "./components/pages/BarGraph";
 // import Pie from "./components/pages/Pie";
@@ -123,7 +124,7 @@ const App = () => {
               userId = {userId}
               setUserId = {setUserId}/> */}
 
-        {/* <Route
+        <Route
           path="/leaderboard"
           exact
           element={
@@ -134,7 +135,7 @@ const App = () => {
               setUserId={setUserId}
             />
           }
-        /> */}
+        />
 
         <Route
           path="/quiz"
