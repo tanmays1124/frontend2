@@ -173,6 +173,7 @@ const App = () => {
           element={
             <Quizend
               score={score}
+              setScore={setScore}
               questions={questions}
               setQuestions={setQuestions}
               answers={answers}

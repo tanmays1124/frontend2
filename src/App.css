@@ -4,13 +4,14 @@ body {
   padding: 0;
   /* background-image: url('images/bg33.jpg') !important; */
   /* background-color: aliceblue; */
-  background-size: 100vh 100vw;
 
   /* background-color: whitesmoke !important; */
   /* background-color: linear-gradient(#8572df40, rgba(0, 0, 0, 0)) ; */
 
   /* background: rgb(38, 179, 207) !important;  */
   background: linear-gradient(to bottom, #fefdffe1, #023252) !important;
+  background-size: 100%;
+
   /* background-repeat: no-repeat; */
   
 }

@@ -15,6 +15,7 @@ const Quizend = (props) => {
 
 
     const handleClick =() =>{
+      props.setScore(0)
         navigate('/history')
     }
   return (

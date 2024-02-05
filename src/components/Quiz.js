@@ -10,30 +10,41 @@ const Quiz = (props) => {
 
   const [attempted, setAttempted] = useState([]);
   const [isCorrect, setIsCorrect] = useState([]);
-  const [isSelected, setIsSelected] = useState(false)
+  const [isSelected, setIsSelected] = useState(false);
 
-  const [timer, setTimer] = useState(15); 
-
+  const [timer, setTimer] = useState(15);
 
   const navigate = useNavigate();
 
-  let val;
-  let option;
-  let selectedOptions
-  
-
+  const [val, setVal] = useState("");
+  var allUpdated = false;
   const handleSelect = (event) => {
-    setIsSelected(true);
-    val = event.target.textContent;
-    option = event.target;
-    selectedOptions = document.getElementsByClassName("option");
+    setVal(event.target.textContent);
+    const option = event.target;
+    const selectedOptions = document.getElementsByClassName("option");
     for (const selectedOption of selectedOptions) {
       selectedOption.style.background = "white";
     }
     option.style.background = "orange";
+    console.log(val);
     
- 
 
+    // if (val === currOptions[currAnswer]) {
+    //   console.log("correct");
+    //   console.log(currQuestion);
+    //   setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
+    //   setIsCorrect((prevIsCorrect) => [...prevIsCorrect, true]);
+    //   props.setScore(props.score + 1);
+    //   console.log(props.score);
+    // } else {
+    //   console.log("Incorrect");
+    //   console.log(currQuestion);
+    //   setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
+    //   setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
+    // }
+  };
+
+  const handleNext = () => {
     if (val === currOptions[currAnswer]) {
       console.log("correct");
       console.log(currQuestion);
@@ -47,31 +58,11 @@ const Quiz = (props) => {
       setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
       setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
     }
-    
-  };
-
-  const handleNext = () => {
-    if(val && option && selectedOptions)
-    {
-      console("Good to go!!")
-
-  }
-  else{
-    console.log("Incorrect");
-    console.log(currQuestion);
-    setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
-    setIsCorrect((prevIsCorrect) => [...prevIsCorrect, false]);
-  }
-
-
-
-
-
-
+    setVal("");
 
     const options = document.getElementsByClassName("option");
     for (const option of options) {
-      option.style.backgroundColor = 'white';
+      option.style.backgroundColor = "white";
     }
 
     if (currIndex < props.questions.length - 1) {
@@ -81,73 +72,87 @@ const Quiz = (props) => {
       setCurrOptions(props.options[currIndex + 1]);
 
       // Update Quiz History for the current question
-      updateHistory(currQuestion, currOptions, currOptions[currAnswer]);
+      // updateHistory(currQuestion, currOptions, currOptions[currAnswer]);
       setTimer(15);
-
     } else {
-      console.log(attempted);
-      console.log(isCorrect);
-      console.log(props.userId);
-      const userid = localStorage.getItem("userId");
+      // console.log(attempted);
+      // console.log(isCorrect);
+      // console.log(props.userId);
+      setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
+      setIsCorrect((prevIsCorrect) => [
+        ...prevIsCorrect,
+        val === currOptions[currAnswer],
+      ]);
+      props.setScore(props.score+1)
+      console.log(attempted)
 
-      const postData = async () => {
-        const url = "http://127.0.0.1:8000/api/questionhistorycreate/";
+      // Ensure state is updated before navigating
+      setTimeout(() => {
+        const userid = localStorage.getItem("userId");
 
-        const newQuestionHistory = {
-          user: userid,
-          domain: props.category,
-          difficulty_level: props.difficultyLevel,
-          score: props.score,
-          attempted_questions: attempted.map((q_text, index) => ({
-            q_text,
-            is_correct: isCorrect[index],
-          })),
+        const postData = async () => {
+          const url = "http://127.0.0.1:8000/api/questionhistorycreate/";
+
+          const newQuestionHistory = {
+            user: userid,
+            domain: props.category,
+            difficulty_level: props.difficultyLevel,
+            score: props.score,
+            attempted_questions: attempted.map((q_text, index) => ({
+              q_text,
+              is_correct: isCorrect[index],
+            })),
+          };
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newQuestionHistory),
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log("New Question History created:", responseData);
+          } catch (error) {
+            console.error("Error posting data:", error);
+          }
         };
 
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newQuestionHistory),
-          });
+        // Call the postData function
+        postData();
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-
-          const responseData = await response.json();
-          console.log("New Question History created:", responseData);
-        } catch (error) {
-          console.error("Error posting data:", error);
-        }
-      };
-
-      // Call the postData function
-      postData();
-
-      navigate('/quizend')
+        navigate("/quizend");
+      }, 2000);
     }
   };
-
- 
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
-    console.log(currAnswer, currQuestion, currIndex, currOptions);
-  }, [currAnswer, currQuestion, currIndex, currOptions]);
+    if (
+      attempted.length === props.questions.length &&
+      isCorrect.length === props.questions.length
+    ) {
+      allUpdated = true;
+    }
+  }, [attempted, isCorrect]);
+
+  useEffect(() => {}, [allUpdated]);
 
   const updateHistory = (question, options, userAnswer) => {
-    // Check if the question is already in the attempted array
     const isQuestionAlreadyAttempted = attempted.includes(question);
-  
+
     if (!isQuestionAlreadyAttempted) {
-      console.log("Updating Quiz History:", question, options, userAnswer);
+      // console.log("Updating Quiz History:", question, options, userAnswer);
       setAttempted((prevAttempted) => [...prevAttempted, question]);
-  
+
       if (userAnswer === options[props.answers[currIndex]]) {
         setIsCorrect((prevIsCorrect) => [...prevIsCorrect, true]);
         props.setScore(props.score + 1);
@@ -159,11 +164,6 @@ const Quiz = (props) => {
     }
   };
 
-
-
-
-
-  
   useEffect(() => {
     const timerInterval = setInterval(() => {
       setTimer((prevTimer) => {
@@ -175,13 +175,14 @@ const Quiz = (props) => {
       });
     }, 1000); // Timer updates every second
 
-    // Cleanup function to clear the interval when the component unmounts or when moving to the next question
     return () => clearInterval(timerInterval);
-  }, [currIndex]); // Runs whenever the current index changes
+  }, [currIndex]);
 
   return (
     <div className="quiz-container">
-      <center><h1>Quiz</h1></center>
+      <center>
+        <h1>Quiz</h1>
+      </center>
       <div className="timer">{timer}</div>
       <div className="question-container">
         <p className="question">{currQuestion}</p>
