@@ -8,7 +8,6 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Quizend from "./components/Quizend";
 import Dashboard from "./components/Dashboard";
-import Leaderboard from "./components/Leaderboard";
 import Quiz from  "./components/Quiz";
 import Forgot from  "./components/Forgot";
 import Profile from "./components/Profile";
@@ -111,9 +110,6 @@ const App = () => {
               userId = {userId}
               setUserId = {setUserId}/> */}
 
-        <Route path="/leaderboard" exact element={<Leaderboard user={user} setUser={setUser}
-              userId = {userId}
-              setUserId = {setUserId}/>} />
 
         <Route
           path="/quiz"

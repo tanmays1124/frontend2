@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import Box from '@mui/material/Box';
 
-function BarGraph({ userId }) {
+function BarGraph() {
   const [data, setDatabaseData] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState('Linux');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
@@ -22,6 +22,7 @@ function BarGraph({ userId }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      const userId = localStorage.getItem('userId') 
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/questionhistoryget/?user_id=${userId}`);
         const fetchedData = await response.json();
@@ -41,7 +42,7 @@ function BarGraph({ userId }) {
     };
 
     fetchData();
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     const difficultyLevels = [...new Set(data.map(item => item.difficulty_level))];

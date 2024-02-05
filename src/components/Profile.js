@@ -131,11 +131,16 @@ const Profile = () => {
       setEmail(data.email);
   
       // Append the relative path to the base URL to get the complete photo URL
+      if(data.photo != null )
+      {
       const completePhotoUrl = `http://127.0.0.1:8000${data.photo}`;
-      
-      // Update photoSrc with the complete photo URL
       setPhotoSrc(completePhotoUrl);
-  
+      }
+      else{
+        setPhotoSrc(null)
+      }
+      // Update photoSrc with the complete photo URL
+      console.log(photoSrc)
       setIsImageChanged(false);
     } catch (error) {
       console.error("Error fetching user data:", error);
