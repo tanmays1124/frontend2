@@ -90,29 +90,99 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                         onChange={handleInputChange}
                         required
                       />
-                      {/* <span
-                        className="toggle-password"
-                        onClick={handleTogglePassword}
-                      >
-                        {showPassword ? (
-                          <FontAwesomeIcon icon={faEyeSlash} />
-                        ) : (
-                          <FontAwesomeIcon icon={faEye} />
-                        )}
-                      </span> */}
-                    </div>
+                      </div>
                   </div>
                 </div>
                 <div className="button" >
                   <input type="submit" value="Login" />
                 </div>
                 <Link to="/register">Register?</Link>
-                <Link to="/forgot">Forgot Password</Link>
+                <Link to="http://127.0.0.1:8000/api/forgot_password/">Forgot Password</Link>
               </form>
             </div>
           </div>
         </div>
       </center>
+
+{/* <div className="login-wrap">
+      <div className="login-html">
+        <input id="tab-1" type="radio" name="tab" className="sign-in" checked />
+        <label htmlFor="tab-1" className="tab">
+          Sign In
+        </label>
+        <input id="tab-2" type="radio" name="tab" className="sign-up" />
+        <label htmlFor="tab-2" className="tab">
+          Sign Up
+        </label>
+        <div className="login-form">
+          <div className="sign-in-htm">
+            <div className="group">
+              <label htmlFor="username" className="label">
+                Username
+              </label>
+              <input
+                id="user"
+                name="username"
+                type="text"
+                className="input"
+                onChange={handleInputChange}
+                value={formData.username}
+              />
+            </div>
+            <div className="group">
+              <label htmlFor="password" className="label">
+                Password
+              </label>
+              <input
+                id="pass"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="input"
+                data-type="password"
+                onChange={handleInputChange}
+                value={formData.password}
+              />
+            </div>
+            <div className="group">
+              <input type="submit" className="button" value="Sign In" onClick={handleSubmit} />
+            </div>
+            <div className="hr"></div>
+            <div className="foot-lnk">
+              <Link to="/forgot">Forgot Password?</Link>
+            </div>
+          </div>
+          <div className="sign-up-htm">
+            <div className="group">
+              <label htmlFor="username" className="label">
+                Username
+              </label>
+              <input id="user" name="username" type="text" className="input" value={formData.username} />
+            </div>
+            <div className="group">
+              <label htmlFor="password" className="label">
+                Password
+              </label>
+              <input id="pass" name="password" type="password" className="input" data-type="password" value={formData.password} />
+            </div>
+            <div className="group">
+              <label htmlFor="email" className="label">
+                Email Address
+              </label>
+              <input id="email" name="email" type="text" className="input" value={formData.email} />
+            </div>
+            <div className="group">
+              <input type="submit" className="button" value="Sign Up" onClick={handleSubmit} />
+            </div>
+            <div className="hr"></div>
+            <div className="foot-lnk">
+              <Link to="/login" htmlFor="tab-1">
+                Already Member?
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> */}
     </>
   );
 };

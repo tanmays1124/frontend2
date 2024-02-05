@@ -12,6 +12,7 @@ const Quiz = (props) => {
   const [isCorrect, setIsCorrect] = useState([]);
 
   const navigate = useNavigate();
+  
 
   const handleSelect = (event) => {
     const val = event.target.textContent;

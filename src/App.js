@@ -8,16 +8,18 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Quizend from "./components/Quizend";
 import Dashboard from "./components/Dashboard";
-import Quiz from  "./components/Quiz";
-import Forgot from  "./components/Forgot";
+import Quiz from "./components/Quiz";
+import Forgot from "./components/Forgot";
 import Profile from "./components/Profile";
-import Linegraph from "./components/pages/LineGraph";
-import Bargraph from "./components/pages/BarGraph";
-import Pie from "./components/pages/Pie";
+// import Linegraph from "./components/pages/LineGraph";
+// import Bargraph from "./components/pages/BarGraph";
+// import Pie from "./components/pages/Pie";
+// import bg from "../images/bg33.jpg";
 
 import { useState } from "react";
 
 const App = () => {
+  const [allUpdated, setAllUpdated] = useState(false);
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -25,13 +27,12 @@ const App = () => {
   const [options, setOptions] = useState([]);
   const [userId, setUserId] = useState(0);
   const [logged, setLogged] = useState(false);
-  const [quiz, setQuiz] = useState([{}])
-  const [difficultyLevel, setDifficultyLevel] = useState('')
-  const [typeOfQuestion, setTypeOfquestion] = useState('')
-  const [number, setNumber] = useState('')
+  const [quiz, setQuiz] = useState([{}]);
+  const [difficultyLevel, setDifficultyLevel] = useState("");
+  const [typeOfQuestion, setTypeOfquestion] = useState("");
+  const [number, setNumber] = useState("");
   const [category, setCategory] = useState("");
-  const [score, setScore] = useState(0)
-
+  const [score, setScore] = useState(0);
 
   return (
     <Router>
@@ -50,8 +51,8 @@ const App = () => {
               user={user}
               setUser={setUser}
               setLogged={setLogged}
-              userId = {userId}
-              setUserId = {setUserId}
+              userId={userId}
+              setUserId={setUserId}
             />
           }
         />
@@ -60,6 +61,8 @@ const App = () => {
           path="/home"
           element={
             <Home
+              allUpdated={allUpdated}
+              setAllUpdated={setAllUpdated}
               token={token}
               setToken={setToken}
               user={user}
@@ -71,18 +74,18 @@ const App = () => {
               setAnswers={setAnswers}
               options={options}
               setOptions={setOptions}
-              quiz = {quiz}
-              setQuiz = {setQuiz}
-              userId = {userId}
-              setUserId = {setUserId}
-              difficultyLevel = {difficultyLevel}
-              setDifficultyLevel = {setDifficultyLevel}
-              typeOfQuestion = {typeOfQuestion}
-              setTypeOfquestion = {setTypeOfquestion}
-              number  ={number}
-              setNumber = {setNumber}
-              category = {category}
-              setCategory = {setCategory}
+              quiz={quiz}
+              setQuiz={setQuiz}
+              userId={userId}
+              setUserId={setUserId}
+              difficultyLevel={difficultyLevel}
+              setDifficultyLevel={setDifficultyLevel}
+              typeOfQuestion={typeOfQuestion}
+              setTypeOfquestion={setTypeOfquestion}
+              number={number}
+              setNumber={setNumber}
+              category={category}
+              setCategory={setCategory}
             />
           }
         />
@@ -90,60 +93,96 @@ const App = () => {
         <Route
           path="/history"
           exact
-          element={<History user={user} setUser={setUser} 
-          userId = {userId}
-          setUserId = {setUserId}/>}
+          element={
+            <History
+              user={user}
+              setUser={setUser}
+              userId={userId}
+              setUserId={setUserId}
+            />
+          }
         />
 
         <Route
           path="/dashboard"
           exact
-          element={<Dashboard user={user} setUser={setUser} 
-          userId = {userId}
-          setUserId = {setUserId}/>}
+          element={
+            <Dashboard
+              user={user}
+              setUser={setUser}
+              userId={userId}
+              setUserId={setUserId}
+            />
+          }
         />
 
-         {/* <Route path="/bgraph" exact element={<Bargraph />} 
+        {/* <Route path="/bgraph" exact element={<Bargraph />} 
               userId = {userId}
               setUserId = {setUserId}/>
          <Route path="/lgraph" exact element={<Linegraph />} 
               userId = {userId}
               setUserId = {setUserId}/> */}
 
+        {/* <Route
+          path="/leaderboard"
+          exact
+          element={
+            <Leaderboard
+              user={user}
+              setUser={setUser}
+              userId={userId}
+              setUserId={setUserId}
+            />
+          }
+        /> */}
 
         <Route
           path="/quiz"
           exact
           element={
             <Quiz
+              allUpdated={allUpdated}
+              setAllUpdated={setAllUpdated}
               questions={questions}
               setQuestions={setQuestions}
               answers={answers}
               setAnswers={setAnswers}
               options={options}
               setOptions={setOptions}
-              userId = {userId}
-              setUserId = {setUserId}
-              quiz = {quiz}
-              setQuiz = {setQuiz}
-              difficultyLevel = {difficultyLevel}
-              setDifficultyLevel = {setDifficultyLevel}
-              typeOfQuestion = {typeOfQuestion}
-              setTypeOfquestion = {setTypeOfquestion}
-              number  ={number}
-              setNumber = {setNumber}
-              category = {category}
-              setCategory = {setCategory}
-              score = {score}
-              setScore = {setScore}
-              
+              userId={userId}
+              setUserId={setUserId}
+              quiz={quiz}
+              setQuiz={setQuiz}
+              difficultyLevel={difficultyLevel}
+              setDifficultyLevel={setDifficultyLevel}
+              typeOfQuestion={typeOfQuestion}
+              setTypeOfquestion={setTypeOfquestion}
+              number={number}
+              setNumber={setNumber}
+              category={category}
+              setCategory={setCategory}
+              score={score}
+              setScore={setScore}
             />
           }
         />
-        <Route path='/quizend' exact element={<Quizend score={score}/>}/>
-        <Route path='/forgot' exact element = {<Forgot/>} />   
-        <Route path='/profile' exact element = {<Profile/>} />
-        
+        <Route
+          path="/quizend"
+          exact
+          element={
+            <Quizend
+              score={score}
+              questions={questions}
+              setQuestions={setQuestions}
+              answers={answers}
+              setAnswers={setAnswers}
+              options={options}
+              setOptions={setOptions}
+            />
+          }
+        />
+        <Route path="/forgot" exact element={<Forgot />} />
+        <Route path="/profile" exact element={<Profile />} />
       </Routes>
     </Router>
   );

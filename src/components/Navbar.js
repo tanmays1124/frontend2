@@ -26,7 +26,7 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  backgroundColor: '#e4e9f7 ', // Specify your desired background color here
+  backgroundColor: '#103f76', // Specify your desired background color here
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -45,7 +45,7 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
   opacity: 1,
-  backgroundColor: '#e4e9f7 ', // Set the background color when the drawer is closed
+  backgroundColor: '#103f76', // Set the background color when the drawer is closed
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -55,6 +55,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   opacity: 1.0,
   width: '100%', // Set width to 100%
+  color: '#FFFFFF', // Set the text color to white
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -78,7 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false); // Change default state to false
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -87,6 +88,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
     localStorage.removeItem('username');
     navigate('/login');
   };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -95,7 +97,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
           <IconButton onClick={() => setOpen(!open)}>
             {open ? (
               <>
-                <h1>Quizviz</h1>
+                <h1 style={{ color: '#FFFFFF' }}>Quizviz</h1>
                 {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
               </>
             ) : (
@@ -105,12 +107,13 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/')}>
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/home')}>
             <ListItemButton
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
+                color: '#FFFFFF',
               }}
             >
               <ListItemIcon
@@ -118,6 +121,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
+                  color: '#FFFFFF',
                 }}
               >
                 <HomeIcon />
@@ -131,6 +135,8 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
+                color: '#FFFFFF',
+                
               }}
             >
               <ListItemIcon
@@ -138,6 +144,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
+                  color: '#FFFFFF',
                 }}
               >
                 <DashboardIcon />
@@ -151,6 +158,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
+                color: '#FFFFFF',
               }}
             >
               <ListItemIcon
@@ -158,6 +166,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
+                  color: '#FFFFFF',
                 }}
               >
                 <HistoryIcon />
@@ -171,6 +180,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
+                color: '#FFFFFF',
               }}
             >
               <ListItemIcon
@@ -178,6 +188,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
+                  color: '#FFFFFF',
                 }}
               >
                 <PersonIcon />
@@ -194,6 +205,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  color: '#FFFFFF',
                 }}
               >
                 <ListItemIcon
@@ -201,6 +213,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
+                    color: '#FFFFFF',
                   }}
                 >
                   <ExitToAppIcon />
@@ -212,6 +225,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'left',
+                    color: '#FFFFFF',
                   }}
                 />
               </ListItemButton>
