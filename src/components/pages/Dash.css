@@ -1,24 +1,21 @@
 .bo {
   /* background-color: #f5f5f5 !important; */
-  background: #d3dcda;
-    width: 100%;
-  }
-
+  background: transparent;
+  width: 100%;
+}
 
 .Dashboard body {
   background: linear-gradient(#192428, rgba(19, 19, 245, 0.775)) !important;
-
 }
 
 .Dashboard .App {
   text-align: center;
   margin-top: 53px;
   background-color: #103f76 !important;
-
 }
 
 .das h1 {
-  background-color: #e6e7eb;
+  background-color: #e6e7ebde;
   padding: 10px;
   border-radius: 8px;
 }
@@ -37,7 +34,7 @@
   border: 1px solid #ccc;
   padding: 16px;
   border-radius: 8px;
-  background-color: #f5f5f5 !important;
+  background-color: #e6e7ebde !important;
   transition: transform 0.3s ease;
   flex-direction: row;
 
@@ -49,8 +46,6 @@
     margin-bottom: 10px;
   }
 }
-
-
 
 .card-12:not(:last-child) {
   margin-bottom: 20px;
@@ -80,21 +75,17 @@
 }
 
 .secondary-primary-card {
-  background-color: #64B5F6 !important; /* Adjust color as needed */
+  background-color: #64b5f6 !important; /* Adjust color as needed */
   margin-bottom: auto;
 }
 
-
 @media (max-width: 768px) {
   .card-12 {
-      width: 100%;
+    width: 100%;
   }
 }
 @media (max-height: 768px) {
-.card-12 {
+  .card-12 {
     height: 100%;
+  }
 }
-}
-
-
-

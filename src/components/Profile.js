@@ -114,6 +114,10 @@ const Profile = () => {
     }
   };
   const handleDelete = async() =>{
+    if(confirm("Are You Sure You want to delete Account?")==true)
+    {
+
+    
     try {
       // Make a DELETE request to the deleteUserProfile API endpoint
       const response = await axios.post(`http://127.0.0.1:8000/api/delete/${userId}`);
@@ -129,6 +133,8 @@ const Profile = () => {
     } catch (error) {
       console.error('Error occurred while deleting user profile:', error);
     }
+    
+  }
   };
 
 
@@ -201,7 +207,7 @@ const Profile = () => {
               </div> */}
                <Layout>
         <div className="container shadow rounded mt-5 mb-5 profile-container">
-          <div className="row">
+          <div className="row profileCont">
             <div className="col-md-12">
               <div className="d-flex justify-content-between align-items-center p-3 top-container">
                 

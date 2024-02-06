@@ -1,24 +1,24 @@
-// import React, { useState } from 'react';  
+// import React, { useState } from 'react';
 // import axios from 'axios';
 // import { Link } from 'react-router-dom';
 // import './Login.css'
 // import log from '../images/log.png';
 
-// function Register() {  
+// function Register() {
 //   const [formData, setFormData] = useState({
 //     email: '',
 //     username: '',
 //     password: '',
 //     first_name: '',
 //     last_name: ''
-    
+
 //   });
 
 //   const [error, setError] = useState(null);
 //   const [mssg, setMssg] = useState('')
 
 //   const handleInputChange = (event) => {
-//     setFormData({ 
+//     setFormData({
 //       ...formData,
 //       [event.target.name]: event.target.value
 //     });
@@ -40,36 +40,33 @@
 //       setMssg("Invalid email format")
 //       document.getElementById('alert').style.display='block';
 
-
 //     }
 //     if(psswd.length < 8){
 //       setMssg("password should should be greater than 8")
 //       document.getElementById('alert').style.display='block';
 
 //     }
-    
+
 //     try {
 //       const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
-      
-//       setError(null);  
+
+//       setError(null);
 //       console.log(response.data);
-//       window.location.href = '/login'; 
+//       window.location.href = '/login';
 
+//       // redirect or display message on success hello
 
-//       // redirect or display message on success hello 
-      
 //     } catch (err) {
 //       setError(err.message);
 //     }
 //   }
 
-
 // return(
 
 //   <center>
-  
+
 //   <div className="partition">
-//           <div className="partition-image" style={{ backgroundImage: `url(${log})` }} ></div> 
+//           <div className="partition-image" style={{ backgroundImage: `url(${log})` }} ></div>
 //   <div className="login-container">
 //     <div className="title">Registration</div>
 //     <div className="content">
@@ -111,16 +108,12 @@
 //   </center>
 // )
 
-
-
-
 // return(
 //   <>
-         
+
 //          {/* <body>
 // <style jsx>{`
-    
- 
+
 // *,
 // *:before,
 // *:after{
@@ -164,7 +157,7 @@
 //     bottom: -80px;
 // }
 // form{
-   
+
 //     height: 620px;
 //     width: 800px;
 //     background-color: rgba(255,255,255,0.13);
@@ -263,7 +256,7 @@
 // <div className="alert alert-warning" role="alert" id="alert">
 //           {mssg}
 //         </div>
-  
+
 //     <form onSubmit={handleSubmit}>
 //         <h3>Register Here</h3>
 //         <div className="form-group">
@@ -292,154 +285,252 @@
 //       };
 // export default Register;
 
-
 //- -------------------    -- - - - - -- - - - - - - - - - - --  --  - - -
 
-
-import React, { useState } from 'react';  
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './Login.css'
-import log from '../images/Log.png';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./Registration.css";
+import log from "../images/Log.png";
 // import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 // import { library } from '@fortawesome/fontawesome-svg-core';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function Register() {  
+function Register() {
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    first_name: '',
-    last_name: ''
+    email: "",
+    username: "",
+    password: "",
+    first_name: "",
+    last_name: "",
   });
   // library.add(faEye, faEyeSlash);
 
   const [error, setError] = useState(null);
-  const [mssg, setMssg] = useState('');
-  const [password, setPassword] = useState('');
+  const [mssg, setMssg] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [show, setShow] = useState('fade')
 
   const handleInputChange = (event) => {
-    setFormData({ 
+    setFormData({
       ...formData,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-  }
+  };
+  var shakeMe = document.getElementById('alert1')
+
 
   // const handleTogglePassword = () => {
   //   setShowPassword(!showPassword);
   // };
 
-const validatePassword = (value) => {
-  const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@]{8,}$/;
-  return alphanumericRegex.test(value);
-};
+  const validatePassword = (str) => {
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
+    const numberRegex = /[0-9]/;
 
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  const psswd = document.getElementById('password').value;
-  const email = document.getElementById('email').value;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const alertElement = document.getElementById('alert');
-
-  if (!emailRegex.test(email)) {
-    setMssg("Invalid email format");
-    if (alertElement) alertElement.style.display = 'block';
-    return;
-  }
-
-  if (psswd.length < 8 || !validatePassword(psswd)) {
-    setMssg("Password should be alphanumeric and at least 8 characters long");
-    if (alertElement) alertElement.style.display = 'block';
-    return;
-  }
-
-  try {
-    const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
-    // setError(null);
-    console.log(response.data);
-
-    window.location.href = '/login';
-  
-  
-  } catch (err) {
-    if (err.response && err.response.status === 400) {
-      const errorData = err.response.data;
-      console.log(errorData.error)
-      // document.getElementById('alert').style.display = 'block';
-      alertElement.style.display = 'block'
-
-      setMssg(errorData.error)
+    // Check if the string contains at least one uppercase letter, one lowercase letter, one number, and its length is greater than 8
+    if (
+      uppercaseRegex.test(str) &&
+      lowercaseRegex.test(str) &&
+      numberRegex.test(str) &&
+      str.length > 8
+    ) {
+      return true;
+    } else {
+      return false;
     }
-    
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const psswd = document.getElementById("password");
+    const email = document.getElementById("email");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+    if (!emailRegex.test(email.value)) {
+      setMssg("Invalid email format");
+      setShow('show')
+      handleShake()
+
+    }
+
+    if (!validatePassword(psswd.value)) {
+      setMssg("Password must contain Uppercase, LowerCase and at least 8 characters long");
+      psswd.style.border = "2px solid red";
+      setShow('show')
+      handleShake()
+  
+    }
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/register/",
+        formData
+      );
+      // setError(null);
+      console.log(response.data);
+
+      window.location.href = "/login";
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        const errorData = err.response.data;
+        console.log(errorData.error);
+        // document.getElementById('alert').style.display = 'block';
+
+        setMssg(errorData.error);
+        setShow('show')
+        handleShake()
+      }
+    }
+  };
+
+
+  const handleShake = () =>{
+    shakeMe.classList.add('shake');
+    setTimeout(() => {
+      shakeMe.classList.remove('shake');
+    }, 500);
   }
-  
-  
-}
-
-
-
   return (
-    <center>
-      <div className="partition">
-        {/* <div className="partition-image" style={{ backgroundImage: `url(${log})` }} ></div>  */}
-        <div className="login-container">
-          <div className="title">Registration</div>
-          <div className="content">
-            <form action="#" onSubmit={handleSubmit}>
-              <div className="user-details">
-                <div className="input-box">
-                  {/* <span className="details">First Name</span> */}
-                  <input name="first_name" type="text" placeholder="First Name" id="first_name" value={formData.first_name} onChange={handleInputChange} required/>
-                </div>
-                <div className="input-box">
-                  {/* <span className="details">Last Name</span> */}
-                  <input name="last_name" type="text" placeholder="Last Name" id="last_name" value={formData.last_Name} onChange={handleInputChange} required/>
-                </div>
+    // <center>
+    //   <div className="partition">
+    //     {/* <div className="partition-image" style={{ backgroundImage: `url(${log})` }} ></div>  */}
+    //     <div className="login-container">
+    //       <div className="title">Registration</div>
+    //       <div className="content">
+    //         <form action="#" onSubmit={handleSubmit}>
+    //           <div className="user-details">
+    //             <div className="input-box">
+    //               {/* <span className="details">First Name</span> */}
+    //               <input name="first_name" type="text" placeholder="First Name" id="first_name" value={formData.first_name} onChange={handleInputChange} required/>
+    //             </div>
+    //             <div className="input-box">
+    //               {/* <span className="details">Last Name</span> */}
+    //               <input name="last_name" type="text" placeholder="Last Name" id="last_name" value={formData.last_Name} onChange={handleInputChange} required/>
+    //             </div>
 
-                <div className="inputbox">
-                  {/* <span className="details">Email</span> */}
-                  <input name="email" type="email" placeholder="Email" id="email" value={formData.email} onChange={handleInputChange} required/>
-                </div>
-                <div className="inputbox">
-                  {/* <span className="details">Username</span> */}
-                  <input name="username" type="text" placeholder="Username" id="username" value={formData.username} onChange={handleInputChange} required/>
-                </div>
-                <div className="inputbox">
-                  {/* <span className="details">Password</span> */}
-                  <div className="password-input-container">
-                    <input
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                      id="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {/* <span className="toggle-password" onClick={handleTogglePassword}>
-                      {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
-                    </span> */}
-                  </div>
-                </div>
+    //             <div className="inputbox">
+    //               {/* <span className="details">Email</span> */}
+    //               <input name="email" type="email" placeholder="Email" id="email" value={formData.email} onChange={handleInputChange} required/>
+    //             </div>
+    //             <div className="inputbox">
+    //               {/* <span className="details">Username</span> */}
+    //               <input name="username" type="text" placeholder="Username" id="username" value={formData.username} onChange={handleInputChange} required/>
+    //             </div>
+    //             <div className="inputbox">
+    //               {/* <span className="details">Password</span> */}
+    //               <div className="password-input-container">
+    //                 <input
+    //                   name="password"
+    //                   type={showPassword ? "text" : "password"}
+    //                   placeholder="Password"
+    //                   id="password"
+    //                   value={formData.password}
+    //                   onChange={handleInputChange}
+    //                   required
+    //                 />
+    //                 {/* <span className="toggle-password" onClick={handleTogglePassword}>
+    //                   {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+    //                 </span> */}
+    //               </div>
+    //             </div>
 
-              </div>
-              <div className="button">
-                <input type="submit" value="Register"/>
-              </div>
-              <Link to="/login" className='login-link'>Login?</Link>
-              {/* Add the alert div */}
-              <div id="alert" className="error-message">
-                {mssg}
-              </div>
-            </form>
-          </div>
+    //           </div>
+    //           <div className="button">
+    //             <input type="submit" value="Register"/>
+    //           </div>
+    //           <Link to="/login" className='login-link'>Login?</Link>
+    //           {/* Add the alert div */}
+    //           <div id="alert" className="error-message">
+    //             {mssg}
+    //           </div>
+    //         </form>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </center>
+    <>
+   
+
+
+      <div className={`alert alert-danger d-flex align-items-center ${show}`} id="alert1" role="alert">
+  <div>
+    {mssg}
+  </div>
+</div>
+
+
+
+      <div className="signup">
+        <h1>Sign Up</h1>
+        <form className="register-form" action="#" onSubmit={handleSubmit}>
+          <input
+            className="signup-input"
+            type="text"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleInputChange}
+            placeholder="First Name"
+            required="required"
+          />
+
+          <input
+            className="signup-input"
+            type="text"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleInputChange}
+            placeholder="Last Name"
+            required="required"
+          />
+
+          <input
+            className="signup-input"
+            type="email"
+            name="email"
+            id="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            required="required"
+          />
+
+          <input
+            className="signup-input"
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            placeholder="Username"
+            required="required"
+          />
+
+          <input
+            className="signup-input"
+            type="password"
+            name="password"
+            id="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            placeholder="Password"
+            required="required"
+          />
+          <button type="submit" class="signup-btn">
+            Sign UP
+          </button>
+        </form>
+        <div className="links">
+          Already a User?&nbsp;
+          <Link className="login-link" to="/login">
+            Login
+          </Link>
         </div>
       </div>
-    </center>
+    </>
   );
 }
 

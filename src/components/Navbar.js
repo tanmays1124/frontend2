@@ -27,7 +27,7 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  backgroundColor: '#2795df', // Specify your desired background color here
+  backgroundColor: '#023252', // Specify your desired background color here
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -46,7 +46,7 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
   opacity: 1,
-  backgroundColor: '#2795df', // Set the background color when the drawer is closed
+  backgroundColor: '#023252', // Set the background color when the drawer is closed
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -83,12 +83,16 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     navigate('/login');
   };
+
+
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -108,7 +112,7 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/home')}>
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/home') }}>
             <ListItemButton
               sx={{
                 minHeight: 48,

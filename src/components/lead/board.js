@@ -541,7 +541,7 @@ const handlePageChange = (pageNumber) => {
 
 
 return (
-  <div className="container">
+  <div className="board-container">
     <div className="sidebar">
       <h2>LEADER BOARD</h2>
       <br />

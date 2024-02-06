@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./History (1).css";
-import bg1 from "../images/history.jpg";
+import bg1 from "../images/history1.png";
 import Navbar from "./Navbar";
 import Layout from './Layout';
 
@@ -10,8 +10,9 @@ const History = ({ userId, setUserId ,open}) => {
   const styles = {
     background: {
       backgroundImage: `url(${bg1})`,
-      backgroundSize: "cover",
+      backgroundSize: "contain",
       backgroundPosition: "center",
+      backgroundRepeat:"no-repeat",
       height: "50vh", // Adjust the height to make the image smaller
       width: "50vw",
       justifyContent: "center",
@@ -28,7 +29,7 @@ const History = ({ userId, setUserId ,open}) => {
       display: "grid",
       placeItems: "center",
       alignItems: "center",
-      backgroundColor: "white"
+      backgroundColor: "transparent"
     },
     text: {
       fontSize: "larger",
@@ -114,14 +115,15 @@ const History = ({ userId, setUserId ,open}) => {
   return (
     <>
         <Layout open={open}>
-      {questionHistory.length == 0 ? (
-        <div className="contained" style={styles.contained}>
+      {questionHistory.length == 0 ? (<>
+        <div className="history-contained" style={styles.contained}>
           <div className="text" style={styles.text}>
             No history
           </div>
 
           <div className="background" style={styles.background}></div>
-        </div>
+          
+         </div> </>
       ) : (
         <div className="quiz-history-container">
           <div className="quiz-history">

@@ -1,10 +1,11 @@
 /* container class styles */
-.container {
+.board-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
     padding: 10px; /* Added padding to container for better spacing */
     box-sizing: border-box; /* Include padding in width */
+    background: transparent;
     
   }
 

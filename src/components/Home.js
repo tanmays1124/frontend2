@@ -248,7 +248,7 @@ const Modal = (props) => {
                 </div>
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <div className="col" style={{ marginBottom: "20px" }}>
                   <select
                     className="form-select"
@@ -261,7 +261,7 @@ const Modal = (props) => {
                     <option value="2">MCQ</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
 
               <div className="row">
                 <div className="col" style={{ marginBottom: "20px" }}>
@@ -403,7 +403,7 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
       <Layout>
         
 <div className="background">
-      <div className="container" style={{ overflowX: 'auto' }}> 
+      <div className="container" style={{ overflowX: 'hidden' }}> 
         <div className="row">
           <Cards
             title={"Linux"}

@@ -24,9 +24,12 @@ const Quiz = (props) => {
     const option = event.target;
     const selectedOptions = document.getElementsByClassName("option");
     for (const selectedOption of selectedOptions) {
-      selectedOption.style.background = "#6ac9bc";
+      selectedOption.style.background = "#aedaed";
+      selectedOption.style.color = "black";
+
     }
-    option.style.background = "#0bbea7";
+    option.style.background = "#023252";
+    option.style.color = "white";
     console.log(val);
     
 
@@ -63,7 +66,9 @@ const Quiz = (props) => {
 
     const options = document.getElementsByClassName("option");
     for (const option of options) {
-      option.style.backgroundColor = "#6ac9bc";
+      option.style.backgroundColor = "#aedaed";
+      option.style.color = "black";
+
     }
 
     if (currIndex < props.questions.length - 1) {

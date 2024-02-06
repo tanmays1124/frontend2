@@ -65,10 +65,16 @@
   .items{
     width: 100%;
   }
+
+   .items-active{
+    color: #007bff;
+  }
   
   .nav-item.active a {
     color: #007bff;
   }
+
+
   
   .side-navbar {
     /* ... other styles ... */
