@@ -49,7 +49,7 @@
 //     }
     
 //     try {
-//       const response = await axios.post('http://3.110.181.46:8000/api/register/', formData);
+//       const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
       
 //       setError(null);  
 //       console.log(response.data);
@@ -358,7 +358,7 @@ const handleSubmit = async (event) => {
   }
 
   try {
-    const response = await axios.post('http://3.110.181.46:8000/api/register/', formData);
+    const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
     // setError(null);
     console.log(response.data);
 

@@ -17,10 +17,11 @@
   .question-container {
     text-align: center; /* Center the question text */
     margin-bottom: 20px;
-    margin-top: 30%;
+    /* margin-top: 30%; */
   }
   
   .question {
+    margin-top:50px;
     font-size: 18px;
     font-weight: bold;
   }
@@ -31,6 +32,7 @@
   }
   
   .options-container {
+    margin-top:50px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -49,33 +51,41 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
+    background-color: #6ac9bc;
   }
   
-  .option:hover {
-    background-color: #eee;
-  }
+  /* .option:hover {
+    background-color: #55aca0;
+  } */
   
   .option.selected {
-    background-color: #4CAF50;
+    background-color: #55aca0;
     color: white;
   }
   
-  .next-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .next-button:hover {
-    background-color: #45a049;
-  }
+
+
   
   /* Additional styling for a subtle gradient and shadow */
   .quiz-container {
-    background: linear-gradient(to bottom, #f5f5f5, #fff);
+    margin-top: 10%;
+    height:500px;
+
+    background: linear-gradient(to bottom,#fefdffe1, #05436d);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
+
+  .next{
+    margin-left: 45%;
+    margin-top: 50px;
+    display: block;
+    justify-content: space-around;
+  }
+
+  .timer{
+    margin-left: 45%;
+    font-size: large;
+    color: #bb0000;
+    
+  }

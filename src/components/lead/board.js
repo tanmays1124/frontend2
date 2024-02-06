@@ -28,12 +28,12 @@
 //         const userId = localStorage.getItem('userId');
 //         console.log(userId);
 //         setIsLoadingUserData(true);
-//         const response = await axios.get(`http://3.110.181.46 :8000/api/userprofile/${userId}`);
+//         const response = await axios.get(`http://127.0.0.1:8000/api/userprofile/${userId}`);
 //         const userData = response.data;
 //         console.log('Fetched user data:', userData);
   
 //         if (userData.photo !== null) {
-//           const completePhotoUrl = `http://3.110.181.46 :8000${userData.photo}`;
+//           const completePhotoUrl = `http://127.0.0.1:8000${userData.photo}`;
 //           setUserPhoto(completePhotoUrl);
 //         } else {
 //           setUserPhoto('default-photo-url');
@@ -58,7 +58,7 @@
 //         const difficultyParam = difficulty !== 'All' ? `&difficulty_level=${difficulty}` : '';
 //         const domainParam = domain !== 'All' ? `&domain=${domain}` : '';
 //         const response = await axios.get(
-//           `http://3.110.181.46 :8000/api/questionhistoryget/?${difficultyParam}${domainParam}`
+//           `http://127.0.0.1:8000/api/questionhistoryget/?${difficultyParam}${domainParam}`
 //         );
   
 //         console.log('Fetched Leaderboard Data:', response.data);
@@ -79,7 +79,7 @@
 //           uniqueUserIds.map(async (uniqueUserId) => {
 //             try {
 //               const userProfileResponse = await axios.get(
-//                 `http://3.110.181.46 :8000/api/userprofile/${uniqueUserId}`
+//                 `http://127.0.0.1:8000/api/userprofile/${uniqueUserId}`
 //               );
 //               console.log('User Profile Response:', userProfileResponse.data);
   
@@ -322,6 +322,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './board.css';
 import pfimg from './profile.jpg';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Board() {
@@ -341,26 +342,36 @@ export default function Board() {
 
 
 
+  const fetchedUserId = localStorage.getItem('userId');
   let user_names = [];
-  
+  const navigate=useNavigate()
 
   useEffect(() => {
-    const fetchedUserId = localStorage.getItem('userId');
+
     setUserid(fetchedUserId);
     // fetchUserData(fetchedUserId);
     fetchLeaderboardData();
   }, [difficulty, domain]);
 
+useEffect(()=>{
+  console.log(fetchedUserId)
+  if(!fetchedUserId)
+  {
+    navigate('/login')
+  }
+},[])
+
+
 
   const fetchUserData = async (userId) => {
     try {
       setIsLoadingUserData(true);
-      const response = await axios.get(`http://3.110.181.46 :8000/api/userprofile/${userId}`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/userprofile/${userId}`);
       const userData = response.data;
       console.log('Fetched user data:', userData);
 
       if (userData.photo !== null) {
-        const completePhotoUrl = `http://3.110.181.46 :8000${userData.photo}`;
+        const completePhotoUrl = `http://127.0.0.1:8000${userData.photo}`;
         setUserPhoto(completePhotoUrl);
       } else {
         setUserPhoto('default-photo-url');
@@ -381,7 +392,7 @@ export default function Board() {
       const difficultyParam = difficulty !== 'All' ? `&difficulty_level=${difficulty}` : '';
       const domainParam = domain !== 'All' ? `&domain=${domain}` : '';
       const response = await axios.get(
-        `http://3.110.181.46 :8000/api/questionhistoryget/?${difficultyParam}${domainParam}`
+        `http://127.0.0.1:8000/api/questionhistoryget/?${difficultyParam}${domainParam}`
       );
 
       console.log('Fetched Leaderboard Data:', response.data);
@@ -402,7 +413,7 @@ export default function Board() {
         uniqueUserIds.map(async (uniqueUserId) => {
           try {
             const userProfileResponse = await axios.get(
-              `http://3.110.181.46:8000/api/userprofile/${uniqueUserId}`
+              `http://127.0.0.1:8000/api/userprofile/${uniqueUserId}`
             );
             console.log('User Profile Response:', userProfileResponse.data);
             setUserNames((prevUserNames) => [...prevUserNames, userProfileResponse.data.username]);

@@ -61,7 +61,7 @@ const Profile = () => {
 
     try {
       const response = await axios.post(
-        `http://3.110.181.46:8000/api/update/${userId}`,
+        `http://127.0.0.1:8000/api/update/${userId}`,
         formData
       );
 
@@ -95,7 +95,7 @@ const Profile = () => {
 
     try {
       const response = await axios.post(
-        `http://3.110.181.46:8000/api/upload/${userId}`,
+        `http://127.0.0.1:8000/api/upload/${userId}`,
         formData,
         {
           headers: {
@@ -116,7 +116,7 @@ const Profile = () => {
   const handleDelete = async() =>{
     try {
       // Make a DELETE request to the deleteUserProfile API endpoint
-      const response = await axios.post(`http://3.110.181.46:8000/api/delete/${userId}`);
+      const response = await axios.post(`http://127.0.0.1:8000/api/delete/${userId}`);
       
       // Check if the request was successful
       if (response.status === 204) {
@@ -134,7 +134,7 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://3.110.181.46:8000/api/userprofile/${userId}`);
+      const response = await fetch(`http://127.0.0.1:8000/api/userprofile/${userId}`);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -149,7 +149,7 @@ const Profile = () => {
       setEmail(data.email);
        
       if (data.photo != null){
-      const completePhotoUrl = `http://3.110.181.46:8000${data.photo}`;
+      const completePhotoUrl = `http://127.0.0.1:8000${data.photo}`;
       setPhotoSrc(completePhotoUrl);
       }
 

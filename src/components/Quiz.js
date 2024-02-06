@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Quiz.css";
+import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 
 const Quiz = (props) => {
   const [currIndex, setCurrIndex] = useState(0);
@@ -23,9 +24,9 @@ const Quiz = (props) => {
     const option = event.target;
     const selectedOptions = document.getElementsByClassName("option");
     for (const selectedOption of selectedOptions) {
-      selectedOption.style.background = "white";
+      selectedOption.style.background = "#6ac9bc";
     }
-    option.style.background = "orange";
+    option.style.background = "#0bbea7";
     console.log(val);
     
 
@@ -62,7 +63,7 @@ const Quiz = (props) => {
 
     const options = document.getElementsByClassName("option");
     for (const option of options) {
-      option.style.backgroundColor = "white";
+      option.style.backgroundColor = "#6ac9bc";
     }
 
     if (currIndex < props.questions.length - 1) {
@@ -85,7 +86,7 @@ const Quiz = (props) => {
         const userid = localStorage.getItem("userId");
 
         const postData = async () => {
-          const url = "http://3.110.181.46:8000/api/questionhistorycreate/";
+          const url = "http://127.0.0.1:8000/api/questionhistorycreate/";
 
           const newQuestionHistory = {
             user: userid,
@@ -177,7 +178,7 @@ const Quiz = (props) => {
       <center>
         <h1>Quiz</h1>
       </center>
-      <div className="timer">{timer}</div>
+      <div className="timer"><AccessAlarmsIcon/>:&nbsp;<strong>{timer}</strong></div>
       <div className="question-container">
         <p className="question">{currQuestion}</p>
         <div className="centered-container">
@@ -201,9 +202,11 @@ const Quiz = (props) => {
           </div>
         </div>
       </div>
-      <button className="next-button" onClick={handleNext}>
+      {/* <button className="next-button" >
         Next
-      </button>
+      </button> */}
+      <button type="button" onClick={handleNext} class="next btn btn-outline-info">Next</button>
+
     </div>
   );
 };
