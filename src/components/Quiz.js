@@ -85,7 +85,7 @@ const Quiz = (props) => {
         const userid = localStorage.getItem("userId");
 
         const postData = async () => {
-          const url = "http://127.0.0.1:8000/api/questionhistorycreate/";
+          const url = "http://3.110.181.46:8000/api/questionhistorycreate/";
 
           const newQuestionHistory = {
             user: userid,

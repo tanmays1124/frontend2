@@ -31,7 +31,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login/",
+        "http://3.110.181.46:8000/api/login/",
         formData
       );
       setToken(response.data.token);
@@ -97,7 +97,7 @@ const Login = ({ token, setToken, setUser, setLogged, setUserId }) => {
                   <input type="submit" value="Login" />
                 </div>
                 <Link to="/register"className="register-link">Register?</Link>
-                <Link to="http://127.0.0.1:8000/api/forgot_password/" className="forgot">Forgot Password</Link>
+                <Link to="http://3.110.181.46:8000/api/forgot_password/" className="forgot">Forgot Password</Link>
               </form>
             </div>
           </div>
