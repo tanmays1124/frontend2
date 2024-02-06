@@ -1,18 +1,24 @@
 /* container class styles */
-.leader-container {
+.container {
     display: flex;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
     padding: 10px; /* Added padding to container for better spacing */
     box-sizing: border-box; /* Include padding in width */
-    background-size: 100vh 100vw;
+    
   }
+
+  .profile-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%; /* Make the image round */
+    margin-right: 10px; /* Adjusted spacing */
+  }
+  
   
   /* Sidebar Styles */
   .sidebar {
-    /* position: fixed;
-    
-    */
+    position:sticky;
     top: 0;
     left: 0;
     height: 100%;
@@ -49,7 +55,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 26%; /* Adjusted margin to a percentage */
+    /* margin-left: 26%; Adjusted margin to a percentage */
     padding: 20px;
     width: 74%; /* Adjusted width */
     box-sizing: border-box; /* Add box-sizing to include padding in width */
@@ -58,32 +64,27 @@
   /* User Profile Styles */
   .user-profile {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Display items in a row */
     align-items: center;
     margin-bottom: 15px;
-    background: rgb(152, 151, 160);
+    background:#ddd;
     width: 80%;
     padding: 10px;
     box-sizing: border-box; /* Added box-sizing */
+    justify-content:space-around ;
+    transition: 0.3s ease-in;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px; /* Adjusted margin for spacing */
   }
   
   .user-profile:hover {
-    background: rgb(59, 117, 244);
-  
-  }
-  
-  .un,
-  .iduser,
-  .rank {
-    font-size: 1em; /* Adjusted font size */
-    margin-bottom: 5px; /* Adjusted spacing */
-  }
-  
-  .profile-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 5px; /* Adjusted spacing */
+    background: rgb(12, 62, 170);
+    transform: scale(1.07);
   }
   
   /* Header Styles */
@@ -103,7 +104,10 @@
     .sidebar {
       max-width: 100%;
       margin-left: 0; /* Reset margin for smaller screens */
+      transition: margin-left 0.3s;
+      margin-top: 20px;
     }
+
   
     /* Adjust font size for smaller screens */
     .sidebar h2,
@@ -112,19 +116,34 @@
       font-size: 1.2em;
     }
   
-    .sidebar button,
-    .un,
-    .iduser,
-    .rank {
+    .sidebar button {
       max-width: 100%;
       font-size: 0.9em;
     }
-  
-    .profile-image {
    
-      width: 40px;
-      height: 40px;
-    }
+    .sidebar.open {
+        margin-left: 250px; /* Set the width of your navbar here */
+      }
+    
+    .user-info {
+          max-width: 100%;
+        }
+      
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* Make the image round */
+            margin-right: 10px; /* Adjusted spacing */
+          }
+          
+      
+        /* Adjust font size for smaller screens */
+        .un,
+        .iduser,
+        .rank,
+        .score {
+          font-size: 0.9em;
+        }
   }
   
   
@@ -148,7 +167,7 @@
   }
   
   .pagination button.active {
-    background-color: #4caf50;
+    background-color: #3b95df;
     color: white;
   }
   
@@ -156,3 +175,46 @@
     cursor: not-allowed;
     opacity: 0.5;
   }
+
+  .container {
+
+  }
+  
+  .selection-dropdowns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown {
+    margin-right: 20px;
+  }
+  
+  .dropdown select {
+    width: 150px;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .leaderboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .board {
+    margin-top: 20px;
+  }
+  
+  .user-profile {
+    margin-bottom: 20px;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+  }
+  
+  .active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  

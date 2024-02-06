@@ -322,7 +322,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './board.css';
 import pfimg from './profile.jpg';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Board() {
@@ -339,28 +338,20 @@ export default function Board() {
   const [scoreFilter, setScoreFilter] = useState('All');
   const [userNames, setUserNames] = useState([]);
   const [userPhotos, setUserPhotos] = useState([]);
+  const [uniqueUserIds, setUniqueUserIds] = useState([]);
+  const [userDetails, setUserDetails] = useState([]);
 
 
 
-  const fetchedUserId = localStorage.getItem('userId');
   let user_names = [];
-  const navigate=useNavigate()
+  
 
   useEffect(() => {
-
+    const fetchedUserId = localStorage.getItem('userId');
     setUserid(fetchedUserId);
     // fetchUserData(fetchedUserId);
     fetchLeaderboardData();
   }, [difficulty, domain]);
-
-useEffect(()=>{
-  console.log(fetchedUserId)
-  if(!fetchedUserId)
-  {
-    navigate('/login')
-  }
-},[])
-
 
 
   const fetchUserData = async (userId) => {
@@ -405,32 +396,28 @@ useEffect(()=>{
         difficulty_level: item.difficulty_level,
         photo: item.photo,
       }));
-
-      const uniqueUserIds = Array.from(new Set(fetchedLeaderboard.map((item) => item.userId)));
+  
+      const uniqueUserIdsArray = Array.from(new Set(fetchedLeaderboard.map((item) => item.userId)));
       const usernameMap = new Map();
-
-      await Promise.all(
-        uniqueUserIds.map(async (uniqueUserId) => {
+      setUniqueUserIds(uniqueUserIdsArray);
+  
+      const userDetailsArray = await Promise.all(
+        uniqueUserIdsArray.map(async (uniqueUserId) => {
           try {
             const userProfileResponse = await axios.get(
               `http://127.0.0.1:8000/api/userprofile/${uniqueUserId}`
             );
             console.log('User Profile Response:', userProfileResponse.data);
-            setUserNames((prevUserNames) => [...prevUserNames, userProfileResponse.data.username]);
-            setUserPhotos((prevUserPhotos) => [...prevUserPhotos, userProfileResponse.data.photo]);
-
-            user_names.push(userProfileResponse.data['username'])
-
-            const { username, photo } = userProfileResponse.data; // Extract username and photo from the response
-            console.log(user_names)
-            if (username) {
-              usernameMap.set(uniqueUserId, { username, photo });
-            }
+            return userProfileResponse.data;
           } catch (error) {
             console.error('Error fetching username and photo:', error);
+            return null;
           }
         })
       );
+  
+      setUserDetails(userDetailsArray);
+  
 
       // Update the leaderboard state with usernames and photos
       setLeaderboard((prevLeaderboard) =>
@@ -536,7 +523,7 @@ useEffect(()=>{
 
 
 // Pagination logic
-const itemsPerPage = 3;
+const itemsPerPage = 5;
 const [currentPage, setCurrentPage] = useState(1);
 
 const indexOfLastItem = currentPage * itemsPerPage;
@@ -553,109 +540,125 @@ const handlePageChange = (pageNumber) => {
 };
 
 
-  return (
-    <div className="leader-container">
-      <div className="sidebar">
-        <h2>LEADER BOARD</h2>
-        <br />
-        <hr />
-        <br />
-        <h2>Score Filter: {scoreFilter}</h2>
-        <div className="score-filter-buttons">
-          {/* <button onClick={() => handleScoreFilterChange('All')}>All</button> */}
-          <button onClick={() => handleScoreFilterChange('Less Than 3')}>Less than 3</button>
-          <button onClick={() => handleScoreFilterChange('Between 3 And 5')}>3 to 5</button>
-          <button onClick={() => handleScoreFilterChange('Greater Than Or Equal 5')}>5 or more</button>
-        </div>
+return (
+  <div className="container">
+    <div className="sidebar">
+      <h2>LEADER BOARD</h2>
+      <br />
+      <hr />
+      <br />
+      <h2>Score Filter: {scoreFilter}</h2>
+      {/* <div className="score-filter-dropdown">
+        <select value={scoreFilter} onChange={(e) => handleScoreFilterChange(e.target.value)}>
+    
+          <option value="Less Than 3">Less than 3</option>
+          <option value="Between 3 And 5">3 to 5</option>
+          <option value="Greater Than Or Equal 5">5 or more</option>
+        </select>
+      </div> */}
 
-        {/* Render difficulty selection only when a score filter is chosen */}
-        {scoreFilter !== 'All' && (
-          <>
-            <h2>Select Difficulty:</h2>
-            <div className="difficulty-buttons">
-              <button onClick={() => handleDifficultyChange('easy')}>Easy</button>
-              <button onClick={() => handleDifficultyChange('medium')}>Medium</button>
-              <button onClick={() => handleDifficultyChange('difficult')}>Difficult</button>
-            </div>
-          </>
-        )}
 
-        {/* Render domain selection only when a difficulty level is selected */}
-        {showDomainSelection && (
-          <>
-            <h2>Domains:</h2>
-            <div className="domain-buttons">
-              {uniqueDomains.map((domain) => (
-                <button key={domain} onClick={() => handleDomainChange(domain)}>
+      {/* {scoreFilter !== 'All' && ( */}
+        <>
+          <h2>Select Difficulty:</h2>
+          <div className="difficulty-dropdown">
+            <select value={difficulty} onChange={(e) => handleDifficultyChange(e.target.value)}>
+            <option value="All">Select Difficulty</option>
+
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="difficult">Difficult</option>
+              {/* <option value="All">All</option> */}
+            </select>
+          </div>
+        </>
+      {/* )} */}
+
+      {/* Render domain selection only when a difficulty level is selected */}
+      {showDomainSelection && (
+        <>
+          <h2>Domains:</h2>
+          <div className="domain-dropdown">
+            <select value={domain} onChange={(e) => handleDomainChange(e.target.value)}>
+              {['All', ...uniqueDomains].map((domain) => (
+                <option key={domain} value={domain}>
                   {domain}
-                </button>
+                </option>
               ))}
-            </div>
-          </>
-        )}
-      </div>
-
-      {(isLoadingUserData || isLoadingLeaderboard) && <p>Loading...</p>}
-
-      {error && <p>Error: {error}</p>}
-      {leaderboard.length > 0 && (
-  <div className="board" style={{ textAlign: 'center' }}>
-    <h1 className="leaderboard">LEADER BOARD</h1>
-    {showDomainSelection && difficulty !== 'All' && (
-      <h2 className="header-text">{`${domain}-${difficulty}`}</h2>
-    )}
-
-    {console.log('Rendering Leaderboard:', currentItems)}
-    {console.log(user_names)}
-    {currentItems.map((user, index) => (
-      <div key={index} className="user-profile">
-        <span className="rank">#{user.rank}</span>
-        {/* <span className="iduser">{user.userId}</span> */}
-        <span className='un'>{userNames[index]}</span>
-        <img
-          className="profile-image"
-      src={userPhotos[index] ? userPhotos[index] : pfimg}
-          alt={`User ${index + 1}`}
-          width="175px"
-          height="175px"
-        />
-        <p> Score: {user.maxScore}</p>
-      </div>
-    ))}
-  </div>
-)}
-
-{/* Pagination */}
-{totalPages > 1 && (
-  <div className="pagination">
-    <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-      Previous
-    </button>
-    {Array.from({ length: totalPages }, (_, index) => (
-      <button
-        key={index + 1}
-        onClick={() => handlePageChange(index + 1)}
-        className={currentPage === index + 1 ? 'active' : ''}
-      >
-        {index + 1}
-      </button>
-    ))}
-    <button
-      onClick={() => handlePageChange(currentPage + 1)}
-      disabled={currentPage === totalPages}
-    >
-      Next
-    </button>
-  </div>
-)}
-        
-
-      {leaderboard.length === 0 && !isLoadingUserData && !isLoadingLeaderboard && !error && (
-        <div className="board" style={{ textAlign: 'mid-center' }}>
-          <h1 className="leaderboard">LEADERBOARD</h1>
-          <p>Select the difficulty level and domain.</p>
-        </div>
+            </select>
+          </div>
+        </>
       )}
     </div>
-  );
+
+    {(isLoadingUserData || isLoadingLeaderboard) && <p>Loading...</p>}
+
+    {error && <p>Error: {error}</p>}
+    {leaderboard.length > 0 && (
+      <div className="board" style={{ textAlign: 'center' }}>
+        <h1 className="leaderboard">LEADER BOARD</h1>
+        {showDomainSelection && difficulty !== 'All' && (
+          <h2 className="header-text">{`${domain}-${difficulty}`}</h2>
+        )}
+
+        {currentItems.map((user, index) => {
+          const userIndex = uniqueUserIds.indexOf(user.userId);
+          const userDetailsForUser = userDetails[userIndex];
+
+          return (
+            <div key={index} className="user-profile">
+              <span className="rank">#{user.rank}</span>
+              <span className="un">
+                {userDetailsForUser ? userDetailsForUser.username : ''}
+              </span>
+              <img
+                className="profile-image"
+                src={
+                  userDetailsForUser.photo
+                    ? `http://127.0.0.1:8000${userDetailsForUser.photo}`
+                    : pfimg
+                }
+                alt={`User ${index + 1}`}
+                width="175px"
+                height="175px"
+              />
+              <p> Score: {user.maxScore}</p>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    {/* Pagination */}
+    {totalPages > 1 && (
+      <div className="pagination">
+        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
+    )}
+
+    {leaderboard.length === 0 && !isLoadingUserData && !isLoadingLeaderboard && !error && (
+      <div className="board" style={{ textAlign: 'mid-center' }}>
+        <h1 className="leaderboard">LEADERBOARD</h1>
+        <p>Select the difficulty level and domain.</p>
+      </div>
+    )}
+  </div>
+);
 }

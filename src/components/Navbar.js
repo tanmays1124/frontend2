@@ -21,12 +21,13 @@ import HistoryIcon from '@mui/icons-material/History';
 import PersonIcon from '@mui/icons-material/Person';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'; 
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  backgroundColor: '#103f76', // Specify your desired background color here
+  backgroundColor: '#2795df', // Specify your desired background color here
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -45,7 +46,7 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
   opacity: 1,
-  backgroundColor: '#103f76', // Set the background color when the drawer is closed
+  backgroundColor: '#2795df', // Set the background color when the drawer is closed
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -174,6 +175,28 @@ const Navbar = ({ token, setToken, user, setUser, setLogged, page }) => {
               <ListItemText primary="History" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/leaderboard')}>
+  <ListItemButton
+    sx={{
+      minHeight: 48,
+      justifyContent: open ? 'initial' : 'center',
+      px: 2.5,
+      color: '#FFFFFF',
+    }}
+  >
+    <ListItemIcon
+      sx={{
+        minWidth: 0,
+        mr: open ? 3 : 'auto',
+        justifyContent: 'center',
+        color: '#FFFFFF',
+      }}
+    >
+      <LeaderboardIcon /> {/* Use the Leaderboard icon here */}
+    </ListItemIcon>
+    <ListItemText primary="Leaderboard" sx={{ opacity: open ? 1 : 0 }} />
+  </ListItemButton>
+</ListItem>
           <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/Profile')}>
             <ListItemButton
               sx={{
