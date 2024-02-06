@@ -74,20 +74,14 @@ const Quiz = (props) => {
       // Update Quiz History for the current question
       // updateHistory(currQuestion, currOptions, currOptions[currAnswer]);
       setTimer(15);
-    } else {
-      // console.log(attempted);
-      // console.log(isCorrect);
-      // console.log(props.userId);
-      setAttempted((prevAttempted) => [...prevAttempted, currQuestion]);
-      setIsCorrect((prevIsCorrect) => [
-        ...prevIsCorrect,
-        val === currOptions[currAnswer],
-      ]);
-      props.setScore(props.score+1)
+    } 
+    if (attempted.length === props.questions.length && isCorrect.length === props.questions.length) {
+
+      
       console.log(attempted)
 
       // Ensure state is updated before navigating
-      setTimeout(() => {
+      
         const userid = localStorage.getItem("userId");
 
         const postData = async () => {
@@ -128,7 +122,7 @@ const Quiz = (props) => {
         postData();
 
         navigate("/quizend");
-      }, 2000);
+      
     }
   };
 
