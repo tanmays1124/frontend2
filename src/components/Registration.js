@@ -335,7 +335,7 @@ function Register() {
       uppercaseRegex.test(str) &&
       lowercaseRegex.test(str) &&
       numberRegex.test(str) &&
-      str.length > 8
+      str.length >= 8
     ) {
       return true;
     } else {
@@ -365,6 +365,8 @@ function Register() {
       handleShake()
   
     }
+    if(emailRegex.test(email.value) && validatePassword(psswd.value))
+    {
 
     try {
       const response = await axios.post(
@@ -385,7 +387,7 @@ function Register() {
         setShow('show')
         handleShake()
       }
-    }
+    }}
   };
 
 
